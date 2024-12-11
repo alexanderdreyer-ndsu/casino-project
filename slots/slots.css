@@ -1,0 +1,146 @@
+body {
+    background-image: url("eugenia-vorontsova-promo-bg1.jpg");
+    transform: scale(0.7);
+    background-repeat: no-repeat;
+}
+
+.bettingBtns{
+    width: auto;
+    margin-left: 20px;
+    margin-right: 20px;
+    border: none;
+    border-radius: 25px;
+    padding: 10px;
+    background-color: dodgerblue;
+    color: white;
+    font-weight: 700;
+    transition: 150ms ease-in-out;
+    height: auto;
+    scale: 1.4;
+}
+.bettingBtns:hover{
+    scale: 2;
+    background-color: #4aa4ff;
+}
+.bettingBtns:active{
+    scale: 2.2;
+    background-color: aqua;
+}
+
+.outputCells{
+    border: none;
+    border-radius: 25px;
+    animation: none;
+}
+
+#gameDisplay {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#tableOutput {
+    border: none;
+    width: 825px;
+    height: 200px;
+    border-radius: 15px;
+    background-color: blueviolet;
+    margin-top: 50px;
+    font-size: 110px;
+    padding: 25px;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: left;
+}
+
+#balanceDiv {
+    display: flex;
+    border: none;
+    justify-content: left;
+}
+
+#bettingInput {
+    display: flex;
+    justify-content: center;
+}
+
+#spinBtn {
+    border: none;
+    border-radius: 15px;
+    background-color: gold;
+    width: 70px;
+    height: 200px;
+    transition: 150ms ease-in-out;
+    color: white;
+    font-weight: 700;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    cursor: pointer;
+}
+#spinBtn:hover{
+    scale: 1.3;
+    background-color: #ffe23b;
+}
+#spinBtn:active{
+    scale:1.5;
+    background-color: yellow;
+}
+
+#lowerDiv {
+    border: none;
+    padding: 50px;
+    margin-top: 20px;
+}
+
+#betAndInputs {
+    display: flex;
+    justify-content: space-between;
+}
+
+#betDisplay {
+    margin-right: 100px;
+    color: white;
+    margin-left: 10px;
+}
+
+#balanceAndPrevious {
+    display: flex;
+    justify-content: left;
+    margin-bottom: 30px;
+}
+
+#balanceOutput {
+    margin-right: 300px;
+    color: white;
+}
+
+#previousWin {
+    display: flex;
+    color: white;
+}
+
+#balanceLabel {
+    color: white;
+}
+
+#betLabel {
+    color: white;
+}
+
+#game {
+    border: 4px solid;
+    border-radius: 25px;
+    background-color: grey;
+    padding: 40px;
+}
+
+@keyframes spin {
+    0%{
+        scale: 1.5;
+    }
+    50%{
+        transform: rotate(0);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+  }

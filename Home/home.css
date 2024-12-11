@@ -1,0 +1,55 @@
+body {
+    background: linear-gradient(to bottom, black, #181818)
+}
+
+.game-btns {
+    border: none;
+    border-radius: 25px;
+    width: 300px;
+    height: 60px;
+    margin-bottom: 100px;
+    font-size: 20px;
+    transition: 150ms;
+    font-weight: bold;
+    color: white;
+    position: relative;
+}
+.game-btns:hover {
+    scale: 1.8;
+}
+
+#games-div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 250px;
+}
+
+#roulette {
+    background-image: url("view-roulette-game-casino_23-2151007731.avif");
+    background-size: cover;
+    background-position-y: center;
+    position: relative;
+}
+
+#slots {
+    background-image: url("eugenia-vorontsova-promo-bg1.jpg");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+#bottom-text {
+    display: flex;
+    color: grey;
+    justify-content: center;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+#about-link:hover {
+    color: white;
+    cursor: pointer;
+    text-decoration: underline;
+}
