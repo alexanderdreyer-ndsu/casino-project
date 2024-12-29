@@ -1,0 +1,50 @@
+.page{
+    display: flex;
+    background-color: red;
+    border: none;
+    border-radius: 15px;
+    padding: 50px;
+    color: white;
+    margin-top: 200px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 100px;
+    width: 500px;
+    height: 400px;
+}
+
+.game-info{
+    display: flex;
+    flex-direction: column;
+    margin-right: 275px;
+    background-color: blue;
+}
+
+.dealer-cards{
+    display: flex;
+    flex-direction: row;
+    background-color: chartreuse;
+    margin-bottom: 150px;
+}
+
+.player-cards{
+    display: flex;
+    flex-direction: row;
+    background-color: cyan;
+}
+
+.player-btns{
+    display: flex;
+    flex-direction: column;
+    background-color: bisque;
+}
+
+.game-btns{
+    margin-bottom: 25px;
+    
+}
+
+.display-dealer-cards{
+    display: flex;
+    flex-direction: row;
+}
