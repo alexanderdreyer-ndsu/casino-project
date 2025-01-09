@@ -2,15 +2,6 @@ body{
     background: radial-gradient(circle, forestgreen, black);
 }
 
-.title{
-    display: flex;
-    justify-content: center;
-    color: white;
-    margin-left: auto;
-    margin-right: auto;
-    width: auto;
-}
-
 .page{
     display: flex;
     border: none;
@@ -36,6 +27,7 @@ body{
     flex-direction: row;
     margin-bottom: 150px;
     margin-right: 5px;
+    width: fit-content;
 }
 
 .player-cards{

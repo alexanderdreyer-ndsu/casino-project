@@ -14,7 +14,7 @@ let dealerHand = new Hand();
 let playerHand1 = new Hand();
 let playerHand2 = new Hand();
 
-const deck = new Deck();
+let shoe = new Shoe(6);
 
 let faceDownCard;
 
@@ -22,22 +22,22 @@ dealerHand.cardDisplay = dealerCardDisplay;
 playerHand1.cardDisplay = playerCardDisplay;
 playerHand2.cardDisplay = playerSplitCardDisplay;
 
-
-
 function drawFaceDownCard() {
-    faceDownCard = deck.drawCard();
+    faceDownCard = shoe.drawCard();
     dealerHand.addToHand(faceDownCard);
 
     faceDownCardImage.src = "Images/backOfCard.jpeg";
     faceDownCardImage.style.height = '70px';
     faceDownCardImage.style.width = '50px';
-    faceDownCardImage.style.marginLeft = '5px';
 
     dealerCardDisplay.appendChild(faceDownCardImage);
+    
+    reduceHandAces(dealerHand);
+    shoe.removeCard(faceDownCard);
 }
 
 function drawCard(hand) {
-    const card = deck.drawCard();
+    const card = shoe.drawCard();
     hand.addToHand(card);
 
     const img = document.createElement('img');
@@ -45,31 +45,47 @@ function drawCard(hand) {
     img.style.height = '70px';
     img.style.width = '50px';
     img.style.marginLeft = '5px';
-    img.style.marginTop = '5px';
+    img.style.marginBottom = '5px';
 
     hand.cardDisplay.appendChild(img);
+
+    shoe.removeCard(card);
 }
 
-function revealFaceDownCard() {
+function endGame() {
     faceDownCardImage.src = faceDownCard.imagePath;
     faceDownCardImage.style.marginLeft = '5px';
+
+    playBtn.disabled = false;
+
+    disableButtons();
 }
 
-//need to do check for blackjack to work with splits
 function checkForBlackjack() {
-    if (dealerHand.count === 21 && playerHand1.count !== 21) {
-        window.alert("Dealer Blackjack");
-        revealFaceDownCard();
-    }
+    const gameIsSplit = playerHand1.selected || playerHand2.selected;
+    const isDealerBlackjack = dealerHand.count === 21;
+    const isPlayerBlackjack = playerHand1.count === 21;
 
-    if (playerHand1.count === 21 && dealerHand.count !== 21) {
-        window.alert("Player Blackjack");
-        revealFaceDownCard();
-    }
-
-    if (dealerHand.count === 21 && playerHand1.count === 21) {
-        window.alert("Tie");
-        revealFaceDownCard();
+    if (gameIsSplit) {
+        const isPlayer2Blackjack = playerHand2.count === 21;
+        
+        if (isPlayerBlackjack && isPlayer2Blackjack) {
+            endGame();
+            window.alert("Player Hand 1 Blackjack, Player Hand 2 Blackjack");
+        } else if (isPlayerBlackjack) {
+            window.alert("Player Hand 1 Blackjack");
+            stay();
+        } else if (isPlayer2Blackjack) {
+            window.alert("Player Hand 2 Blackjack");
+        }
+    } else {
+        if (isDealerBlackjack) {
+            endGame();
+            isPlayerBlackjack ? window.alert("Push") : window.alert("Dealer Blackjack");
+        } else if (isPlayerBlackjack) {
+            endGame();
+            window.alert("Player Blackjack");
+        }
     }
 }
 
@@ -102,7 +118,7 @@ function splitHand() {
     img.style.height = '70px';
     img.style.width = '50px';
     img.style.marginLeft = '5px';
-    img.style.marginTop = '5px';
+    img.style.marginBottom = '5px';
 
     playerSplitCardDisplay.appendChild(img);
 
@@ -112,23 +128,63 @@ function splitHand() {
     drawCard(playerHand1);
 }
 
-//need to do calculate winner work with splits
 function calculateWinner() {
-    if (playerHand1.count > 21) {
-        revealFaceDownCard();
-        setTimeout(window.alert("Player Bust, Dealer Win"), 1000);
-    } else if (playerHand1.count <= 21 && dealerHand.count > 21) {
-        revealFaceDownCard();
-        setTimeout(window.alert("Dealer Bust, Player Win"), 1000);
-    } else if (21 - dealerHand.count < 21 - playerHand1.count) {
-        revealFaceDownCard();
-        setTimeout(window.alert("Dealer Win"), 1000);
-    } else if (21 - dealerHand.count > 21 - playerHand1.count) {
-        revealFaceDownCard();
-        setTimeout(window.alert("Player Win"), 1000);
+    const gameIsSplit = playerHand1.selected || playerHand2.selected;
+    const dealerScore = dealerHand.count <= 21 ? dealerHand.count : 0;
+    const playerScore = playerHand1.count <= 21 ? playerHand1.count : 0;
+    
+    if (gameIsSplit) {
+        const player2Score = playerHand2.count <= 21 ? playerHand2.count : 0;
+        let outputString;
+
+        //fix this so it builds a string not hardcode
+        //this is just counting how far away the score is from 21
+        //0 > -2 this means busting by 2 is better than 21
+        if (dealerScore > playerScore && dealerScore > player2Score) {
+            endGame();
+            window.alert("Dealer Wins Both");
+        } else if (dealerScore > playerScore && dealerScore < player2Score) {
+            endGame();
+            window.alert("Player Hand 1 Lose, Player Hand 2 Win");
+        } else if (dealerScore < playerScore && dealerScore > player2Score) {
+            endGame();
+            window.alert("Player Hand 1 Win, Player Hand 2 Lose");
+        } else if (dealerScore < playerScore && dealerScore < player2Score) {
+            endGame();
+            window.alert("Player Wins Both");
+        } else if (dealerScore === playerScore && dealerScore < player2Score) {
+            endGame();
+            window.alert("Player Hand 1 Push, Player Hand 2 Win");
+        } else if (dealerScore === playerScore && dealerScore > player2Score) {
+            endGame();
+            window.alert("Player Hand 1 Push, Player Hand 2 Lose");
+        } else if (dealerScore < playerScore && dealerScore === player2Score) {
+            endGame();
+            window.alert("Player Hand 1 Win, Player Hand 2 Push");
+        } else if (dealerScore > playerScore && dealerScore === player2Score) {
+            endGame();
+            window.alert("Player Hand 1 lose, Player Hand 2 Push");
+        } else if (dealerScore === playerScore && dealerScore === player2Score) {
+            endGame();
+            window.alert("Push");
+        }
     } else {
-        revealFaceDownCard();
-        setTimeout(window.alert("Push"), 1000);
+        if (playerHand1.count > 21) {
+            endGame();
+            window.alert("Player Bust, Dealer Win");
+        } else if (playerScore !== 0 && dealerScore === 0) {
+            endGame();
+            window.alert("Dealer Bust, Player Win");
+        } else if (dealerScore > playerScore) {
+            endGame();
+            window.alert("Dealer Win");
+        } else if (dealerScore < playerScore) {
+            endGame();
+            window.alert("Player Win");
+        } else {
+            endGame();
+            window.alert("Push");
+        }
     }
 }
 
@@ -140,20 +196,19 @@ function disableButtons() {
 }
 
 function reduceHandAces(hand) {
-    for (const card of hand.cards) {
-        if (card.numValue === 'Ace') hand.count -= 10;
+    if (hand.count > 21 && hand.cards.some(card => card.numValue === 'Ace')) {
+        for (const card of hand.cards) {
+            if (card.numValue === 'Ace') hand.count -= 10;
+        }
     }
 }
 
 function runDealerTurn() {
     disableButtons();
-    revealFaceDownCard();
 
     while (dealerHand.count < 17) {
         drawCard(dealerHand);
-        if (dealerHand.count > 21 && dealerHand.cards.some(card => card.numValue === 'Ace')) {
-            reduceHandAces(dealerHand);
-        }
+        reduceHandAces(dealerHand);
     }
 
     if (dealerHand.count === 17 && dealerHand.cards.some(card => card.numValue === 'Ace')) {
@@ -174,13 +229,8 @@ function hit() {
         drawCard(playerHand2);
     }
 
-    if (playerHand1.count > 21 && playerHand1.cards.some(card => card.numValue === 'Ace')) {
-        reduceHandAces(playerHand1)
-    }
-
-    if (playerHand2.count > 21 && playerHand2.cards.some(card => card.numValue === 'Ace')) {
-        reduceHandAces(playerHand2);
-    }
+    reduceHandAces(playerHand1);
+    reduceHandAces(playerHand2);
 
     if (playerHand1.count < 21) {
         doubleBtn.disabled = true;
@@ -189,8 +239,9 @@ function hit() {
         if (isGameSplit) {
             playerHand1.selected = false;
             playerHand2.selected = true;
+            doubleBtn.disabled = false;
 
-            playerCardDisplay.style.backgroundColor = '';
+            playerCardDisplay.style.backgroundColor = null;
             playerSplitCardDisplay.style.backgroundColor = 'limegreen';
         } else {
             runDealerTurn();
@@ -198,7 +249,7 @@ function hit() {
     }
 
     if (playerHand2.count >= 21) {
-        playerSplitCardDisplay.style.backgroundColor = '';
+        playerSplitCardDisplay.style.backgroundColor = null;
         runDealerTurn();
     }
 }
@@ -215,7 +266,7 @@ function double() {
         playerHand1.selected = false;
         playerHand2.selected = true;
 
-        playerCardDisplay.style.backgroundColor = '';
+        playerCardDisplay.style.backgroundColor = null;
         playerSplitCardDisplay.style.backgroundColor = 'limegreen';
     } else if (isGameSplit && playerHand2.selected) {
         drawCard(playerHand2);
@@ -235,22 +286,33 @@ function stay() {
     if (playerHand1.selected) {
         playerHand1.selected = false;
         playerHand2.selected = true;
-        playerCardDisplay.style.backgroundColor = '';
+        playerCardDisplay.style.backgroundColor = null;
         playerSplitCardDisplay.style.backgroundColor = 'limegreen';
     } else {
         runDealerTurn();
     }
 }
 
+function split(){
+    splitBtn.disabled = true;
+    splitHand();
+    checkForBlackjack();
+}
+
 function game() {
-    playBtn.disabled = true;
     playerHand1.clearHand();
     playerHand2.clearHand();
     dealerHand.clearHand();
 
+    playBtn.disabled = true;
     stayBtn.disabled = false;
     hitBtn.disabled = false;
     doubleBtn.disabled = false;
+    playerHand1.selected = false;
+    playerHand2.selected = false;
+
+    playerCardDisplay.style.backgroundColor = null;
+    playerSplitCardDisplay.style.backgroundColor = null;
 
     drawFaceDownCard();
     drawCard(playerHand1);
@@ -264,11 +326,7 @@ function game() {
     hitBtn.addEventListener("click", hit);
     doubleBtn.addEventListener("click", double);
     stayBtn.addEventListener("click", stay);
-
-    splitBtn.addEventListener("click", () => {
-        splitBtn.disabled = true;
-        splitHand();
-    });
+    splitBtn.addEventListener("click", split);
 }
 
 window.addEventListener("DOMContentLoaded", () => {

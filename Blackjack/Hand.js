@@ -8,13 +8,18 @@ class Hand {
 
     calculateHandCount() {
         this.count = 0;
+
         for (let card of this.cards) {
+            console.log(card);
+            console.log("length: " + this.cards.length);
+
             const value = card.numValue;
+            
             const faceCards = ["Jack", "Queen", "King"];
 
             if (faceCards.includes(value)) {
                 this.count += 10;
-            } else if (value == "Ace") {
+            } else if (value === "Ace") {
                 this.count += 11;
             } else {
                 this.count += parseInt(value);
@@ -50,11 +55,9 @@ class Hand {
         this.cards = [];
         this.count = 0;
 
-        for (let image of images) {
-            if (image.id === "faceDownCardImage") {
-                dealerCardDisplay.removeChild(image);
-            } else {
-                image.parentElement === "display-player-cards" ? playerCardDisplay.removeChild(image) : dealerCardDisplay.removeChild(image);
+        while (images.length !== 0) {
+            for (const image of images) {
+                image.parentNode.removeChild(image);
             }
         }
     }
