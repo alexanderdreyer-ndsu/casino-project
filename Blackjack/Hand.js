@@ -3,7 +3,6 @@ class Hand {
         this.cards = [];
         this.count = 0;
         this.selected = false;
-        this.cardDisplay = '';
     }
 
     calculateHandCount() {
