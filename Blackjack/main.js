@@ -33,7 +33,6 @@ function drawFaceDownCard() {
     dealerCardDisplay.appendChild(faceDownCardImage);
     
     reduceHandAces(dealerHand);
-    shoe.removeCard(faceDownCard);
 }
 
 function drawCard(hand) {
@@ -48,8 +47,6 @@ function drawCard(hand) {
     img.style.marginBottom = '5px';
 
     hand.cardDisplay.appendChild(img);
-
-    shoe.removeCard(card);
 }
 
 function endGame() {
@@ -210,7 +207,7 @@ function runDealerTurn() {
         drawCard(dealerHand);
         reduceHandAces(dealerHand);
     }
-
+    
     if (dealerHand.count === 17 && dealerHand.cards.some(card => card.numValue === 'Ace')) {
         drawCard(dealerHand);
     }

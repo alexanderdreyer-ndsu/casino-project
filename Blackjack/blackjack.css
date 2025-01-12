@@ -1,5 +1,5 @@
 body{
-    background: radial-gradient(circle, forestgreen, black);
+    background: radial-gradient(circle, #60cd8a, black);
 }
 
 .page{
@@ -44,7 +44,7 @@ body{
 
 .game-btns{
     margin-bottom: 25px;
-    background-color:goldenrod;
+    background-color:#a94cdc;
     padding: 15px;
     border: none;
     border-radius: 15px;

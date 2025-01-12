@@ -13,6 +13,64 @@
     <link rel="stylesheet" href="slots.css" />
 </head>
 <body>
+    <div id="navbar">
+        <a href="../Home/home.html">
+            <button class="navbar-item" id="title">Free Casino</button>
+        </a>
+
+        <a href="../Home/home.html">
+            <button class="navbar-item" id="home-btn">Home</button>
+        </a>
+
+        <a href="../roulette/roulette.html">
+            <button class="navbar-item" id="roulette-btn">Roulette</button>
+        </a>
+
+        <a href="../slots/slots.html">
+            <button class="navbar-item" id="slots-btn">Slots</button>
+        </a>
+
+        <a href="../Blackjack/blackjack.html">
+            <button class="navbar-item" id="blackjack-btn">Blackjack</button>
+        </a>
+
+        <style>
+            #navbar {
+                background-color: white;
+                color: black;
+                width: 100;
+                padding: 50px;
+                display: flex;
+                flex-direction: row;
+            }
+
+            .navbar-item {
+                border: 1px solid;
+                border-radius: 2px;
+                border-color: #20b420;
+                background-color: white;
+                cursor: pointer;
+                margin-left: 60px;
+                padding: 10px;
+                scale: 1.35;
+                transition: 150ms;
+            }
+            .navbar-item:hover {
+                background-color: #20b420;
+                border-color: white;
+            }
+
+            #title {
+                scale: 2;
+            }
+
+            #home-btn {
+                margin-left: 500px;
+                scale: 1.35;
+            }
+        </style>
+    </div>
+    
 <div class="container" id="game">
     <div id="gameDisplay">
         <table id="outputTable">

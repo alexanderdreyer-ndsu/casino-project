@@ -1,6 +1,5 @@
 body {
     background-image: url("eugenia-vorontsova-promo-bg1.jpg");
-    transform: scale(0.7);
     background-repeat: no-repeat;
 }
 
@@ -131,6 +130,7 @@ body {
     border-radius: 25px;
     background-color: grey;
     padding: 40px;
+    transform: scale(0.7);
 }
 
 @keyframes spin {

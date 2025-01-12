@@ -18,17 +18,15 @@ class Shoe {
     }
 
     drawCard() {
-        const drawIndex = Math.floor(Math.random() * 52 * this.decks);
+        const drawIndex = Math.floor(Math.random() * this.shoe.length);
         const card = this.shoe[drawIndex];
 
-        if (card === null) {
-            this.drawCard();
-        }
+        this.removeCardFromDeck(card);
 
         return card;
     }
 
-    removeCard(card){
+    removeCardFromDeck(card){
         const cardIndex = this.shoe.indexOf(card);
         this.shoe.splice(cardIndex, 1);
     }
