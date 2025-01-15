@@ -285,6 +285,7 @@ function stay() {
     if (playerHand1.selected) {
         playerHand1.selected = false;
         playerHand2.selected = true;
+        doubleBtn.disabled = false;
         playerCardDisplay.style.backgroundColor = null;
         playerSplitCardDisplay.style.backgroundColor = 'limegreen';
     } else {
