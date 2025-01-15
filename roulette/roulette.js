@@ -66,17 +66,7 @@ function main() {
   let thisBet = 0;
   let balance = 100;
   let userBets = new Map();
-  let validStrings = [
-    "first12",
-    "second12",
-    "third12",
-    "evens",
-    "odds",
-    "red",
-    "black",
-    "high",
-    "low",
-  ];
+  let validStrings = ["first12", "second12", "third12", "evens", "odds", "red", "black", "high", "low"];
 
   balanceDisplay.innerText = balance;
   thisBetDisplay.innerText = thisBet;
@@ -92,10 +82,12 @@ function main() {
       } else if (userBets.has(cell.id)) {
         let currentBet = userBets.get(cell.id);
         userBets.set(cell.id, currentBet + chipSize);
+
         balance -= chipSize;
         thisBet += chipSize;
       } else if (!userBets.has(cell.id)) {
         userBets.set(cell.id, chipSize);
+
         balance -= chipSize;
         thisBet += chipSize;
       }
@@ -132,10 +124,15 @@ function main() {
     }
 
     let winnings = payout(userBets, output[0], output[1]);
+
     balance += winnings;
+
     userBets.clear();
+
     balanceDisplay.innerText = balance;
+
     thisBet = 0;
+    
     thisBetDisplay.innerText = thisBet;
   });
 }

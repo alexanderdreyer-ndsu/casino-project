@@ -1,19 +1,21 @@
 body{
+    /*
     background: radial-gradient(circle, #60cd8a, black);
+    */
 }
 
 .page{
     display: flex;
     border: none;
     border-radius: 15px;
-    padding: 50px;
-    color: white;
+    padding: 25px;
+    background-color: #aeaeae;
+    color: black;
     margin-top: 50px;
     margin-right: auto;
     margin-left: auto;
     margin-bottom: 50px;
     width: 500px;
-    height: 400px;
 }
 
 .game-info{
@@ -39,12 +41,11 @@ body{
     display: flex;
     flex-direction: column;
     margin-left: auto;
-
 }
 
 .game-btns{
     margin-bottom: 25px;
-    background-color:#a94cdc;
+    background-color:#f32318;
     padding: 15px;
     border: none;
     border-radius: 15px;
@@ -60,7 +61,7 @@ body{
     scale: 1.4;
 }
 .game-btns:disabled{
-    background-color: grey;
+    background-color: #808080;
 }
 
 #display-dealer-cards{
@@ -87,4 +88,8 @@ body{
     border: none;
     border-radius: 15px;
     padding: 20px;
+}
+
+#dealer-label{
+    margin-right: 20px;
 }

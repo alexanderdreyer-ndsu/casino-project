@@ -1,5 +1,5 @@
 body {
-    background-image: url("eugenia-vorontsova-promo-bg1.jpg");
+    /* background-image: url("eugenia-vorontsova-promo-bg1.jpg"); */
     background-repeat: no-repeat;
 }
 
@@ -10,7 +10,7 @@ body {
     border: none;
     border-radius: 25px;
     padding: 10px;
-    background-color: dodgerblue;
+    background-color: #f32318;
     color: white;
     font-weight: 700;
     transition: 150ms ease-in-out;
@@ -19,11 +19,11 @@ body {
 }
 .bettingBtns:hover{
     scale: 2;
-    background-color: #4aa4ff;
+    background-color: #ffe23b;
 }
 .bettingBtns:active{
     scale: 2.2;
-    background-color: aqua;
+    background-color: yellow;
 }
 
 .outputCells{
@@ -42,7 +42,7 @@ body {
     width: 825px;
     height: 200px;
     border-radius: 15px;
-    background-color: blueviolet;
+    background-color: white;
     margin-top: 50px;
     font-size: 110px;
     padding: 25px;
@@ -65,7 +65,7 @@ body {
 #spinBtn {
     border: none;
     border-radius: 15px;
-    background-color: gold;
+    background-color: #f32318;
     width: 70px;
     height: 200px;
     transition: 150ms ease-in-out;
@@ -126,21 +126,9 @@ body {
 }
 
 #game {
-    border: 4px solid;
+    border: none;
     border-radius: 25px;
-    background-color: grey;
+    background-color: #808080;
     padding: 40px;
     transform: scale(0.7);
 }
-
-@keyframes spin {
-    0%{
-        scale: 1.5;
-    }
-    50%{
-        transform: rotate(0);
-    }
-    100%{
-        transform: rotate(360deg);
-    }
-  }

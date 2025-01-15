@@ -13,11 +13,13 @@ function spin() {
 function printSpin(spunObjects) {
     const outputTable = document.getElementById("outputTable").getElementsByTagName('tbody')[0];
     outputTable.innerText = "";
+
     let outputRow = outputTable.insertRow();
 
     for (let i = 0; i < spunObjects.length; i++) {
         const newCell = outputRow.insertCell(i);
         newCell.className = "outputCells";
+
         setTimeout( () => {
             newCell.innerText = spunObjects[i];
         }, 1000);
@@ -26,24 +28,25 @@ function printSpin(spunObjects) {
 
 function payout(spunObjects, bet) {
     let payoutAmount = 0;
-    const occurranceMap = new Map();
+
+    const occurrances = new Map();
     
-    for (let item of spunObjects){
-        if (occurranceMap.has(item)){
-            occurranceMap.set(item, occurranceMap.get(item) + 1);
+    for (let item of spunObjects) {
+        if (occurrances.has(item)) {
+            occurrances.set(item, occurrances.get(item) + 1);
         }
         else {
-            occurranceMap.set(item, 1);
+            occurrances.set(item, 1);
         }
     }
 
-    for (let [item, count] of occurranceMap.entries()){
-        if (count > 2){
+    for (let [item, count] of occurrances.entries()) {
+        if (count > 2) {
             payoutAmount += bet * (count * 3);
         }
     }
     
-    return { payoutAmount, occurranceMap };
+    return { payoutAmount, occurranceMap: occurrances };
 }
 
 function main() {
@@ -52,6 +55,7 @@ function main() {
     const balanceOutput = document.getElementById("balanceOutput");
     const betDisplay = document.getElementById("betDisplay");
     const prevWinDisplay = document.getElementById("prevWinDisplay");
+
     let balance = 500;
     let bet = 0;
     let biggestWin = 0;
@@ -60,18 +64,15 @@ function main() {
     betDisplay.innerText = bet;
     prevWinDisplay.innerText = biggestWin;
 
-    for (let btn of bettingBtns){
+    for (let btn of bettingBtns) {
         btn.addEventListener("click", () => {
             bet += parseInt(btn.id);
 
             if (btn.id === "maxBetBtn") {
                 bet = 100;
-            }
-
-            if (bet < 0) {
+            } else if (bet < 0) {
                 bet = 0;
-            }
-            if (bet > 100) {
+            } else if (bet > 100) {
                 bet = 100;
             }
 
@@ -90,9 +91,9 @@ function main() {
             window.alert("Insufficient Funds");
         }
 
-        const { payoutAmount, occurranceMap } = payout(spunObjects, bet);
+        const { payoutAmount, occurranceMap: occurrances } = payout(spunObjects, bet);
 
-        if (payoutAmount > biggestWin){
+        if (payoutAmount > biggestWin) {
             biggestWin = payoutAmount;
         }
 
@@ -108,18 +109,6 @@ function main() {
             balanceOutput.innerText = balance.toString();
             prevWinDisplay.innerText = biggestWin.toString();
         }, 1000);
-
-        console.log(occurranceMap);
-        for (const cell of cells) {
-            if (occurranceMap.get(cell) > 2) {
-                cell.style.animation = "none";
-                void cell.offsetWidth;
-
-                setTimeout(() => {
-                    cell.style.animation = "spin 0.5s";
-                }, 10);
-            }
-        }
     });
 }
 
