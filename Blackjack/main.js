@@ -135,8 +135,6 @@ function calculateWinner() {
         let outputString;
 
         //fix this so it builds a string not hardcode
-        //this is just counting how far away the score is from 21
-        //0 > -2 this means busting by 2 is better than 21
         if (dealerScore > playerScore && dealerScore > player2Score) {
             endGame();
             window.alert("Dealer Wins Both");
@@ -203,6 +201,10 @@ function reduceHandAces(hand) {
 function runDealerTurn() {
     disableButtons();
 
+    if (dealerHand.count === 22) {
+        reduceHandAces(dealerHand);
+    }
+    
     while (dealerHand.count < 17) {
         drawCard(dealerHand);
         reduceHandAces(dealerHand);
