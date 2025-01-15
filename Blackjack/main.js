@@ -128,10 +128,10 @@ function splitHand() {
 function calculateWinner() {
     const gameIsSplit = playerHand1.selected || playerHand2.selected;
     const dealerScore = dealerHand.count <= 21 ? dealerHand.count : 0;
-    const playerScore = playerHand1.count <= 21 ? playerHand1.count : 0;
+    const playerScore = playerHand1.count <= 21 ? playerHand1.count : -1;
     
     if (gameIsSplit) {
-        const player2Score = playerHand2.count <= 21 ? playerHand2.count : 0;
+        const player2Score = playerHand2.count <= 21 ? playerHand2.count : -1;
         let outputString;
 
         //fix this so it builds a string not hardcode
