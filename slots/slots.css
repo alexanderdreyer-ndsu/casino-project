@@ -1,5 +1,5 @@
 body {
-    /* background-image: url("eugenia-vorontsova-promo-bg1.jpg"); */
+    background-image: url("eugenia-vorontsova-promo-bg1.jpg");
     background-repeat: no-repeat;
 }
 
@@ -10,7 +10,7 @@ body {
     border: none;
     border-radius: 25px;
     padding: 10px;
-    background-color: #f32318;
+    background-color: dodgerblue;
     color: white;
     font-weight: 700;
     transition: 150ms ease-in-out;
@@ -42,7 +42,7 @@ body {
     width: 825px;
     height: 200px;
     border-radius: 15px;
-    background-color: white;
+    background-color: #b400b4;
     margin-top: 50px;
     font-size: 110px;
     padding: 25px;
@@ -65,7 +65,7 @@ body {
 #spinBtn {
     border: none;
     border-radius: 15px;
-    background-color: #f32318;
+    background-color: #f3c018;
     width: 70px;
     height: 200px;
     transition: 150ms ease-in-out;
