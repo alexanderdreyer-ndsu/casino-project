@@ -1,173 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
     <title>Roulette</title>
     <link rel="stylesheet" href="roulette.css" />
-  </head>
-  <body id="body">
-    
+</head>
+
+<body id="body">
+
     <div id="navbar">
-      <a href="../Home/home.html">
-          <button class="navbar-item" id="title">Casino.com</button>
-      </a>
+        <a href="../Home/home.html">
+            <button class="navbar-item" id="title">Casino.com</button>
+        </a>
 
-      <a href="../Home/home.html">
-          <button class="navbar-item" id="home-btn">Home</button>
-      </a>
+        <a href="../Home/home.html">
+            <button class="navbar-item" id="home-btn">Home</button>
+        </a>
 
-      <a href="../roulette/roulette.html">
-          <button class="navbar-item" id="roulette-btn">Roulette</button>
-      </a>
+        <a href="../roulette/roulette.html">
+            <button class="navbar-item" id="roulette-btn">Roulette</button>
+        </a>
 
-      <a href="../slots/slots.html">
-          <button class="navbar-item" id="slots-btn">Slots</button>
-      </a>
+        <a href="../slots/slots.html">
+            <button class="navbar-item" id="slots-btn">Slots</button>
+        </a>
 
-      <a href="../Blackjack/blackjack.html">
-          <button class="navbar-item" id="blackjack-btn">Blackjack</button>
-      </a>
+        <a href="../Blackjack/blackjack.html">
+            <button class="navbar-item" id="blackjack-btn">Blackjack</button>
+        </a>
 
-      <style>
-          #navbar {
-              background-color: white;
-              color: black;
-              width: 100;
-              padding: 50px;
-              display: flex;
-              flex-direction: row;
-          }
+        <style>
+            #navbar {
+                background-color: white;
+                color: black;
+                width: 100;
+                padding: 50px;
+                display: flex;
+                flex-direction: row;
+            }
 
-          .navbar-item {
-              border: 1px solid;
-              border-radius: 2px;
-              border-color: #f32318;
-              padding: 15px;
-              background-color: white;
-              cursor: pointer;
-              margin-left: 60px;
-              padding: 10px;
-              scale: 1.35;
-              transition: 150ms;
-          }
-          .navbar-item:hover {
-              background-color: #f32318;
-              padding: 15px;
-              border-color: white;
-          }
+            .navbar-item {
+                border: 1px solid;
+                border-radius: 2px;
+                border-color: #f32318;
+                padding: 15px;
+                background-color: white;
+                cursor: pointer;
+                margin-left: 60px;
+                padding: 10px;
+                scale: 1.35;
+                transition: 150ms;
+            }
 
-          #title {
-              scale: 2;
-          }
+            .navbar-item:hover {
+                background-color: #f32318;
+                padding: 15px;
+                border-color: white;
+            }
 
-          #home-btn {
-              margin-left: 500px;
-              scale: 1.35;
-          }
-      </style>
-  </div>
+            #title {
+                scale: 2;
+            }
+
+            #home-btn {
+                margin-left: 500px;
+                scale: 1.35;
+            }
+        </style>
+    </div>
 
     <div id="rouletteHeader">
-      <h1>Roulette</h1>
+        <h1>Roulette</h1>
     </div>
 
     <div id="gameInfoDiv">
-      <h5 id="balanceHeader">Balance: $</h5>
-      <h5 id="balanceDisplay"></h5>
-      <h5 id="thisBetHeader">Current bet: $</h5>
-      <h5 id="thisBetDisplay"></h5>
+        <h5 id="balanceHeader">Balance: $</h5>
+        <h5 id="balanceDisplay"></h5>
     </div>
 
-    <div id="tableDiv">
-      <div id="spinOutputDiv">
-        <h1 id="spinOutput"></h1>
-      </div>
-      <table id="bettingTable">
-        <tr>
-          <td></td>
-          <td id="3" class="redCell">3</td>
-          <td id="6" class="blackCell">6</td>
-          <td id="9" class="redCell">9</td>
-          <td id="12" class="redCell">12</td>
-          <td id="15" class="blackCell">15</td>
-          <td id="18" class="redCell">18</td>
-          <td id="21" class="redCell">21</td>
-          <td id="24" class="blackCell">24</td>
-          <td id="27" class="redCell">27</td>
-          <td id="30" class="redCell">30</td>
-          <td id="33" class="blackCell">33</td>
-          <td id="36" class="redCell">36</td>
-        </tr>
-        <tr>
-          <td id="zero">0</td>
-          <td id="2" class="blackCell">2</td>
-          <td id="5" class="redCell">5</td>
-          <td id="8" class="blackCell">8</td>
-          <td id="11" class="blackCell">11</td>
-          <td id="14" class="redCell">14</td>
-          <td id="17" class="blackCell">17</td>
-          <td id="20" class="blackCell">20</td>
-          <td id="23" class="redCell">23</td>
-          <td id="26" class="blackCell">26</td>
-          <td id="29" class="blackCell">29</td>
-          <td id="32" class="redCell">32</td>
-          <td id="35" class="blackCell">35</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td id="1" class="redCell">1</td>
-          <td id="4" class="blackCell">4</td>
-          <td id="7" class="redCell">7</td>
-          <td id="10" class="blackCell">10</td>
-          <td id="13" class="blackCell">13</td>
-          <td id="16" class="redCell">16</td>
-          <td id="19" class="redCell">19</td>
-          <td id="22" class="blackCell">22</td>
-          <td id="25" class="redCell">25</td>
-          <td id="28" class="blackCell">28</td>
-          <td id="31" class="blackCell">31</td>
-          <td id="34" class="redCell">34</td>
-        </tr>
-      </table>
-      <table id="secondaryBets">
-        <tr>
-          <td id="first12" class="twelvesCells">1/12</td>
-          <td id="second12" class="twelvesCells">2/12</td>
-          <td id="third12" class="twelvesCells">3/12</td>
-        </tr>
-      </table>
-      <table id="secondaryBets2">
-        <tr>
-          <td id="low" class="defaultCell">1 to 18</td>
-          <td id="evens" class="defaultCell">Evens</td>
-          <td id="red">Red</td>
-          <td id="black">Black</td>
-          <td id="odds" class="defaultCell">Odds</td>
-          <td id="high" class="defaultCell">19 to 36</td>
-        </tr>
-      </table>
-    </div>
+    <div id="current-bets-label-and-table">
+        <div id="current-bets">
+            <h2 id="current-bet-label">Current Bet</h2>
+            <button id="clear-bet">Clear Bet</button>
+            <p id="current-bets-paragraph"></p>
+        </div>
+        
+        <div id="tableDiv">
+            <div id="spinOutputDiv">
+                <h1 id="spinOutput"></h1>
+            </div>
 
-    <div id="buttonsDiv">
-      <button id="1" class="chips" draggable="true">1</button>
-      <button id="5" class="chips" draggable="true">5</button>
-      <button id="10" class="chips" draggable="true">10</button>
-      <button id="25" class="chips" draggable="true">25</button>
-      <button id="spin">Spin</button>
+            <table id="bettingTable">
+                <tr>
+                    <td></td>
+                    <td id="3" class="redCell">3</td>
+                    <td id="6" class="blackCell">6</td>
+                    <td id="9" class="redCell">9</td>
+                    <td id="12" class="redCell">12</td>
+                    <td id="15" class="blackCell">15</td>
+                    <td id="18" class="redCell">18</td>
+                    <td id="21" class="redCell">21</td>
+                    <td id="24" class="blackCell">24</td>
+                    <td id="27" class="redCell">27</td>
+                    <td id="30" class="redCell">30</td>
+                    <td id="33" class="blackCell">33</td>
+                    <td id="36" class="redCell">36</td>
+                </tr>
+                <tr>
+                    <td id="zero">0</td>
+                    <td id="2" class="blackCell">2</td>
+                    <td id="5" class="redCell">5</td>
+                    <td id="8" class="blackCell">8</td>
+                    <td id="11" class="blackCell">11</td>
+                    <td id="14" class="redCell">14</td>
+                    <td id="17" class="blackCell">17</td>
+                    <td id="20" class="blackCell">20</td>
+                    <td id="23" class="redCell">23</td>
+                    <td id="26" class="blackCell">26</td>
+                    <td id="29" class="blackCell">29</td>
+                    <td id="32" class="redCell">32</td>
+                    <td id="35" class="blackCell">35</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td id="1" class="redCell">1</td>
+                    <td id="4" class="blackCell">4</td>
+                    <td id="7" class="redCell">7</td>
+                    <td id="10" class="blackCell">10</td>
+                    <td id="13" class="blackCell">13</td>
+                    <td id="16" class="redCell">16</td>
+                    <td id="19" class="redCell">19</td>
+                    <td id="22" class="blackCell">22</td>
+                    <td id="25" class="redCell">25</td>
+                    <td id="28" class="blackCell">28</td>
+                    <td id="31" class="blackCell">31</td>
+                    <td id="34" class="redCell">34</td>
+                </tr>
+            </table>
+            <table id="secondaryBets">
+                <tr>
+                    <td id="first12" class="twelvesCells">1/12</td>
+                    <td id="second12" class="twelvesCells">2/12</td>
+                    <td id="third12" class="twelvesCells">3/12</td>
+                </tr>
+            </table>
+            <table id="secondaryBets2">
+                <tr>
+                    <td id="low" class="defaultCell">1 to 18</td>
+                    <td id="evens" class="defaultCell">Evens</td>
+                    <td id="red">Red</td>
+                    <td id="black">Black</td>
+                    <td id="odds" class="defaultCell">Odds</td>
+                    <td id="high" class="defaultCell">19 to 36</td>
+                </tr>
+            </table>
+
+            <div id="buttonsDiv">
+                <button id="1" class="chips" draggable="true">1</button>
+                <button id="5" class="chips" draggable="true">5</button>
+                <button id="10" class="chips" draggable="true">10</button>
+                <button id="25" class="chips" draggable="true">25</button>
+            </div>
+        </div>
+
+        <div id="timer-information">
+            <h2 id="timer">25</h2>
+        </div>
     </div>
 
     <script src="roulette.js"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
 </html>
