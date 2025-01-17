@@ -97,6 +97,7 @@ function spin() {
 
 function updateTimer() {
     if (timeUntilSpin === 0) {
+        spin();
         timeUntilSpin = 24;
     } else {
         timeUntilSpin--;
@@ -142,7 +143,7 @@ function main() {
                 thisBet += chipSize;
             }
 
-            if (chipSize !== 0 && !balanceLessThanChipSize) currentBets.innerText += "\n" + cell.id.toString() + " x $" + chipSize.toString();
+            if (chipSize !== 0 && !balanceLessThanChipSize) currentBets.innerText += "\n" + cell.id + " x $" + chipSize.toString();
 
             balanceDisplay.innerText = balance;
         });
@@ -161,7 +162,6 @@ function main() {
 
     clearBetButton.addEventListener("click", clearBet);
 
-    setInterval(spin, 25000);
     setInterval(updateTimer, 1000);
 }
 
