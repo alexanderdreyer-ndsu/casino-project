@@ -5,6 +5,7 @@ const balanceDisplay = document.getElementById("balanceDisplay");
 const clearBetButton = document.getElementById("clear-bet");
 let currentBets = document.getElementById("current-bets-paragraph");
 let timer = document.getElementById("timer");
+let betsAvailableLabel = document.getElementById("bets-available-label");
 
 const validStrings = ["first12", "second12", "third12", "evens", "odds", "red", "black", "high", "low"];
 
@@ -13,6 +14,7 @@ let thisBet = 0;
 let balance = 100;
 let userBets = new Map();
 let timeUntilSpin = 25;
+let betsClosed;
 
 function generateSpin() {
     const spin = Math.floor(Math.random() * 37);
@@ -103,6 +105,12 @@ function updateTimer() {
         timeUntilSpin--;
     }
 
+    betsClosed = timeUntilSpin <= 10;
+
+    const statusText = betsClosed ? "Bets Closed" : "Bets Open";
+
+    betsAvailableLabel.innerText = statusText;
+
     timer.innerText = timeUntilSpin;
 }
 
@@ -117,6 +125,38 @@ function clearBet() {
     currentBets.innerText = "";
 }
 
+function addBet(cell) {
+    const balanceLessThanChipSize = balance < chipSize;
+
+    if (balanceLessThanChipSize) {
+        window.alert("Insufficient funds!");
+    } else if (userBets.has(cell.id)) {
+        let currentBet = userBets.get(cell.id);
+        userBets.set(cell.id, currentBet + chipSize);
+
+        balance -= chipSize;
+        thisBet += chipSize;
+    } else if (!userBets.has(cell.id)) {
+        userBets.set(cell.id, chipSize);
+
+        balance -= chipSize;
+        thisBet += chipSize;
+    }
+
+    if (chipSize !== 0 && !balanceLessThanChipSize) currentBets.innerText += "\n" + cell.id + " x $" + chipSize.toString();
+
+    balanceDisplay.innerText = balance;
+}
+
+function selectChip(chip) {
+    for (let chipResetColor of chips) {
+        chipResetColor.style.border = "none";
+    }
+
+    chipSize = parseInt(chip.id);
+    chip.style.border = "3px solid";
+}
+
 function main() {
     balanceDisplay.innerText = balance;
 
@@ -126,37 +166,13 @@ function main() {
 
     for (let cell of cells) {
         cell.addEventListener("click", () => {
-            const balanceLessThanChipSize = balance < chipSize;
-
-            if (balanceLessThanChipSize) {
-                window.alert("Insufficient funds!");
-            } else if (userBets.has(cell.id)) {
-                let currentBet = userBets.get(cell.id);
-                userBets.set(cell.id, currentBet + chipSize);
-
-                balance -= chipSize;
-                thisBet += chipSize;
-            } else if (!userBets.has(cell.id)) {
-                userBets.set(cell.id, chipSize);
-
-                balance -= chipSize;
-                thisBet += chipSize;
-            }
-
-            if (chipSize !== 0 && !balanceLessThanChipSize) currentBets.innerText += "\n" + cell.id + " x $" + chipSize.toString();
-
-            balanceDisplay.innerText = balance;
+            betsClosed ? window.alert("Bets are closed") : addBet(cell);
         });
     }
 
     for (let chip of chips) {
         chip.addEventListener("click", () => {
-            for (let chipReset of chips) {
-                chipReset.style.border = "none";
-            }
-
-            chipSize = parseInt(chip.id);
-            chip.style.border = "3px solid";
+            selectChip(chip);
         });
     }
 
