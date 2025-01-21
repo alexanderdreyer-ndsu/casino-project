@@ -258,6 +258,7 @@ function double() {
 
     if (!isGameSplit) {
         drawCard(playerHand1);
+        reduceHandAces(playerHand1);
         runDealerTurn();
     } else if (isGameSplit && playerHand1.selected) {
         drawCard(playerHand1);
@@ -269,6 +270,7 @@ function double() {
         playerSplitCardDisplay.style.backgroundColor = 'limegreen';
     } else if (isGameSplit && playerHand2.selected) {
         drawCard(playerHand2);
+        reduceHandAces(playerHand2);
         runDealerTurn();
     }
 
