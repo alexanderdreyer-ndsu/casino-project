@@ -3,6 +3,9 @@ const chips = document.getElementsByClassName("chips");
 const spinButton = document.getElementById("spin");
 const balanceDisplay = document.getElementById("balanceDisplay");
 const clearBetButton = document.getElementById("clear-bet");
+const spinOutput = document.getElementById("spinOutput");
+const spinOutputDiv = document.getElementById("spinOutputDiv");
+let previousNumbersDisplay = document.getElementById("previous-numbers");
 let currentBets = document.getElementById("current-bets-paragraph");
 let timer = document.getElementById("timer");
 let betsAvailableLabel = document.getElementById("bets-available-label");
@@ -23,25 +26,34 @@ function generateSpin() {
     if (spin === 0) {
         color = "limegreen";
     } else if (spin % 2 === 0) {
-        if ((spin >= 1 && spin <= 10) || (spin >= 19 && spin <= 28)) {
-            color = "Black";
-        } else {
-            color = "Red";
-        }
+        color = (spin >= 1 && spin <= 10) || (spin >= 19 && spin <= 28) ? "Black" : "Red";
     } else if (spin % 2 === 1) {
-        if ((spin >= 11 && spin <= 18) || (spin >= 29 && spin <= 36)) {
-            color = "Black";
-        } else {
-            color = "Red";
-        }
+        color = (spin >= 11 && spin <= 18) || (spin >= 29 && spin <= 36) ? "Black" : "Red";
     }
 
-    let spinOutput = document.getElementById("spinOutput");
-    let spinOutputDiv = document.getElementById("spinOutputDiv");
-    spinOutput.innerText = spin.toString();
-    spinOutputDiv.style.backgroundColor = color.toLowerCase().toString();
+    addToPreviousSpins(spin, color);
 
     return [spin, color];
+}
+
+function addToPreviousSpins(num, color) {
+    const newNumber = document.createElement("div");
+    const newNumberText = document.createElement("h1");
+
+    const numberOfElements = previousNumbersDisplay.children.length;
+
+    if (numberOfElements === 11) {
+        previousNumbersDisplay.removeChild(previousNumbersDisplay.lastChild);
+    }
+
+    newNumber.classList.add("spin-output");
+    newNumber.appendChild(newNumberText);
+
+    newNumberText.innerText = num;
+
+    newNumber.style.backgroundColor = color.toLowerCase().toString();
+
+    previousNumbersDisplay.insertBefore(newNumber, previousNumbersDisplay.firstChild);
 }
 
 function payout(inputMap, spin, color) {
@@ -75,21 +87,21 @@ function payout(inputMap, spin, color) {
 }
 
 function spin() {
-    let output = generateSpin();
+    let spinNumberAndColor = generateSpin();
 
     for (let cell of cells) {
-        if (parseInt(cell.id) === output[0]) {
+        if (parseInt(cell.id) === spinNumberAndColor[0]) {
             cell.style.animation = "none";
             void cell.offsetWidth;
             cell.style.animation = "flash 1.5s ease-in-out";
-        } else if (cell.id === "zero" && output[0] === 0) {
+        } else if (cell.id === "zero" && spinNumberAndColor[0] === 0) {
             cell.style.animation = "none";
             void cell.offsetWidth;
             cell.style.animation = "flash 1.5s ease-in-out";
         }
     }
 
-    let winnings = payout(userBets, output[0], output[1]);
+    let winnings = payout(userBets, spinNumberAndColor[0], spinNumberAndColor[1]);
     balance += winnings;
     userBets.clear();
     balanceDisplay.innerText = balance;
@@ -106,11 +118,8 @@ function updateTimer() {
     }
 
     betsClosed = timeUntilSpin <= 10;
-
     const statusText = betsClosed ? "Bets Closed" : "Bets Open";
-
     betsAvailableLabel.innerText = statusText;
-
     timer.innerText = timeUntilSpin;
 }
 
