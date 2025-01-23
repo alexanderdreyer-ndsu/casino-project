@@ -48,14 +48,14 @@ body{
     border-radius: 15px;
     color: white;
     font-weight: bold;
-    transition: 200ms;
+    transition: 150ms;
 }
 .game-btns:hover{
-    scale: 1.2;
+    scale: 1.3;
     cursor: pointer;
 }
 .game-btns:active{
-    scale: 1.4;
+    scale: 1.5;
 }
 .game-btns:disabled{
     background-color: #808080;

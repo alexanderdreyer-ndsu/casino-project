@@ -42,7 +42,7 @@ function addToPreviousSpins(num, color) {
 
     const numberOfElements = previousNumbersDisplay.children.length;
 
-    if (numberOfElements === 11) {
+    if (numberOfElements === 10) {
         previousNumbersDisplay.removeChild(previousNumbersDisplay.lastChild);
     }
 
@@ -171,6 +171,8 @@ function main() {
 
     for (let i = 0; i < 37; i++) {
         validStrings.push(i.toString());
+        
+        if (i < 10) generateSpin();
     }
 
     for (let cell of cells) {
