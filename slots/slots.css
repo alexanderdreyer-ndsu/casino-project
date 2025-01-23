@@ -28,9 +28,9 @@ body {
 }
 
 .outputCells{
-    border: none;
     border-radius: 25px;
-    animation: none;
+    text-align: center;
+    width: max-content;
 }
 
 #gameDisplay {
@@ -48,8 +48,12 @@ body {
     font-size: 110px;
     padding: 25px;
     margin-bottom: 50px;
-    display: flex;
-    justify-content: left;
+    display: inline-block
+}
+
+#outputTable {
+    table-layout: fixed;
+    width: 100%;
 }
 
 #balanceDiv {
