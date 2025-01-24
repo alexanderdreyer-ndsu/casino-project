@@ -16,6 +16,11 @@
             <button class="navbar-item" id="title">Casino.com</button>
         </a>
 
+        <div id="balance-navbar-item">
+            <h3 id="balance-label">$</h3>
+            <h3 id="balance-output"></h3>
+        </div>
+
         <a href="../Home/home.html">
             <button class="navbar-item" id="home-btn">Home</button>
         </a>
@@ -40,33 +45,56 @@
                 padding: 50px;
                 display: flex;
                 flex-direction: row;
+                justify-content: center;
+                height: fit-content;
             }
 
             .navbar-item {
                 border: 1px solid;
                 border-radius: 2px;
                 border-color: #f32318;
-                padding: 15px;
+                padding: 12px;
                 background-color: white;
                 cursor: pointer;
                 margin-left: 60px;
-                padding: 10px;
-                scale: 1.35;
+                scale: 1.1;
                 transition: 150ms;
             }
             .navbar-item:hover {
                 background-color: #f32318;
-                padding: 15px;
                 border-color: white;
             }
 
             #title {
-                scale: 2;
+                scale: 1.5;
+                margin-right: 150px;
             }
 
             #home-btn {
-                margin-left: 500px;
-                scale: 1.35;
+                margin-left: 100px;
+                scale: 1.1;
+            }
+
+            #balance-navbar-item {
+                display: flex;
+                flex-direction: row;
+                height: 65px;
+                width: 200px;
+                border: none;
+                border-radius: 100px;
+                color: white;
+                font-weight: bold;
+                scale: 0.75;
+                background-color:#f32318;
+                padding: 15px; 
+            }
+
+            #balance-label {
+                width: auto;
+            }
+            
+            #balance-output {
+                margin-left: 50px;
             }
         </style>
     </div>
@@ -82,10 +110,6 @@
 
         <div id="lowerDiv">
             <div id="balanceAndPrevious">
-                <div id="balanceDiv">
-                    <h3 id="balanceLabel">Balance: $</h3>
-                    <h3 id="balanceOutput"></h3>
-                </div>
 
                 <div id="previousWin">
                     <h3 id="prevWinLabel">Previous win: $</h3>

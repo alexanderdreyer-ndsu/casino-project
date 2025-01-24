@@ -40,8 +40,8 @@ body {
 
 #tableOutput {
     border: none;
-    width: 825px;
-    height: 200px;
+    width: 820px;
+    height: 560px;
     border-radius: 15px;
     background-color: #b400b4;
     margin-top: 50px;
@@ -54,12 +54,6 @@ body {
 #outputTable {
     table-layout: fixed;
     width: 100%;
-}
-
-#balanceDiv {
-    display: flex;
-    border: none;
-    justify-content: left;
 }
 
 #bettingInput {
@@ -106,23 +100,8 @@ body {
     margin-left: 10px;
 }
 
-#balanceAndPrevious {
-    display: flex;
-    justify-content: left;
-    margin-bottom: 30px;
-}
-
-#balanceOutput {
-    margin-right: 300px;
-    color: white;
-}
-
 #previousWin {
     display: flex;
-    color: white;
-}
-
-#balanceLabel {
     color: white;
 }
 
@@ -133,7 +112,7 @@ body {
 #game {
     border: none;
     border-radius: 25px;
+    width: fit-content;
     background-color: #808080;
     padding: 40px;
-    transform: scale(0.7);
 }

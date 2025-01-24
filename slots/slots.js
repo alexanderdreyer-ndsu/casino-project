@@ -1,6 +1,6 @@
 const spinbtn = document.getElementById("spinBtn");
 const bettingBtns = document.getElementsByClassName("bettingBtns");
-const balanceOutput = document.getElementById("balanceOutput");
+const balanceOutput = document.getElementById("balance-output");
 const betDisplay = document.getElementById("betDisplay");
 const prevWinDisplay = document.getElementById("prevWinDisplay");
 const outputTable = document.getElementById("outputTable").getElementsByTagName('tbody')[0];
@@ -66,7 +66,7 @@ function payout(spunObjects, bet) {
     let payoutAmount = 0;
 
     const multiplier = 1.75;
-    const amountOfOccurrancesToWin = 5;
+    const amountOfOccurrancesToWin = 4;
 
     const occurrances = new Map();
     
@@ -109,6 +109,8 @@ function spin() {
 
     setTimeout(() => {
         balance += payoutAmount;
+        console.log(balance)
+        console.log(payoutAmount)
         balanceOutput.innerText = balance.toString();
         prevWinDisplay.innerText = biggestWin.toString();
     }, 5500);
