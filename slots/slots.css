@@ -60,7 +60,6 @@ body {
     cursor: pointer;
     width: 200px;
     height: 50px;
-    margin-left: 40px;
 }
 #spinBtn:hover{
     scale: 1.2;
@@ -89,6 +88,7 @@ body {
 
 #modify-bet-div {
     display: flex;
+    justify-content: center;
 }
 
 #previous-win-div {
@@ -98,8 +98,6 @@ body {
     padding: 5px;
     color: white;
     background-color: #00af32;
-    margin-left: 25px;
-    margin-right: 25px;
     border-radius: 15px;
 }
 
@@ -109,8 +107,9 @@ body {
     margin-right: auto;
     margin-top: 20px;
     margin-bottom: 20px;
-    width: 1000px;
-    justify-content: center;
+    width: 900px;
+    justify-content: space-between;
+
 }
 
 #game {

@@ -27,8 +27,7 @@ function drawFaceDownCard() {
     dealerHand.addToHand(faceDownCard);
 
     faceDownCardImage.src = "Images/backOfCard.jpeg";
-    faceDownCardImage.style.height = '70px';
-    faceDownCardImage.style.width = '50px';
+    faceDownCardImage.className = "game-cards";
 
     dealerCardDisplay.appendChild(faceDownCardImage);
     
@@ -41,17 +40,13 @@ function drawCard(hand) {
 
     const img = document.createElement('img');
     img.src = card.imagePath;
-    img.style.height = '70px';
-    img.style.width = '50px';
-    img.style.marginLeft = '5px';
-    img.style.marginBottom = '5px';
+    img.className = "game-cards";
 
     hand.cardDisplay.appendChild(img);
 }
 
 function endGame() {
     faceDownCardImage.src = faceDownCard.imagePath;
-    faceDownCardImage.style.marginLeft = '5px';
 
     playBtn.disabled = false;
 
@@ -112,10 +107,7 @@ function splitHand() {
 
     const img = document.createElement('img');
     img.src = splitCard.imagePath;
-    img.style.height = '70px';
-    img.style.width = '50px';
-    img.style.marginLeft = '5px';
-    img.style.marginBottom = '5px';
+    img.className = "game-cards";
 
     playerSplitCardDisplay.appendChild(img);
 
@@ -132,7 +124,6 @@ function calculateWinner() {
     
     if (gameIsSplit) {
         const player2Score = playerHand2.count <= 21 ? playerHand2.count : -1;
-        let outputString;
 
         //fix this so it builds a string not hardcode
         if (dealerScore > playerScore && dealerScore > player2Score) {

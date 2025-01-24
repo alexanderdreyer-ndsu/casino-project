@@ -2,46 +2,45 @@ body{
     background: radial-gradient(circle, forestgreen, black);
 }
 
-.page{
+.page-all{
     display: flex;
+    justify-content: space-between;
     border: none;
-    border-radius: 15px;
     padding: 25px;
     color: white;
-    margin-top: 50px;
-    margin-right: auto;
-    margin-left: auto;
-    margin-bottom: 50px;
-    width: 500px;
+    margin: auto;
+    width: 700px;
 }
 
 .game-info{
     display: flex;
     flex-direction: column;
-    margin-right: 275px;
+    justify-content: space-between;
+    height: 400px;
 }
 
 .dealer-cards{
     display: flex;
     flex-direction: row;
-    margin-bottom: 150px;
-    margin-right: 5px;
+    justify-content: space-between;
     width: fit-content;
 }
 
 .player-cards{
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    width: fit-content;
 }
 
-.player-btns{
+.player-control-btns{
     display: flex;
     flex-direction: column;
-    margin-left: auto;
+    justify-content: space-between;
+    height: 350px;
 }
 
 .game-btns{
-    margin-bottom: 25px;
     background-color:#ddc300;
     padding: 15px;
     border: none;
@@ -61,32 +60,36 @@ body{
     background-color: #808080;
 }
 
+.game-cards {
+    height: 70px;
+    width: 50px;
+    grid-row: span 5;
+    grid-column: span 7;
+}
+
 #display-dealer-cards{
     display: flex;
     flex-direction: row;
-    width: 100px;
-    margin-right: 5px;
+    justify-content: space-between;
+    gap: 0.5em;
+    margin-left: 10px;
 }
 
 #display-player-cards{
     display: flex;
     flex-direction: column;
-    width: 60px;
+    gap: 0.5em;
     border: none;
-    border-radius: 15px;
-    padding: 20px;
+    padding: 10px;
+    border-radius: 7px;
 }
 
 #display-player-split-cards{
     display: flex;
     flex-direction: column;
-    width: 60px;
-    margin-left: 15px;
+    gap: 0.5em;
     border: none;
-    border-radius: 15px;
-    padding: 20px;
-}
-
-#dealer-label{
-    margin-right: 20px;
+    padding: 10px;
+    border-radius: 7px;
+    margin-left: 40px;
 }
