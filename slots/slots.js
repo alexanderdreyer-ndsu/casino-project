@@ -103,7 +103,7 @@ function spin() {
 
     setTimeout(() => {
         spinbtn.disabled = false;
-    }, 5500);
+    }, 4100);
 
     printSpin(spunObjects);
 
