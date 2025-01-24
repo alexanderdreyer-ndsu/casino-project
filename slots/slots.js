@@ -7,11 +7,9 @@ const outputTable = document.getElementById("outputTable").getElementsByTagName(
 
 let balance = 500;
 let bet = 0;
-let biggestWin = 0;
 
 balanceOutput.innerText = balance;
 betDisplay.innerText = bet;
-prevWinDisplay.innerText = biggestWin;
 
 function generateSpin() {
     const objects = ['🏆', '💰', '🍊', '🍒', '💎', '🔔', '👑', '💸', '🧨', '🍉', '🍌', '🍀', '🍇', '🍎', '💤', '💲'];
@@ -47,10 +45,12 @@ function printColumn(iterator, listOfSpunObjects) {
 function printSpin(spunObjects) {
     outputTable.innerText = "";
 
+    const columnDelayInMilliseconds = 850;
+
     for (let i = 0; i < 5; i++) {
         setTimeout(() => {
             printColumn(i, spunObjects);
-        }, i * 1000);
+        }, i * columnDelayInMilliseconds);
     }
 }
 
@@ -64,10 +64,8 @@ function populateTable() {
 
 function payout(spunObjects, bet) {
     let payoutAmount = 0;
-
-    const multiplier = 1.75;
+    let multiplier = 1.0;
     const amountOfOccurrancesToWin = 4;
-
     const occurrances = new Map();
     
     for (let item of spunObjects) {
@@ -99,11 +97,9 @@ function spin() {
         window.alert("Insufficient Funds");
     }
 
-    if (payoutAmount > biggestWin) biggestWin = payoutAmount;
-
     setTimeout(() => {
         spinbtn.disabled = false;
-    }, 4100);
+    }, 4000);
 
     printSpin(spunObjects);
 
@@ -111,8 +107,8 @@ function spin() {
         balance += payoutAmount;
 
         balanceOutput.innerText = balance.toString();
-        prevWinDisplay.innerText = biggestWin.toString();
-    }, 5500);
+        prevWinDisplay.innerText = payoutAmount.toString();
+    }, 4000);
 } 
 
 function main() {
@@ -124,7 +120,7 @@ function main() {
 
     for (let btn of bettingBtns) {
         btn.addEventListener("click", () => {
-            if (btn.id === "maxBetBtn") {
+            if (btn.id === "max-bet-btn") {
                 bet = maxBet;
             } else {
                 btn.id === "add" ? bet += buttonIncrement : bet -= buttonIncrement;
