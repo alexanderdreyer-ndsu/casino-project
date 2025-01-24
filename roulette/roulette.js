@@ -177,7 +177,7 @@ function main() {
 
     for (let cell of cells) {
         cell.addEventListener("click", () => {
-            betsClosed ? window.alert("Bets are closed") : addBet(cell);
+            if(!betsClosed) addBet(cell);
         });
     }
 

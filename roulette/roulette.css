@@ -23,132 +23,134 @@
 .redCell {
     background-color: red;
     color: white;
-    border-radius: 15px;
     cursor: pointer;
     text-align: center;
     width: 50px;
     height: 55px;
     transition: 150ms ease;
-    animation-timing-function: ease-in-out;
+    animation-timing-function: 250ms ease-in-out;
+    border: 2px solid;
+    border-color: white;
 }
 .redCell:hover {
-    scale: 1.2;
+    background-color: #a40000;
 }
 .redCell:active {
     background-color: gold;
-    scale: 1.4;
+    scale: 1.2;
 }
 
 .blackCell {
     background-color: black;
     color: white;
-    border-radius: 15px;
+    border: 2px solid;
+    border-color: white;
     cursor: pointer;
     text-align: center;
     width: 50px;
     height: 55px;
     transition: 150ms ease;
-    animation-timing-function: ease-in-out
+    animation-timing-function: 250ms ease-in-out;
 }
 .blackCell:hover {
-    scale: 1.2;
+    background-color: #353535;
 }
 .blackCell:active {
     background-color: gold;
-    scale: 1.4;
+    scale: 1.2;
 }
 
 .defaultCell {
     background-color: forestgreen;
     color: white;
-    border-radius: 5px;
     cursor: pointer;
     text-align: center;
     width: 130px;
     height: 40px;
     font-size: large;
     transition: 150ms ease;
+    border: 2px solid;
+    border-color: white;
 }
 .defaultCell:hover {
     background-color: limegreen;
-    scale: 1.2;
 }
 .defaultCell:active {
     background-color: gold;
-    scale: 1.4;
+    scale: 1.2;
 }
 
 .twelvesCells {
     background-color: forestgreen;
     color: white;
-    border-radius: 5px;
     cursor: pointer;
     text-align: center;
     width: 177px;
     height: 40px;
     font-size: large;
     transition: 150ms ease;
+    border: 2px solid;
+    border-color: white;
 }
 .twelvesCells:hover {
     background-color: limegreen;
-    scale: 1.2;
 }
 .twelvesCells:active {
     background-color: gold;
-    scale: 1.4;
+    scale: 1.2;
 }
 
 #red {
     background-color: red;
     color: white;
-    border-radius: 15px;
     cursor: pointer;
     text-align: center;
     width: 75px;
     transition: 150ms ease;
+    border: 2px solid;
+    border-color: white;
 }
 #red:hover {
     background-color: limegreen;
-    scale: 1.2;
 }
 #red:active {
     background-color: gold;
-    scale: 1.4;
+    scale: 1.2;
 }
 
 #black {
     background-color: black;
     color: white;
-    border-radius: 15px;
     cursor: pointer;
     text-align: center;
     width: 75px;
     transition: 150ms ease;
+    border: 2px solid;
+    border-color: white;
 }
 #black:hover {
     background-color: limegreen;
-    scale: 1.2;
 }
 #black:active {
     background-color: gold;
-    scale: 1.4;
+    scale: 1.2;
 }
 
 #zero {
     background-color: limegreen;
     color: white;
-    border-radius: 15px;
+    border: 2px solid;
+    border-color: white;
     cursor: pointer;
     text-align: center;
     width: 50px;
     height: 55px;
     font-size: large;
     transition: 150ms ease;
-    animation-timing-function: ease-in-out
+    animation-timing-function: 200ms ease-in-out;
 }
 #zero:hover {
     background-color: lime;
-    scale: 1.1;
 }
 #zero:active {
     background-color: gold;
@@ -215,6 +217,8 @@
 #secondaryBets2 {
     margin-left: auto;
     margin-right: auto;
+    border: 2px solid;
+    border-color: white;
 }
 
 .spin-output {
@@ -241,6 +245,7 @@
 #current-bets-label-and-table{
     display: flex;
     flex-direction: row;
+    justify-content: space-evenly;
     margin-bottom: 50px;
     text-align: center;
 }
@@ -267,19 +272,19 @@
     width: 100px;
     background-color: goldenrod;
     color: white;
+    font-weight: bold;
     transition: 150ms;
 }
 #clear-bet:hover {
-    scale: 1.2;
+    background-color: #e3bd00;
 }
 #clear-bet:active {
     background-color: gold;
-    scale: 1.4;
+    scale: 1.2;
 }
 
 @keyframes flash {
     0% {
-        scale: 1.1;
     }
 
     50% {
@@ -287,6 +292,5 @@
     }
 
     100% {
-        scale: 1.2;
     }
 }
