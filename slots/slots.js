@@ -14,11 +14,11 @@ betDisplay.innerText = bet;
 prevWinDisplay.innerText = biggestWin;
 
 function generateSpin() {
-    const objects = ['🏆', '💰', '🍊', '🍒', '💎', '🔔', '👑', '💸', '🧨', '🍉', '🍌', '🍀', '🍇', '♥', '🍎', '💤', '💲'];
+    const objects = ['🏆', '💰', '🍊', '🍒', '💎', '🔔', '👑', '💸', '🧨', '🍉', '🍌', '🍀', '🍇', '🍎', '💤', '💲'];
     let spunObjects = [];
 
     for (let i = 0; i < 15; i++) {
-        let spin = Math.floor(Math.random() * 17);
+        let spin = Math.floor(Math.random() * 16);
 
         spunObjects.push(objects[spin]);
     }
@@ -109,8 +109,7 @@ function spin() {
 
     setTimeout(() => {
         balance += payoutAmount;
-        console.log(balance)
-        console.log(payoutAmount)
+
         balanceOutput.innerText = balance.toString();
         prevWinDisplay.innerText = biggestWin.toString();
     }, 5500);
@@ -119,19 +118,23 @@ function spin() {
 function main() {
     populateTable();
 
+    const maxBet = 50;
+
+    const buttonIncrement = 5;
+
     for (let btn of bettingBtns) {
         btn.addEventListener("click", () => {
             if (btn.id === "maxBetBtn") {
-                bet = 50;
+                bet = maxBet;
             } else {
-                btn.id === "add" ? bet += 5 : bet -= 5;
+                btn.id === "add" ? bet += buttonIncrement : bet -= buttonIncrement;
             }
             
             if (bet < 0) bet = 0;
             
-            if (bet > 100) bet = 100;
+            if (bet > maxBet) bet = maxBet;
 
-            betDisplay.innerText = bet;
+            betDisplay.innerText = "$" + bet;
         });
     }
 

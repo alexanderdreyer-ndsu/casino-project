@@ -42,11 +42,11 @@
                 background-color: white;
                 color: black;
                 width: 100;
-                padding: 50px;
+                padding: 20px;
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
-                height: 150px;
+                height: fit-content;
             }
 
             .navbar-item {
@@ -60,6 +60,7 @@
                 scale: 1.1;
                 transition: 150ms;
             }
+
             .navbar-item:hover {
                 background-color: #f32318;
                 border-color: white;
@@ -85,14 +86,14 @@
                 color: white;
                 font-weight: bold;
                 scale: 0.75;
-                background-color:#f32318;
-                padding: 15px; 
+                background-color: #f32318;
+                padding: 15px;
             }
 
             #balance-label {
                 width: auto;
             }
-            
+
             #balance-output {
                 margin-left: 50px;
             }
@@ -106,24 +107,20 @@
             </table>
         </div>
 
-        <div id="lowerDiv">
-            <div id="balanceAndPrevious">
-
-                <div id="previousWin">
-                    <h3 id="prevWinLabel">Previous win: $</h3>
-                    <h3 id="prevWinDisplay"></h3>
-                    <button id="spinBtn">Spin</button>
-                </div>
+        <div id="game-controls">
+            <div id="modify-bet-div">
+                <button id="subtract" class="bettingBtns">-</button>
+                <h3 id="betDisplay">$0</h3>
+                <button id="add" class="bettingBtns">+</button>
             </div>
 
-            <div id="betAndInputs">
-                <div id="bettingInput">
-                    <button id="subtract" class="bettingBtns">-</button>
-                    <h3 id="betDisplay">0</h3>
-                    <button id="add" class="bettingBtns">+</button>
-                    <button id="maxBetBtn" class="bettingBtns">Max Bet</button>
-                </div>
+            <div id="previous-win-div">
+                <h3 id="prevWinLabel">Previous win: $</h3>
+                <h3 id="prevWinDisplay"></h3>
             </div>
+
+            <button id="max-bet-btn" class="bettingBtns">Max Bet</button>
+            <button id="spinBtn">Spin</button>
         </div>
     </div>
 

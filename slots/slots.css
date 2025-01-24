@@ -1,36 +1,35 @@
 body {
-    background-image: url("eugenia-vorontsova-promo-bg1.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
+    background: linear-gradient(#2f0e98, black);
 }
 
 .bettingBtns{
-    width: auto;
-    margin-left: 20px;
-    margin-right: 20px;
+    width: 50px;
+    height: 50px;
     border: none;
-    border-radius: 25px;
+    border-radius: 50%;
     padding: 10px;
     background-color: dodgerblue;
     color: white;
-    font-weight: 700;
+    font-weight: 600;
     transition: 150ms ease-in-out;
-    height: auto;
-    scale: 1.4;
 }
 .bettingBtns:hover{
-    scale: 2;
+    scale: 1.3;
     background-color: #ffe23b;
 }
 .bettingBtns:active{
-    scale: 2.2;
+    scale: 1.4  ;
     background-color: yellow;
+}
+
+#max-bet-btn {
+    width: 100px;
+    border-radius: 15px;
+    height: 50px;
 }
 
 .outputCells{
     text-align: center;
-    border: 5px solid;
-    border-color: black;
 }
 
 #gameDisplay {
@@ -40,21 +39,15 @@ body {
 
 #tableOutput {
     border: none;
-    width: 765px;
+    width: 745px;
     height: 530px;
     border-radius: 15px;
-    background-color: #b400b4;
+    background: radial-gradient(circle, #a428c4, black);
     font-size: 100px;
     padding: 25px;
-    margin-bottom: 50px;
     display: inline-block;
     margin-left: auto;
     margin-right: auto;
-}
-
-#bettingInput {
-    display: flex;
-    justify-content: center;
 }
 
 #spinBtn {
@@ -65,31 +58,25 @@ body {
     color: white;
     font-weight: 700;
     cursor: pointer;
+    width: 200px;
+    height: 50px;
+    margin-left: 40px;
 }
 #spinBtn:hover{
-    scale: 1.3;
+    scale: 1.2;
     background-color: #ffe23b;
 }
 #spinBtn:active{
-    scale:1.5;
+    scale: 1.3;
     background-color: yellow;
 }
 
-#lowerDiv {
-    border: none;
-    padding: 50px;
-    margin-top: 20px;
-}
-
-#betAndInputs {
-    display: flex;
-    justify-content: space-between;
-}
-
 #betDisplay {
-    margin-right: 100px;
+    margin-left: 50px;
+    margin-right: 50px;
+    text-align: center;
     color: white;
-    margin-left: 10px;
+    width: 37px;
 }
 
 #previousWin {
@@ -97,13 +84,31 @@ body {
     color: white;
 }
 
-#betLabel {
+#modify-bet-div {
+    display: flex;
+}
+
+#previous-win-div {
+    display: flex;
+    width: 250px;
+    justify-content: center;
     color: white;
+    background-color: blue;
+    margin-left: 25px;
+    margin-right: 25px;
+    border-radius: 30px;
+}
+
+#game-controls {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 1000px;
+    justify-content: center;
 }
 
 #game {
-    border: none;
-    border-radius: 25px;
-    width: fit-content;
-    background-color: #808080;
+    margin-top: 20px;
 }
