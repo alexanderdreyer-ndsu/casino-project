@@ -12,11 +12,11 @@ balanceOutput.innerText = balance;
 betDisplay.innerText = bet;
 
 function generateSpin() {
-    const objects = ['🏆', '💰', '🍊', '🍒', '💎', '🔔', '👑', '💸', '🧨', '🍉', '🍌', '🍀', '🍇', '🍎', '💤', '💲'];
+    const objects = ['🏆', '💰', '🍊', '🍒', '💎', '🔔', '👑', '💸', '🧨', '🍉', '🍌', '🍀', '🍇', '🍎', '💲', '🥝', '❤️', '🎰', '🎲'];
     let spunObjects = [];
 
     for (let i = 0; i < 15; i++) {
-        let spin = Math.floor(Math.random() * 16);
+        let spin = Math.floor(Math.random() * objects.length);
 
         spunObjects.push(objects[spin]);
     }
@@ -33,9 +33,9 @@ function printColumn(iterator, listOfSpunObjects) {
     const newCell2 = secondOutputRow.insertCell(iterator);
     const newCell3 = thirdOutputRow.insertCell(iterator);
 
-    newCell.className = "outputCells";
-    newCell2.className = "outputCells";
-    newCell3.className = "outputCells";
+    newCell.className = "outputCells slideInTop";
+    newCell2.className = "outputCells slideInTop";
+    newCell3.className = "outputCells slideInTop";
 
     newCell.innerText = listOfSpunObjects[iterator];
     newCell2.innerText = listOfSpunObjects[iterator + 5];
@@ -45,7 +45,7 @@ function printColumn(iterator, listOfSpunObjects) {
 function printSpin(spunObjects) {
     outputTable.innerText = "";
 
-    const columnDelayInMilliseconds = 850;
+    const columnDelayInMilliseconds = 750;
 
     for (let i = 0; i < 5; i++) {
         setTimeout(() => {
@@ -63,9 +63,11 @@ function populateTable() {
 }
 
 function payout(spunObjects, bet) {
+    const cells = document.getElementsByClassName("outputCells");
+
     let payoutAmount = 0;
-    let multiplier = 1.0;
-    const amountOfOccurrancesToWin = 4;
+    let multiplier = 0.3;
+    const amountOfOccurrancesToWin = 3;
     const occurrances = new Map();
     
     for (let item of spunObjects) {
@@ -75,19 +77,23 @@ function payout(spunObjects, bet) {
     for (let [item, count] of occurrances.entries()) {
         if (count >= amountOfOccurrancesToWin) payoutAmount += bet * (count * multiplier);
     }
-    
-    return { payoutAmount, occurranceMap: occurrances };
+
+    for (let cell of cells) {
+        if (occurrances.get(cell.innerHTML.trim()) >= amountOfOccurrancesToWin) {
+            cell.className = "outputCells flashForWin";
+        }
+    }
+
+    return payoutAmount;
 }
 
 function spin() {
     spinbtn.disabled = true;
 
     balance -= bet;
-    balanceOutput.innerText = balance.toString();
+    balanceOutput.innerText = balance.toFixed(2);
 
     const spunObjects = generateSpin();
-
-    const { payoutAmount, occurranceMap: occurrances } = payout(spunObjects, bet);
 
     if ((balance - bet) < 0) {
         bet = 0;
@@ -104,12 +110,13 @@ function spin() {
     printSpin(spunObjects);
 
     setTimeout(() => {
+        const payoutAmount = payout(spunObjects, bet);
         balance += payoutAmount;
 
-        balanceOutput.innerText = balance.toString();
-        prevWinDisplay.innerText = payoutAmount.toString();
+        balanceOutput.innerText = balance.toFixed(2);
+        prevWinDisplay.innerText = payoutAmount.toFixed(2);
     }, 4000);
-} 
+}
 
 function main() {
     populateTable();

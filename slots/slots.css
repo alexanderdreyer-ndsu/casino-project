@@ -30,6 +30,7 @@ body {
 
 .outputCells{
     text-align: center;
+    color: white;
 }
 
 #gameDisplay {
@@ -48,6 +49,7 @@ body {
     display: inline-block;
     margin-left: auto;
     margin-right: auto;
+    overflow: hidden;
 }
 
 #spinBtn {
@@ -114,4 +116,43 @@ body {
 
 #game {
     margin-top: 20px;
+}
+
+.slideInTop {
+    animation: slideInTop 1s ease-in;
+}
+
+.flashForWin {
+    animation: flashForWin 1.5s ease-in-out;
+}
+
+@keyframes flashForWin {
+    40% {
+        transform: translateY(-20px);
+        background-color: #f3c018;
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInTop {
+    100%,
+    75%,
+    85% {
+        transform: translateY(0);
+    }
+
+    80% {
+        transform: translateY(-10px);
+    }
+
+    95% {
+        transform: translateY(-3px);
+    }
+
+    0% {
+        transform: translateY(-480px);
+    }
 }
