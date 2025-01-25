@@ -8,7 +8,7 @@ body{
     border: none;
     padding: 25px;
     color: white;
-    margin: auto;
+    margin: 50px auto;
     width: 700px;
 }
 
@@ -16,7 +16,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 400px;
+    min-height: 400px;
 }
 
 .dealer-cards{
@@ -31,13 +31,14 @@ body{
     flex-direction: row;
     justify-content: space-between;
     width: fit-content;
+    margin-top: 170px;
 }
 
 .player-control-btns{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 350px;
+    max-height: 350px;
 }
 
 .game-btns{
@@ -63,8 +64,6 @@ body{
 .game-cards {
     height: 70px;
     width: 50px;
-    grid-row: span 5;
-    grid-column: span 7;
 }
 
 #display-dealer-cards{
