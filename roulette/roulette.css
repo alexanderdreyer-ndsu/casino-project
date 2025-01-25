@@ -161,10 +161,10 @@
     animation-timing-function: 200ms ease-in-out;
 }
 .zero:hover {
-    background-color: lime;
+    background-color: hsl(120, 61%, 60%);
 }
 .zero:active {
-    background-color: hsl(120, 100%, 70%);
+    background-color: hsl(120, 61%, 70%);
 }
 
 #gameInfo {

@@ -71,13 +71,9 @@ function payout(inputMap, spin, color) {
             payout += inputMap.get(item) * 2;
         } else if (item === "Odds" && spin % 2 !== 0) {
             payout += inputMap.get(item) * 2;
-        } else if (item === "Red" && color == "Red") {
-            payout += inputMap.get(item) * 2;
-        } else if (item === "Black" && color == "Black") {
-            payout += inputMap.get(item) * 2;
-        } else if (item === "1 to 18" && spin > 18) {
-            payout += inputMap.get(item) * 2;
         } else if (item === "19 to 36" && spin <= 18) {
+            payout += inputMap.get(item) * 2;
+        } else if (item === color) {
             payout += inputMap.get(item) * 2;
         }
     }
@@ -88,15 +84,13 @@ function payout(inputMap, spin, color) {
 function spin() {
     let spinNumberAndColor = generateSpin();
 
-    for (let cell of cells) {
+    const gameCells = document.getElementsByClassName("game-cell")
+
+    for (let cell of gameCells) {
         if (parseInt(cell.id) === spinNumberAndColor[0]) {
             cell.style.animation = "none";
             void cell.offsetWidth;
-            cell.style.animation = "flash 1.5s ease-in-out";
-        } else if (cell.id === "0" && spinNumberAndColor[0] === 0) {
-            cell.style.animation = "none";
-            void cell.offsetWidth;
-            cell.style.animation = "flash 1.5s ease-in-out";
+            cell.style.animation = "flash 1.5s linear";
         }
     }
 
@@ -189,7 +183,7 @@ function main() {
 
     for (let cell of cells) {
         cell.addEventListener("click", () => {
-            if(!betsClosed && chipSize > 0) addBet(cell);
+            if (!betsClosed && chipSize > 0) addBet(cell);
         });
     }
 
