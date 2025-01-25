@@ -6,18 +6,17 @@ const clearBetButton = document.getElementById("clear-bet");
 const spinOutput = document.getElementById("spinOutput");
 const spinOutputDiv = document.getElementById("spinOutputDiv");
 let previousNumbersDisplay = document.getElementById("previous-numbers");
-let currentBets = document.getElementById("current-bets-paragraph");
 let timer = document.getElementById("timer");
 let betsAvailableLabel = document.getElementById("bets-available-label");
 
-const validStrings = ["first12", "second12", "third12", "evens", "odds", "red", "black", "high", "low"];
+const validStrings = ["1/12", "2/12", "3/12", "Evens", "Odds", "Red", "Black", "High", "Low"];
 
 let chipSize = 0;
 let thisBet = 0;
 let balance = 100;
-let userBets = new Map();
-let timeUntilSpin = 25;
+let timeUntilSpin = 30;
 let betsClosed;
+let userBets = new Map();
 
 function generateSpin() {
     const spin = Math.floor(Math.random() * 37);
@@ -62,23 +61,23 @@ function payout(inputMap, spin, color) {
     for (let item of inputMap.keys()) {
         if (item === spin.toString()) {
             payout += inputMap.get(item) * 36;
-        } else if (item === "first12" && spin >= 1 && spin <= 12) {
+        } else if (item === "1/12" && spin >= 1 && spin <= 12) {
             payout += inputMap.get(item) * 3;
-        } else if (item === "second12" && spin >= 13 && spin <= 24) {
+        } else if (item === "2/12" && spin >= 13 && spin <= 24) {
             payout += inputMap.get(item) * 3;
-        } else if (item === "third12" && spin >= 25 && spin <= 36) {
+        } else if (item === "3/12" && spin >= 25 && spin <= 36) {
             payout += inputMap.get(item) * 3;
-        } else if (item === "evens" && spin % 2 === 0) {
+        } else if (item === "Evens" && spin % 2 === 0) {
             payout += inputMap.get(item) * 2;
-        } else if (item === "odds" && spin % 2 !== 0) {
+        } else if (item === "Odds" && spin % 2 !== 0) {
             payout += inputMap.get(item) * 2;
-        } else if (item === "red" && color == "Red") {
+        } else if (item === "Red" && color == "Red") {
             payout += inputMap.get(item) * 2;
-        } else if (item === "black" && color == "Black") {
+        } else if (item === "Black" && color == "Black") {
             payout += inputMap.get(item) * 2;
-        } else if (item === "high" && spin > 18) {
+        } else if (item === "1 to 18" && spin > 18) {
             payout += inputMap.get(item) * 2;
-        } else if (item === "low" && spin <= 18) {
+        } else if (item === "19 to 36" && spin <= 18) {
             payout += inputMap.get(item) * 2;
         }
     }
@@ -94,7 +93,7 @@ function spin() {
             cell.style.animation = "none";
             void cell.offsetWidth;
             cell.style.animation = "flash 1.5s ease-in-out";
-        } else if (cell.id === "zero" && spinNumberAndColor[0] === 0) {
+        } else if (cell.id === "0" && spinNumberAndColor[0] === 0) {
             cell.style.animation = "none";
             void cell.offsetWidth;
             cell.style.animation = "flash 1.5s ease-in-out";
@@ -106,20 +105,21 @@ function spin() {
     userBets.clear();
     balanceDisplay.innerText = balance;
     thisBet = 0;
-    currentBets.innerText = "";
+
+    clearBet();
 }
 
 function updateTimer() {
     if (timeUntilSpin === 0) {
         spin();
-        timeUntilSpin = 24;
+        timeUntilSpin = 29;
     } else {
         timeUntilSpin--;
     }
 
     betsClosed = timeUntilSpin <= 10;
-    const statusText = betsClosed ? "Bets Closed" : "Bets Open";
-    betsAvailableLabel.innerText = statusText;
+    betsAvailableLabel.innerText = betsClosed ? "Bets Closed" : "Bets Open";
+
     timer.innerText = timeUntilSpin;
 }
 
@@ -131,39 +131,51 @@ function clearBet() {
 
     thisBet = 0;
 
-    currentBets.innerText = "";
+    for (let cell of cells) {
+        while (cell.hasChildNodes()) {
+            cell.removeChild(cell.firstChild);
+        }
+        
+        cell.innerText = cell.id;
+    }
 }
 
 function addBet(cell) {
-    const balanceLessThanChipSize = balance < chipSize;
+    if (balance < chipSize) {
+        return window.alert("Insufficient funds");
+    }
 
-    if (balanceLessThanChipSize) {
-        window.alert("Insufficient funds!");
-    } else if (userBets.has(cell.id)) {
-        let currentBet = userBets.get(cell.id);
-        userBets.set(cell.id, currentBet + chipSize);
+    const isCellAlreadyInUserBets = userBets.has(cell.id);
+
+    const chipToBeDisplayed = document.createElement("button");
+    chipToBeDisplayed.className = "chips-on-board";
+
+    if (isCellAlreadyInUserBets) {
+        const currentBetOnThisCell = userBets.get(cell.id);
+
+        const updatedChip = document.createElement("button");
+        updatedChip.className = "chips-on-board";
+        updatedChip.innerText = currentBetOnThisCell + chipSize;
+
+        userBets.set(cell.id, currentBetOnThisCell + chipSize);
 
         balance -= chipSize;
         thisBet += chipSize;
-    } else if (!userBets.has(cell.id)) {
+
+        cell.innerHTML = "";
+        cell.appendChild(updatedChip);
+    } else {
         userBets.set(cell.id, chipSize);
 
         balance -= chipSize;
         thisBet += chipSize;
-    }
 
-    if (chipSize !== 0 && !balanceLessThanChipSize) currentBets.innerText += "\n" + cell.id + " x $" + chipSize.toString();
+        cell.innerHTML = "";
+        chipToBeDisplayed.innerText = chipSize;
+        cell.appendChild(chipToBeDisplayed);
+    }
 
     balanceDisplay.innerText = balance;
-}
-
-function selectChip(chip) {
-    for (let chipResetColor of chips) {
-        chipResetColor.style.border = "none";
-    }
-
-    chipSize = parseInt(chip.id);
-    chip.style.border = "3px solid";
 }
 
 function main() {
@@ -177,13 +189,16 @@ function main() {
 
     for (let cell of cells) {
         cell.addEventListener("click", () => {
-            if(!betsClosed) addBet(cell);
+            if(!betsClosed && chipSize > 0) addBet(cell);
         });
     }
 
     for (let chip of chips) {
         chip.addEventListener("click", () => {
-            selectChip(chip);
+            for (let chipResetColor of chips) chipResetColor.style.border = "none";
+            
+            chipSize = parseInt(chip.id);
+            chip.style.border = "3px solid";
         });
     }
 

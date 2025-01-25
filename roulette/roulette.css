@@ -5,7 +5,7 @@
 
 .chips {
     border: none;
-    background-color: #cf4f00;
+    background-color: #00adcf;
     border-radius: 20px;
     width: 40px;
     height: 40px;
@@ -13,11 +13,28 @@
     margin-left: 5px;
     margin-right: 5px;
     color: white;
-    cursor: grab;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
 }
 .chips:hover {
     border: 3px solid;
     scale: 1.2;
+}
+
+.chips-on-board {
+    border: none;
+    background-color: #00adcf;
+    border-radius: 20px;
+    width: 40px;
+    height: 40px;
+    transition: 150ms ease;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
 }
 
 .redCell {
@@ -25,7 +42,7 @@
     color: white;
     cursor: pointer;
     text-align: center;
-    width: 50px;
+    width: 55px;
     height: 55px;
     transition: 150ms ease;
     animation-timing-function: 250ms ease-in-out;
@@ -33,11 +50,10 @@
     border-color: white;
 }
 .redCell:hover {
-    background-color: #a40000;
+    background-color: hsl(0, 100%, 60%);
 }
 .redCell:active {
-    background-color: gold;
-    scale: 1.2;
+    background-color: hsl(0, 100%, 70%);
 }
 
 .blackCell {
@@ -47,17 +63,16 @@
     border-color: white;
     cursor: pointer;
     text-align: center;
-    width: 50px;
+    width: 55px;
     height: 55px;
     transition: 150ms ease;
     animation-timing-function: 250ms ease-in-out;
 }
 .blackCell:hover {
-    background-color: #353535;
+    background-color: hsl(0, 0%, 10%);
 }
 .blackCell:active {
-    background-color: gold;
-    scale: 1.2;
+    background-color: hsl(0, 0%, 20%);
 }
 
 .defaultCell {
@@ -66,41 +81,39 @@
     cursor: pointer;
     text-align: center;
     width: 130px;
-    height: 40px;
+    height: 50px;
     font-size: large;
     transition: 150ms ease;
     border: 2px solid;
     border-color: white;
 }
 .defaultCell:hover {
-    background-color: limegreen;
+    background-color: hsl(120, 61%, 44%);
 }
 .defaultCell:active {
-    background-color: gold;
-    scale: 1.2;
+    background-color: hsl(120, 61%, 54%);
 }
 
 .twelvesCells {
-    background-color: forestgreen;
+    background-color: #228b22;
     color: white;
     cursor: pointer;
     text-align: center;
     width: 177px;
-    height: 40px;
+    height: 50px;
     font-size: large;
     transition: 150ms ease;
     border: 2px solid;
     border-color: white;
 }
 .twelvesCells:hover {
-    background-color: limegreen;
+    background-color: hsl(120, 61%, 44%);
 }
 .twelvesCells:active {
-    background-color: gold;
-    scale: 1.2;
+    background-color: hsl(120, 61%, 54%);
 }
 
-#red {
+#Red {
     background-color: red;
     color: white;
     cursor: pointer;
@@ -110,15 +123,14 @@
     border: 2px solid;
     border-color: white;
 }
-#red:hover {
-    background-color: limegreen;
+#Red:hover {
+    background-color: hsl(0, 100%, 60%);
 }
-#red:active {
-    background-color: gold;
-    scale: 1.2;
+#Red:active {
+    background-color: hsl(0, 100%, 70%);
 }
 
-#black {
+#Black {
     background-color: black;
     color: white;
     cursor: pointer;
@@ -128,33 +140,31 @@
     border: 2px solid;
     border-color: white;
 }
-#black:hover {
-    background-color: limegreen;
+#Black:hover {
+    background-color: hsl(0, 0%, 10%);
 }
-#black:active {
-    background-color: gold;
-    scale: 1.2;
+#Black:active {
+    background-color: hsl(0, 0%, 20%);
 }
 
-#zero {
+.zero {
     background-color: limegreen;
     color: white;
     border: 2px solid;
     border-color: white;
     cursor: pointer;
     text-align: center;
-    width: 50px;
+    width: 55px;
     height: 55px;
     font-size: large;
     transition: 150ms ease;
     animation-timing-function: 200ms ease-in-out;
 }
-#zero:hover {
+.zero:hover {
     background-color: lime;
 }
-#zero:active {
-    background-color: gold;
-    scale: 1.2;
+.zero:active {
+    background-color: hsl(120, 100%, 70%);
 }
 
 #gameInfo {
@@ -173,33 +183,7 @@
     padding: 4px;
     max-width: fit-content;
     max-height: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#rouletteHeader {
-    text-align: center;
-    font-style: italic;
-    color: goldenrod;
-    margin-bottom: 50px;
-}
-
-#gameInfoDiv {
-    display: flex;
-    justify-content: center;
-    border: none;
-    border-radius: 15px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 50px;
-    color: white;
-    max-width: fit-content;
-    background-color: goldenrod;
-    padding: 15px;
-}
-
-#thisBetHeader {
-    margin-left: 10px
+    margin: 20px auto;
 }
 
 #buttonsDiv {
@@ -242,27 +226,14 @@
     height: 75px
 }
 
-#current-bets-label-and-table{
+#timer-information-and-clear-bet-btn {
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    margin-bottom: 50px;
-    text-align: center;
-}
-
-#current-bets {
-    background-color: forestgreen;
-    border-color: black;
-    border-width: 3px;
-    border: 3px solid;
-    border-radius: 10px;
-    padding: 4px;
-}
-
-#timer-information {
+    justify-content: space-between;
+    align-items: baseline;
+    max-width: 400px;
+    margin: 20px auto;
     color: white;
-    margin-right: 30px;
-    width: 50px;
+    font-weight: bold;
 }
 
 #clear-bet {
