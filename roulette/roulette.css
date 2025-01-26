@@ -255,13 +255,7 @@
 }
 
 @keyframes flash {
-    0% {
-    }
-
     50% {
         background-color: gold;
-    }
-
-    100% {
     }
 }

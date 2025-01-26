@@ -97,7 +97,7 @@ function spin() {
     let winnings = payout(userBets, spinNumberAndColor[0], spinNumberAndColor[1]);
     balance += winnings;
     userBets.clear();
-    balanceDisplay.innerText = balance;
+    balanceDisplay.innerText = balance.toFixed(2);
     thisBet = 0;
 
     clearBet();
@@ -121,7 +121,7 @@ function clearBet() {
     userBets.clear();
 
     balance += thisBet;
-    balanceDisplay.innerText = balance;
+    balanceDisplay.innerText = balance.toFixed(2);
 
     thisBet = 0;
 
@@ -169,11 +169,11 @@ function addBet(cell) {
         cell.appendChild(chipToBeDisplayed);
     }
 
-    balanceDisplay.innerText = balance;
+    balanceDisplay.innerText = balance.toFixed(2);
 }
 
 function main() {
-    balanceDisplay.innerText = balance;
+    balanceDisplay.innerText = balance.toFixed(2);
 
     for (let i = 0; i < 37; i++) {
         validStrings.push(i.toString());
