@@ -5,7 +5,7 @@ const betDisplay = document.getElementById("betDisplay");
 const prevWinDisplay = document.getElementById("prevWinDisplay");
 const outputTable = document.getElementById("outputTable").getElementsByTagName('tbody')[0];
 
-let balance = 500;
+let balance = 100;
 let bet = 0;
 
 balanceOutput.innerText = balance;
@@ -95,14 +95,6 @@ function spin() {
 
     const spunObjects = generateSpin();
 
-    if ((balance - bet) < 0) {
-        bet = 0;
-
-        betDisplay.innerText = bet.toString();
-
-        window.alert("Insufficient Funds");
-    }
-
     setTimeout(() => {
         spinbtn.disabled = false;
     }, 4000);
@@ -142,6 +134,10 @@ function main() {
     }
 
     spinbtn.addEventListener("click", () => {
+        if (balance - bet < 0) {
+            return window.alert("Insufficient Funds");
+        }
+
         if (bet > 0) spin();
     });
 }

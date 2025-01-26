@@ -128,7 +128,7 @@ body {
 
 @keyframes flashForWin {
     40% {
-        transform: translateY(-20px);
+        transform: translateY(-10px);
         background-color: #f3c018;
     }
 
