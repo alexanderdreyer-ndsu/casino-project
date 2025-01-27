@@ -8,8 +8,9 @@ body{
     border: none;
     padding: 25px;
     color: white;
-    margin: 50px auto;
+    margin: 0px auto;
     width: 700px;
+    overflow: hidden;
 }
 
 .game-info{
@@ -31,7 +32,7 @@ body{
     flex-direction: row;
     justify-content: space-between;
     width: fit-content;
-    margin-top: 170px;
+    margin-top: 100px;
 }
 
 .player-control-btns{
@@ -64,6 +65,19 @@ body{
 .game-cards {
     height: 70px;
     width: 50px;
+}
+
+#deck-and-game-output {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: 20px 0;
+    width: 100%;
+    min-height: 50px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium';
 }
 
 #display-dealer-cards{
@@ -99,7 +113,7 @@ body{
 
 @keyframes slideInTop {
     from {
-        transform: translateX(50vh) translateY(-100vh);
+        transform: translateX(10vh) translateY(-100vh);
     }
 
     to {

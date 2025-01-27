@@ -7,6 +7,7 @@ const doubleBtn = document.getElementById("double-btn");
 let playerCardDisplay = document.getElementById("display-player-cards");
 let dealerCardDisplay = document.getElementById("display-dealer-cards");
 let playerSplitCardDisplay = document.getElementById("display-player-split-cards");
+let displayGameInfo = document.getElementById("game-output-display");
 
 let faceDownCardImage = document.createElement('img');
 
@@ -64,28 +65,28 @@ function checkForBlackjack() {
         if (isPlayerBlackjack && isPlayer2Blackjack) {
             endGame();
 
-            window.alert("Player Hand 1 Blackjack, Player Hand 2 Blackjack");
+            displayGameInfo.innerText = "Player Hand 1 Blackjack, Player Hand 2 Blackjack";
         } else if (isPlayerBlackjack) {
             stay();
 
-            window.alert("Player Hand 1 Blackjack");
+            displayGameInfo.innerText = "Player Hand 1 Blackjack";
         } else if (isPlayer2Blackjack) {
             playerHand1.selected = false;
             playerHand2.selected = false;
 
-            window.alert("Player Hand 2 Blackjack");
+            displayGameInfo.innerText = "Player Hand 2 Blackjack";
         }
     } else {
         if (isDealerBlackjack) {
             endGame();
 
-            return window.alert(`${isPlayerBlackjack ? "Push" : "Dealer Blackjack"}`);
+            return displayGameInfo.innerText = `${isPlayerBlackjack ? "Push" : "Dealer Blackjack"}`;
         }
 
         if (isPlayerBlackjack) {
             endGame();
 
-            window.alert("Player Blackjack");
+            displayGameInfo.innerText = "Player Blackjack";
         }
     }
 }
@@ -150,11 +151,11 @@ function calculateWinner() {
             dealerVsPlayer2Message = "Push";
         }
 
-        return window.alert(`${dealerVsPlayer1Message}, ${dealerVsPlayer2Message}`);
+        return displayGameInfo.innerText = `${dealerVsPlayer1Message}, ${dealerVsPlayer2Message}`;
     } else {
-        if (dealerScore !== playerScore) return window.alert(`${dealerScore > playerScore ? "Dealer Win" : "Player Win"}`);
+        if (dealerScore !== playerScore) return displayGameInfo.innerText = `${dealerScore > playerScore ? "Dealer Win" : "Player Win"}`;
 
-        window.alert("Push");
+        displayGameInfo.innerText = "Push";
     }
 }
 
@@ -189,7 +190,7 @@ function runDealerTurn() {
         drawCard(dealerHand);
     }
 
-    calculateWinner();
+    setTimeout(() => {calculateWinner()}, 1000);
 }
 
 function hit() {
@@ -280,6 +281,8 @@ function split() {
 }
 
 function game() {
+    displayGameInfo.innerText = "";
+    
     dealerHand.clearHand();
     playerHand1.clearHand();
     playerHand2.clearHand();
