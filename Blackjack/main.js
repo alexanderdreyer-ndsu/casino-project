@@ -175,7 +175,7 @@ function reduceHandAces(hand) {
 }
 
 function runDealerTurn() {
-    disableButtons();
+    endGame();
 
     if (dealerHand.count === 22) {
         reduceHandAces(dealerHand);
@@ -218,7 +218,7 @@ function hit() {
             playerCardDisplay.style.backgroundColor = null;
             playerSplitCardDisplay.style.backgroundColor = 'limegreen';
         } else {
-            runDealerTurn();
+            setTimeout(() => {runDealerTurn()}, 1000);
         }
     }
 
@@ -235,7 +235,8 @@ function double() {
     if (!isGameSplit) {
         drawCard(playerHand1);
         reduceHandAces(playerHand1);
-        runDealerTurn();
+
+        setTimeout(() => {runDealerTurn()}, 1000);
     } else if (isGameSplit && playerHand1.selected) {
         drawCard(playerHand1);
 
@@ -247,7 +248,8 @@ function double() {
     } else if (isGameSplit && playerHand2.selected) {
         drawCard(playerHand2);
         reduceHandAces(playerHand2);
-        runDealerTurn();
+
+        setTimeout(() => {runDealerTurn()}, 1000);
     }
 
     if (playerHand1.count > 21 && playerHand1.cards.some(card => card.numValue === 'Ace')) {
@@ -282,7 +284,7 @@ function split() {
 
 function game() {
     displayGameInfo.innerText = "";
-    
+
     dealerHand.clearHand();
     playerHand1.clearHand();
     playerHand2.clearHand();
