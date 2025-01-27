@@ -58,7 +58,7 @@ body{
     scale: 1.5;
 }
 .game-btns:disabled{
-    background-color: #808080;
+    background-color: hsl(53, 100%, 23%);
 }
 
 .game-cards {
@@ -91,4 +91,18 @@ body{
     padding: 10px;
     border-radius: 7px;
     margin-left: 40px;
+}
+
+.slideInTop {
+    animation: slideInTop 0.7s ease-out;
+}
+
+@keyframes slideInTop {
+    from {
+        transform: translateX(50vh) translateY(-100vh);
+    }
+
+    to {
+        transform: translateX(0) translateY(0);
+    }
 }
