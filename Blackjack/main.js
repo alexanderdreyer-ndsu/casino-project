@@ -49,9 +49,9 @@ function drawCard(hand) {
 function endGame() {
     faceDownCardImage.src = faceDownCard.imagePath;
 
-    playBtn.disabled = false;
-
     disableButtons();
+
+    setTimeout(() => {playBtn.disabled = false}, 1300);
 }
 
 function checkForBlackjack() {
