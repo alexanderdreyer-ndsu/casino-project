@@ -51,7 +51,7 @@ function endGame() {
 
     disableButtons();
 
-    setTimeout(() => {playBtn.disabled = false}, 1300);
+    setTimeout(() => {playBtn.disabled = false}, 1000);
 }
 
 function checkForBlackjack() {
@@ -63,9 +63,9 @@ function checkForBlackjack() {
         const isPlayer2Blackjack = playerHand2.count === 21;
 
         if (isPlayerBlackjack && isPlayer2Blackjack) {
-            endGame();
-
             displayGameInfo.innerText = "Player Hand 1 Blackjack, Player Hand 2 Blackjack";
+
+            endGame();
         } else if (isPlayerBlackjack) {
             stay();
 
@@ -78,15 +78,13 @@ function checkForBlackjack() {
         }
     } else {
         if (isDealerBlackjack) {
+            displayGameInfo.innerText = `${isPlayerBlackjack ? "Push" : "Dealer Blackjack"}`;
+            
             endGame();
-
-            return displayGameInfo.innerText = `${isPlayerBlackjack ? "Push" : "Dealer Blackjack"}`;
-        }
-
-        if (isPlayerBlackjack) {
-            endGame();
-
+        } else if (isPlayerBlackjack) {
             displayGameInfo.innerText = "Player Blackjack";
+
+            endGame();
         }
     }
 }
@@ -132,8 +130,6 @@ function calculateWinner() {
     const dealerScore = dealerHand.count <= 21 ? dealerHand.count : 0;
     const playerScore = playerHand1.count <= 21 ? playerHand1.count : -1;
 
-    endGame();
-
     if (gameIsSplit) {
         const player2Score = playerHand2.count <= 21 ? playerHand2.count : -1;
         let dealerVsPlayer1Message;
@@ -167,12 +163,13 @@ function disableButtons() {
 }
 
 function reduceHandAces(hand) {
-    if (hand.count > 21 && hand.cards.some(card => card.numValue === 'Ace')) {
+    if (hand.count > 21) {
         for (const card of hand.cards) {
             if (card.numValue === 'Ace') hand.count -= 10;
         }
     }
 }
+
 
 function runDealerTurn() {
     endGame();
@@ -190,15 +187,19 @@ function runDealerTurn() {
         drawCard(dealerHand);
     }
 
-    setTimeout(() => {calculateWinner()}, 1000);
+    setTimeout(() => {
+        calculateWinner();
+    }, 1000);
 }
+
+//write a new hit function that takes in the paremeter of the hand that is being hit
 
 function hit() {
     const isGameSplit = playerHand1.selected || playerHand2.selected;
 
-    if (!isGameSplit) {
+    if (!isGameSplit && playerHand1.count < 21) {
         drawCard(playerHand1);
-    } else {
+    } else if (isGameSplit && playerHand2.count < 21){
         playerHand1.selected && !playerHand2.selected ? drawCard(playerHand1) : drawCard(playerHand2);
     }
 
@@ -218,7 +219,7 @@ function hit() {
             playerCardDisplay.style.backgroundColor = null;
             playerSplitCardDisplay.style.backgroundColor = 'limegreen';
         } else {
-            setTimeout(() => {runDealerTurn()}, 1000);
+            runDealerTurn();
         }
     }
 
@@ -290,9 +291,6 @@ function game() {
     playerHand2.clearHand();
 
     playBtn.disabled = true;
-    stayBtn.disabled = false;
-    hitBtn.disabled = false;
-    doubleBtn.disabled = false;
 
     playerHand1.selected = false;
     playerHand2.selected = false;
@@ -302,6 +300,7 @@ function game() {
 
     drawFaceDownCard();
 
+    
     setTimeout(() => {
         drawCard(playerHand1);
     }, 1000);
@@ -319,7 +318,11 @@ function game() {
         doubleBtn.addEventListener("click", double);
         stayBtn.addEventListener("click", stay);
         splitBtn.addEventListener("click", split);
-    }, 2500);
+
+        stayBtn.disabled = false;
+        hitBtn.disabled = false;
+        doubleBtn.disabled = false;
+    }, 2600);
 
     setTimeout(() => {
         checkForBlackjack();
