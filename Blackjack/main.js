@@ -8,20 +8,25 @@ let playerCardDisplay = document.getElementById("display-player-cards");
 let dealerCardDisplay = document.getElementById("display-dealer-cards");
 let playerSplitCardDisplay = document.getElementById("display-player-split-cards");
 let displayGameInfo = document.getElementById("game-output-display");
+let balanceOutput = document.getElementById("balance-output");
 
 let faceDownCardImage = document.createElement('img');
 
 let dealerHand = new Hand();
 let playerHand1 = new Hand();
 let playerHand2 = new Hand();
-
 let shoe = new Shoe(6);
-
+let balance = 100;
+let originalBet = 2;
+let payoutMultiplier = 2;
+let totalBet;
 let faceDownCard;
 
 dealerHand.cardDisplay = dealerCardDisplay;
 playerHand1.cardDisplay = playerCardDisplay;
 playerHand2.cardDisplay = playerSplitCardDisplay;
+
+balanceOutput.innerText = balance.toFixed(2);
 
 function drawFaceDownCard() {
     faceDownCard = shoe.drawCard();
@@ -52,6 +57,20 @@ function endGame() {
     disableButtons();
     calculateWinner();
 
+    balanceOutput.innerText = balance.toFixed(2);
+
+    setTimeout(() => {
+        playBtn.disabled = false;
+    }, 1000);
+}
+
+function endGameFromCheckForBlackjack() {
+    faceDownCardImage.src = faceDownCard.imagePath;
+
+    disableButtons();
+
+    balanceOutput.innerText = balance.toFixed(2);
+
     setTimeout(() => {
         playBtn.disabled = false;
     }, 1000);
@@ -61,37 +80,48 @@ function checkForBlackjack() {
     const isDealerBlackjack = dealerHand.count === 21;
     const isPlayerBlackjack = playerHand1.count === 21;
     const checkDidPlayerSplit = playerHand1.selected && playerHand2.count !== 0;
+    const blackjackPayout = 3 / 2;
 
     if (!checkDidPlayerSplit) {
         if (isDealerBlackjack) {
+            isPlayerBlackjack ? balance += playerHand1.betOnThisHand : balance = balance;
+
             displayGameInfo.innerText = `${isPlayerBlackjack ? "Push" : "Dealer Blackjack"}`;
 
-            return endGame();
+            return endGameFromCheckForBlackjack();
         }
 
         if (isPlayerBlackjack) {
+            balance += playerHand1.betOnThisHand * blackjackPayout;
+
             displayGameInfo.innerText = "Player Blackjack";
 
-            return endGame();
+            return endGameFromCheckForBlackjack();
         }
     }
     
     const isPlayer2Blackjack = playerHand2.count === 21;
 
     if (isPlayerBlackjack && isPlayer2Blackjack) {
+        balance += totalBet * blackjackPayout;
+
         displayGameInfo.innerText = "Player Hand 1 Blackjack, Player Hand 2 Blackjack";
 
-        return endGame();
+        return endGameFromCheckForBlackjack();
     } 
     
     if (isPlayerBlackjack) {
+        balance += playerHand1.betOnThisHand * blackjackPayout;
+
         displayGameInfo.innerText = "Player Hand 1 Blackjack";
 
         return stay();
     }
     
     if (isPlayer2Blackjack) {
-        playerHand1.selected = false;
+        balance += playerHand2.betOnThisHand * blackjackPayout;
+
+        playerHand1.selected = true;
         playerHand2.selected = false;
 
         displayGameInfo.innerText = "Player Hand 2 Blackjack";
@@ -115,54 +145,49 @@ function checkForSplitAllowed(hand) {
     return flag;
 }
 
-function splitHand() {
-    playerCardDisplay.style.backgroundColor = 'limegreen';
-
-    const splitCard = playerHand1.cards[1];
-    playerHand2.addToHand(splitCard);
-
-    const img = document.createElement('img');
-    img.src = splitCard.imagePath;
-    img.className = "game-cards";
-
-    playerSplitCardDisplay.appendChild(img);
-
-    playerHand1.popFromHand();
-
-    drawCard(playerHand1);
-    drawCard(playerHand2);
-}
-
 function calculateWinner() {
     const dealerScore = dealerHand.count <= 21 ? dealerHand.count : 0;
     const playerScore = playerHand1.count <= 21 ? playerHand1.count : -1;
     const checkDidPlayerSplit = playerHand2.count !== 0;
+    const dealerWon = dealerScore > playerScore;
 
     console.log(`Dealer score = ${dealerScore}`);
     console.log(`Player score = ${playerScore}`);
 
     if (!checkDidPlayerSplit) {
-        if (dealerScore !== playerScore) return displayGameInfo.innerText = `${dealerScore > playerScore ? "Dealer Win" : "Player Win"}`;
+        if (dealerScore !== playerScore) {
+            dealerWon ? balance = balance : balance += playerHand1.betOnThisHand * payoutMultiplier;
 
+            return displayGameInfo.innerText = `${dealerWon ? "Dealer Win" : "Player Win"}`;
+        }
+
+        balance += totalBet;
         return displayGameInfo.innerText = "Push";
     }
 
     const player2Score = playerHand2.count <= 21 ? playerHand2.count : -1;
-
-    console.log(`Player 2 score = ${player2Score}`);
-
+    const dealerWonHand2 = dealerScore > player2Score;
     let dealerVsPlayer1Message;
     let dealerVsPlayer2Message;
+    console.log(`Player 2 score = ${player2Score}`);
 
     if (dealerScore !== playerScore) {
-        dealerVsPlayer1Message = dealerScore > playerScore ? "Dealer Win Hand 1" : "Player Win Hand 1";
+        dealerWon ? balance = balance : balance += playerHand1.betOnThisHand * payoutMultiplier;
+
+        dealerVsPlayer1Message = dealerWon ? "Dealer Win Hand 1" : "Player Win Hand 1";
     } else {
+        balance += totalBet;
+
         dealerVsPlayer1Message = "Push";
     }
 
     if (dealerScore !== player2Score) {
-        dealerVsPlayer2Message = dealerScore > player2Score ? "Dealer Win Hand 2" : "Player Win Hand 2";
+        dealerWonHand2 ? balance = balance : balance += playerHand2.betOnThisHand * payoutMultiplier;
+
+        dealerVsPlayer2Message = dealerWonHand2 ? "Dealer Win Hand 2" : "Player Win Hand 2";
     } else {
+        balance += totalBet;
+
         dealerVsPlayer2Message = "Push";
     }
 
@@ -234,7 +259,20 @@ function hit() {
 }
 
 function double() {
-    playerHand1.selected ? drawCard(playerHand1) : drawCard(playerHand2);
+    balance -= originalBet;
+    balanceOutput.innerText = balance.toFixed(2);
+
+    if (playerHand1.selected) {
+        playerHand1.betOnThisHand += originalBet;
+
+        drawCard(playerHand1);
+    }
+
+    if (playerHand2.selected) {
+        playerHand2.betOnThisHand += originalBet;
+
+        drawCard(playerHand2);
+    }
 
     reduceHandAces(playerHand1);
     reduceHandAces(playerHand2);
@@ -271,14 +309,37 @@ function stay() {
 }
 
 function split() {
+    balance -= originalBet;
+    playerHand2.betOnThisHand = playerHand1.betOnThisHand;
+    balanceOutput.innerText = balance.toFixed(2);
+
     splitBtn.disabled = true;
 
-    splitHand();
+    playerCardDisplay.style.backgroundColor = 'limegreen';
+
+    const splitCard = playerHand1.cards[1];
+    playerHand2.addToHand(splitCard);
+
+    const img = document.createElement('img');
+    img.src = splitCard.imagePath;
+    img.className = "game-cards";
+
+    playerSplitCardDisplay.appendChild(img);
+
+    playerHand1.popFromHand();
+
+    drawCard(playerHand1);
+    drawCard(playerHand2);
     checkForBlackjack();
 }
 
 function game() {
     displayGameInfo.innerText = "";
+
+    playerHand1.betOnThisHand = originalBet;
+    totalBet = originalBet;
+    balance -= totalBet;
+    balanceOutput.innerText = balance.toFixed(2);
 
     dealerHand.clearHand();
     playerHand1.clearHand();
