@@ -108,7 +108,6 @@ function checkForSplitAllowed(hand) {
 }
 
 function splitHand() {
-    playerHand1.selected = true;
     playerCardDisplay.style.backgroundColor = 'limegreen';
 
     const splitCard = playerHand1.cards[1];
@@ -122,13 +121,16 @@ function splitHand() {
 
     playerHand1.popFromHand();
 
-    drawCard(playerHand2);
     drawCard(playerHand1);
+    drawCard(playerHand2);
 }
 
 function calculateWinner() {
     const dealerScore = dealerHand.count <= 21 ? dealerHand.count : 0;
     const playerScore = playerHand1.count <= 21 ? playerHand1.count : -1;
+    console.log("player score = " + playerScore);
+    console.log("Dealer Score = " + dealerScore);
+    console.log("Player hand 2 count = " + playerHand2.count);
 
     if (didPlayerSplitCards) {
         const player2Score = playerHand2.count <= 21 ? playerHand2.count : -1;
@@ -171,8 +173,6 @@ function reduceHandAces(hand) {
 }
 
 function runDealerTurn() {
-    endGame();
-
     if (dealerHand.count === 22) {
         reduceHandAces(dealerHand);
     }
@@ -185,6 +185,8 @@ function runDealerTurn() {
     if (dealerHand.count === 17 && dealerHand.cards.some(card => card.numValue === 'Ace')) {
         drawCard(dealerHand);
     }
+
+    endGame();
 }
 
 function hit() {
@@ -233,7 +235,7 @@ function double() {
 }
 
 function stay() {
-    if (playerHand1.selected && didPlayerSplitCards) {
+    if (playerHand1.selected && playerHand2.count !== 0) {
         playerHand1.selected = false;
         playerHand2.selected = true;
 
@@ -248,7 +250,6 @@ function stay() {
 
 function split() {
     splitBtn.disabled = true;
-    didPlayerSplitCards = true;
 
     splitHand();
     checkForBlackjack();

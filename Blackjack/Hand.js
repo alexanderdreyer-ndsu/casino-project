@@ -9,9 +9,6 @@ class Hand {
         this.count = 0;
 
         for (let card of this.cards) {
-            console.log(card);
-            console.log("length: " + this.cards.length);
-
             const value = card.numValue;
             
             const faceCards = ["Jack", "Queen", "King"];
