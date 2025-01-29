@@ -18,7 +18,6 @@ let playerHand2 = new Hand();
 let shoe = new Shoe(6);
 
 let faceDownCard;
-let didPlayerSplitCards = playerHand2.cards.length !== 0;
 
 dealerHand.cardDisplay = dealerCardDisplay;
 playerHand1.cardDisplay = playerCardDisplay;
@@ -59,8 +58,9 @@ function endGame() {
 function checkForBlackjack() {
     const isDealerBlackjack = dealerHand.count === 21;
     const isPlayerBlackjack = playerHand1.count === 21;
+    const checkDidPlayerSplit = playerHand1.selected && playerHand2.count !== 0;
 
-    if (!didPlayerSplitCards) {
+    if (!checkDidPlayerSplit) {
         if (isDealerBlackjack) {
             displayGameInfo.innerText = `${isPlayerBlackjack ? "Push" : "Dealer Blackjack"}`;
 
@@ -128,12 +128,16 @@ function splitHand() {
 function calculateWinner() {
     const dealerScore = dealerHand.count <= 21 ? dealerHand.count : 0;
     const playerScore = playerHand1.count <= 21 ? playerHand1.count : -1;
+    const checkDidPlayerSplit = playerHand2.count !== 0;
+
     console.log("player score = " + playerScore);
     console.log("Dealer Score = " + dealerScore);
     console.log("Player hand 2 count = " + playerHand2.count);
+    console.log("did player split = " + checkDidPlayerSplit);
 
-    if (didPlayerSplitCards) {
+    if (checkDidPlayerSplit) {
         const player2Score = playerHand2.count <= 21 ? playerHand2.count : -1;
+        console.log("Player hand 2 score = " + player2Score);
         let dealerVsPlayer1Message;
         let dealerVsPlayer2Message;
 
@@ -197,21 +201,23 @@ function hit() {
     reduceHandAces(playerHand1);
     reduceHandAces(playerHand2);
 
+    const checkDidPlayerSplit = playerHand2.count !== 0;
+
     if (playerHand1.count < 21) {
         doubleBtn.disabled = true;
         splitBtn.disabled = true;
     } else {
-        if (didPlayerSplitCards) {
-            playerHand1.selected = false;
-            playerHand2.selected = true;
-
-            doubleBtn.disabled = false;
-
-            playerCardDisplay.style.backgroundColor = null;
-            playerSplitCardDisplay.style.backgroundColor = 'limegreen';
-        } else {
-            endGame();
+        if (!checkDidPlayerSplit) {
+            return endGame();
         }
+
+        playerHand1.selected = false;
+        playerHand2.selected = true;
+
+        doubleBtn.disabled = false;
+
+        playerCardDisplay.style.backgroundColor = null;
+        playerSplitCardDisplay.style.backgroundColor = 'limegreen';
     }
 }
 
@@ -221,31 +227,35 @@ function double() {
     reduceHandAces(playerHand1);
     reduceHandAces(playerHand2);
 
-    if (didPlayerSplitCards) {
-        playerHand1.selected = false;
-        playerHand2.selected = true;
+    const checkDidPlayerSplit = playerHand2.count !== 0;
 
-        playerCardDisplay.style.backgroundColor = null;
-        playerSplitCardDisplay.style.backgroundColor = 'limegreen';
-
-        playerHand1.count >= 21 && playerHand2.count >= 21 ? endGame() : runDealerTurn();
+    if (!checkDidPlayerSplit) {
+        return playerHand1.count >= 21 ? endGame() : runDealerTurn();
     }
 
-    playerHand1.count >= 21 ? endGame() : runDealerTurn();
+    playerHand1.selected = false;
+    playerHand2.selected = true;
+
+    playerCardDisplay.style.backgroundColor = null;
+    playerSplitCardDisplay.style.backgroundColor = 'limegreen';
+
+    playerHand1.count >= 21 && playerHand2.count >= 21 ? endGame() : runDealerTurn();
 }
 
 function stay() {
-    if (playerHand1.selected && playerHand2.count !== 0) {
-        playerHand1.selected = false;
-        playerHand2.selected = true;
+    const checkDidPlayerSplit = playerHand1.selected && playerHand2.count !== 0;
 
-        doubleBtn.disabled = false;
+    if (!checkDidPlayerSplit) {
+        return runDealerTurn();
+    } 
 
-        playerCardDisplay.style.backgroundColor = null;
-        playerSplitCardDisplay.style.backgroundColor = 'limegreen';
-    } else {
-        runDealerTurn();
-    }
+    playerHand1.selected = false;
+    playerHand2.selected = true;
+
+    doubleBtn.disabled = false;
+
+    playerCardDisplay.style.backgroundColor = null;
+    playerSplitCardDisplay.style.backgroundColor = 'limegreen';
 }
 
 function split() {
