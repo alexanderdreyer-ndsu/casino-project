@@ -52,7 +52,9 @@ function endGame() {
     disableButtons();
     calculateWinner();
 
-    setTimeout(() => { playBtn.disabled = false }, 1000);
+    setTimeout(() => {
+        playBtn.disabled = false;
+    }, 1000);
 }
 
 function checkForBlackjack() {
@@ -64,29 +66,35 @@ function checkForBlackjack() {
         if (isDealerBlackjack) {
             displayGameInfo.innerText = `${isPlayerBlackjack ? "Push" : "Dealer Blackjack"}`;
 
-            endGame();
-        } else if (isPlayerBlackjack) {
+            return endGame();
+        }
+
+        if (isPlayerBlackjack) {
             displayGameInfo.innerText = "Player Blackjack";
 
-            endGame();
+            return endGame();
         }
-    } else {
-        const isPlayer2Blackjack = playerHand2.count === 21;
+    }
+    
+    const isPlayer2Blackjack = playerHand2.count === 21;
 
-        if (isPlayerBlackjack && isPlayer2Blackjack) {
-            displayGameInfo.innerText = "Player Hand 1 Blackjack, Player Hand 2 Blackjack";
+    if (isPlayerBlackjack && isPlayer2Blackjack) {
+        displayGameInfo.innerText = "Player Hand 1 Blackjack, Player Hand 2 Blackjack";
 
-            endGame();
-        } else if (isPlayerBlackjack) {
-            stay();
+        return endGame();
+    } 
+    
+    if (isPlayerBlackjack) {
+        displayGameInfo.innerText = "Player Hand 1 Blackjack";
 
-            displayGameInfo.innerText = "Player Hand 1 Blackjack";
-        } else if (isPlayer2Blackjack) {
-            playerHand1.selected = false;
-            playerHand2.selected = false;
+        return stay();
+    }
+    
+    if (isPlayer2Blackjack) {
+        playerHand1.selected = false;
+        playerHand2.selected = false;
 
-            displayGameInfo.innerText = "Player Hand 2 Blackjack";
-        }
+        displayGameInfo.innerText = "Player Hand 2 Blackjack";
     }
 }
 
@@ -130,35 +138,35 @@ function calculateWinner() {
     const playerScore = playerHand1.count <= 21 ? playerHand1.count : -1;
     const checkDidPlayerSplit = playerHand2.count !== 0;
 
-    console.log("player score = " + playerScore);
-    console.log("Dealer Score = " + dealerScore);
-    console.log("Player hand 2 count = " + playerHand2.count);
-    console.log("did player split = " + checkDidPlayerSplit);
+    console.log(`Dealer score = ${dealerScore}`);
+    console.log(`Player score = ${playerScore}`);
 
-    if (checkDidPlayerSplit) {
-        const player2Score = playerHand2.count <= 21 ? playerHand2.count : -1;
-        console.log("Player hand 2 score = " + player2Score);
-        let dealerVsPlayer1Message;
-        let dealerVsPlayer2Message;
-
-        if (dealerScore !== playerScore) {
-            dealerVsPlayer1Message = dealerScore > playerScore ? "Dealer Win Hand 1" : "Player Win Hand 1";
-        } else {
-            dealerVsPlayer1Message = "Push";
-        }
-
-        if (dealerScore !== player2Score) {
-            dealerVsPlayer2Message = dealerScore > player2Score ? "Dealer Win Hand 2" : "Player Win Hand 2";
-        } else {
-            dealerVsPlayer2Message = "Push";
-        }
-
-        return displayGameInfo.innerText = `${dealerVsPlayer1Message}, ${dealerVsPlayer2Message}`;
-    } else {
+    if (!checkDidPlayerSplit) {
         if (dealerScore !== playerScore) return displayGameInfo.innerText = `${dealerScore > playerScore ? "Dealer Win" : "Player Win"}`;
 
-        displayGameInfo.innerText = "Push";
+        return displayGameInfo.innerText = "Push";
     }
+
+    const player2Score = playerHand2.count <= 21 ? playerHand2.count : -1;
+
+    console.log(`Player 2 score = ${player2Score}`);
+
+    let dealerVsPlayer1Message;
+    let dealerVsPlayer2Message;
+
+    if (dealerScore !== playerScore) {
+        dealerVsPlayer1Message = dealerScore > playerScore ? "Dealer Win Hand 1" : "Player Win Hand 1";
+    } else {
+        dealerVsPlayer1Message = "Push";
+    }
+
+    if (dealerScore !== player2Score) {
+        dealerVsPlayer2Message = dealerScore > player2Score ? "Dealer Win Hand 2" : "Player Win Hand 2";
+    } else {
+        dealerVsPlayer2Message = "Push";
+    }
+
+    displayGameInfo.innerText = `${dealerVsPlayer1Message}, ${dealerVsPlayer2Message}`;
 }
 
 function disableButtons() {
@@ -169,10 +177,12 @@ function disableButtons() {
 }
 
 function reduceHandAces(hand) {
-    if (hand.count > 21) {
-        for (const card of hand.cards) {
-            if (card.numValue === 'Ace') hand.count -= 10;
-        }
+    if (hand.count <= 21) {
+        return;
+    }
+
+    for (const card of hand.cards) {
+        if (card.numValue === 'Ace') hand.count -= 10;
     }
 }
 
@@ -206,19 +216,21 @@ function hit() {
     if (playerHand1.count < 21) {
         doubleBtn.disabled = true;
         splitBtn.disabled = true;
-    } else {
-        if (!checkDidPlayerSplit) {
-            return endGame();
-        }
 
-        playerHand1.selected = false;
-        playerHand2.selected = true;
+        return;
+    } 
 
-        doubleBtn.disabled = false;
-
-        playerCardDisplay.style.backgroundColor = null;
-        playerSplitCardDisplay.style.backgroundColor = 'limegreen';
+    if (!checkDidPlayerSplit || playerHand2.count > 21) {
+        return runDealerTurn();
     }
+
+    playerHand1.selected = false;
+    playerHand2.selected = true;
+
+    doubleBtn.disabled = false;
+
+    playerCardDisplay.style.backgroundColor = null;
+    playerSplitCardDisplay.style.backgroundColor = 'limegreen';
 }
 
 function double() {
