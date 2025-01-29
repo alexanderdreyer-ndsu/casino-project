@@ -60,7 +60,17 @@ function checkForBlackjack() {
     const isDealerBlackjack = dealerHand.count === 21;
     const isPlayerBlackjack = playerHand1.count === 21;
 
-    if (didPlayerSplitCards) {
+    if (!didPlayerSplitCards) {
+        if (isDealerBlackjack) {
+            displayGameInfo.innerText = `${isPlayerBlackjack ? "Push" : "Dealer Blackjack"}`;
+
+            endGame();
+        } else if (isPlayerBlackjack) {
+            displayGameInfo.innerText = "Player Blackjack";
+
+            endGame();
+        }
+    } else {
         const isPlayer2Blackjack = playerHand2.count === 21;
 
         if (isPlayerBlackjack && isPlayer2Blackjack) {
@@ -76,16 +86,6 @@ function checkForBlackjack() {
             playerHand2.selected = false;
 
             displayGameInfo.innerText = "Player Hand 2 Blackjack";
-        }
-    } else {
-        if (isDealerBlackjack) {
-            displayGameInfo.innerText = `${isPlayerBlackjack ? "Push" : "Dealer Blackjack"}`;
-
-            endGame();
-        } else if (isPlayerBlackjack) {
-            displayGameInfo.innerText = "Player Blackjack";
-
-            endGame();
         }
     }
 }
