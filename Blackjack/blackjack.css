@@ -1,5 +1,6 @@
 body{
     background: radial-gradient(circle, forestgreen, black);
+    overflow: hidden;
 }
 
 .page-all{
@@ -9,7 +10,7 @@ body{
     padding: 25px;
     color: white;
     margin: 0px auto;
-    width: 700px;
+    width: 1200px;
     overflow: hidden;
 }
 
@@ -17,7 +18,8 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 400px;
+    height: 400px;
+    margin-left: -550px;
 }
 
 .dealer-cards{
@@ -25,6 +27,7 @@ body{
     flex-direction: row;
     justify-content: space-between;
     width: fit-content;
+    position: absolute;
 }
 
 .player-cards{
@@ -32,7 +35,8 @@ body{
     flex-direction: row;
     justify-content: space-between;
     width: fit-content;
-    margin-top: 100px;
+    position: absolute;
+    margin: 200px 0;
 }
 
 .player-control-btns{
@@ -40,6 +44,7 @@ body{
     flex-direction: column;
     justify-content: space-between;
     max-height: 350px;
+    margin-right: 100px;
 }
 
 .game-btns{
@@ -65,6 +70,7 @@ body{
 .game-cards {
     height: 70px;
     width: 50px;
+    border-radius: 2px;
 }
 
 #deck-and-game-output {
@@ -90,7 +96,6 @@ body{
 
 #display-player-cards{
     display: flex;
-    flex-direction: column;
     gap: 0.5em;
     border: none;
     padding: 10px;
@@ -99,7 +104,6 @@ body{
 
 #display-player-split-cards{
     display: flex;
-    flex-direction: column;
     gap: 0.5em;
     border: none;
     padding: 10px;

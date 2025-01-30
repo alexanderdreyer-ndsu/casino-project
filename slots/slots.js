@@ -8,8 +8,8 @@ const outputTable = document.getElementById("outputTable").getElementsByTagName(
 let balance = 100;
 let bet = 0;
 
-balanceOutput.innerText = balance;
-betDisplay.innerText = bet;
+balanceOutput.innerText = balance.toFixed(2);
+betDisplay.innerText = bet.toFixed(2);
 
 function generateSpin() {
     const objects = ['🏆', '💰', '🍊', '🍒', '💎', '🔔', '👑', '💸', '🧨', '🍉', '🍌', '🍀', '🍇', '🍎', '💲', '🥝', '❤️', '🎰', '🎲'];
@@ -129,7 +129,7 @@ function main() {
             
             if (bet > maxBet) bet = maxBet;
 
-            betDisplay.innerText = "$" + bet;
+            betDisplay.innerText = "$" + bet.toFixed(2);
         });
     }
 

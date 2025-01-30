@@ -40,13 +40,15 @@ body {
 
 #tableOutput {
     border: none;
-    width: 745px;
-    height: 530px;
+    width: 717px;
+    height: 475px;
     border-radius: 15px;
     background: radial-gradient(circle, #a428c4, black);
     font-size: 100px;
-    padding: 25px;
+    padding: 15px;
     display: inline-block;
+    justify-content: center;
+    align-items: center;
     margin-left: auto;
     margin-right: auto;
     overflow: hidden;
@@ -76,11 +78,10 @@ body {
 }
 
 #betDisplay {
-    margin-left: 50px;
-    margin-right: 50px;
     text-align: center;
     color: white;
-    width: 37px;
+    width: 100px;
+    margin: 0 20px;
 }
 
 #previousWin {
@@ -90,7 +91,7 @@ body {
 
 #modify-bet-div {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
 #previous-win-div {
@@ -115,7 +116,7 @@ body {
 }
 
 #game {
-    margin-top: 20px;
+    scale: 0.90;
 }
 
 .slideInTop {
