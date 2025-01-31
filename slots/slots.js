@@ -44,7 +44,7 @@ function printColumn(iterator, listOfSpunObjects) {
 
 function printSpin(spunObjects) {
     outputTable.innerText = "";
-
+    
     const columnDelayInMilliseconds = 750;
 
     for (let i = 0; i < 5; i++) {

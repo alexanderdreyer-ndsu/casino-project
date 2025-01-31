@@ -1,5 +1,26 @@
 body {
-    background: linear-gradient(#2f0e98, black);
+    background-color: black;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    scale: 0.93;
+}
+
+#tableOutput {
+    display: inline-block;
+    overflow: hidden;
+    border: 2px solid;
+    width: 700px;
+    height: 460px;
+    font-size: 100px;
+}
+
+.outputCells{
+    text-align: center;
 }
 
 .bettingBtns{
@@ -26,32 +47,6 @@ body {
     width: 100px;
     border-radius: 15px;
     height: 50px;
-}
-
-.outputCells{
-    text-align: center;
-    color: white;
-}
-
-#gameDisplay {
-    display: flex;
-    justify-content: space-evenly;
-}
-
-#tableOutput {
-    border: none;
-    width: 717px;
-    height: 475px;
-    border-radius: 15px;
-    background: radial-gradient(circle, #a428c4, black);
-    font-size: 100px;
-    padding: 15px;
-    display: inline-block;
-    justify-content: center;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    overflow: hidden;
 }
 
 #spinBtn {
@@ -108,15 +103,9 @@ body {
     display: flex;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 900px;
+    margin-top: 12px;
+    width: 80%;
     justify-content: space-between;
-
-}
-
-#game {
-    scale: 0.90;
 }
 
 .slideInTop {
