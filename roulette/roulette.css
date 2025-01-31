@@ -167,6 +167,21 @@
     background-color: hsl(120, 61%, 70%);
 }
 
+.zero-top {
+    pointer-events: none;
+    border-bottom: none;
+}
+
+.zero-middle {
+    border-top: none;
+    border-bottom: none;
+}
+
+.zero-bottom {
+    pointer-events: none;
+    border-top: none;
+}
+
 #gameInfo {
     margin-left: auto;
     margin-right: auto;
