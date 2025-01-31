@@ -5,11 +5,12 @@ const balanceDisplay = document.getElementById("balance-output");
 const clearBetButton = document.getElementById("clear-bet");
 const spinOutput = document.getElementById("spinOutput");
 const spinOutputDiv = document.getElementById("spinOutputDiv");
+const validStrings = ["1/12", "2/12", "3/12", "Evens", "Odds", "Red", "Black", "High", "Low", "two-to-one-cell top", "two-to-one-cell middle", "two-to-one-cell bottom"];
+
+
 let previousNumbersDisplay = document.getElementById("previous-numbers");
 let timer = document.getElementById("timer");
 let betsAvailableLabel = document.getElementById("bets-available-label");
-
-const validStrings = ["1/12", "2/12", "3/12", "Evens", "Odds", "Red", "Black", "High", "Low"];
 
 let chipSize = 0;
 let thisBet = 0;
@@ -58,6 +59,18 @@ function addToPreviousSpins(num, color) {
 function payout(inputMap, spin, color) {
     let payout = 0;
 
+    let firstRow = ["3"];
+    let secondRow = ["2"];
+    let thirdRow = ["1"];
+
+    for (let i = 4; i < 37; i++) {
+        const imodthree = i % 3;
+
+        if (imodthree === 0) firstRow.push(i.toString());
+        if (imodthree === 2) secondRow.push(i.toString());
+        if (imodthree === 1) thirdRow.push(i.toString());
+    }
+
     for (let item of inputMap.keys()) {
         if (item === spin.toString()) {
             payout += inputMap.get(item) * 36;
@@ -73,6 +86,12 @@ function payout(inputMap, spin, color) {
             payout += inputMap.get(item) * 2;
         } else if (item === "19 to 36" && spin <= 18) {
             payout += inputMap.get(item) * 2;
+        } else if (item === "two-to-one-cell bottom" && thirdRow.includes(spin.toString())) {
+            payout += inputMap.get(item) * 3;
+        } else if (item === "two-to-one-cell middle" && secondRow.includes(spin.toString())) {
+            payout += inputMap.get(item) * 3;
+        } else if (item === "two-to-one-cell top" && firstRow.includes(spin.toString())) {
+            payout += inputMap.get(item) * 3;
         } else if (item === color) {
             payout += inputMap.get(item) * 2;
         }
@@ -90,7 +109,7 @@ function spin() {
         if (parseInt(cell.id) === spinNumberAndColor[0]) {
             cell.style.animation = "none";
             void cell.offsetWidth;
-            cell.style.animation = "flash 1.5s linear";
+            cell.style.animation = "flash 2s ease-out";
         }
     }
 
@@ -139,19 +158,19 @@ function addBet(cell) {
         return window.alert("Insufficient funds");
     }
 
-    const isCellAlreadyInUserBets = userBets.has(cell.id);
+    const isCellAlreadyInUserBets = userBets.has(cell.className);
 
     const chipToBeDisplayed = document.createElement("button");
     chipToBeDisplayed.className = "chips-on-board";
 
     if (isCellAlreadyInUserBets) {
-        const currentBetOnThisCell = userBets.get(cell.id);
+        const currentBetOnThisCell = userBets.get(cell.className);
 
         const updatedChip = document.createElement("button");
         updatedChip.className = "chips-on-board";
         updatedChip.innerText = currentBetOnThisCell + chipSize;
 
-        userBets.set(cell.id, currentBetOnThisCell + chipSize);
+        userBets.set(cell.className, currentBetOnThisCell + chipSize);
 
         balance -= chipSize;
         thisBet += chipSize;
@@ -159,7 +178,7 @@ function addBet(cell) {
         cell.innerHTML = "";
         cell.appendChild(updatedChip);
     } else {
-        userBets.set(cell.id, chipSize);
+        userBets.set(cell.className, chipSize);
 
         balance -= chipSize;
         thisBet += chipSize;

@@ -99,17 +99,38 @@
     color: white;
     cursor: pointer;
     text-align: center;
-    width: 177px;
+    width: 220px;
+    height: 50px;
+    font-size: large;
+    transition: 150ms ease;
+    border: 2px solid;
+    border-color: white;
+    border-top: none;
+    border-bottom: none;
+}
+.twelvesCells:hover {
+    background-color: hsl(120, 61%, 44%);
+}
+.twelvesCells:active {
+    background-color: hsl(120, 61%, 54%);
+}
+
+.two-to-one-cell {
+    background-color: forestgreen;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    width: 55px;
     height: 50px;
     font-size: large;
     transition: 150ms ease;
     border: 2px solid;
     border-color: white;
 }
-.twelvesCells:hover {
+.two-to-one-cell:hover {
     background-color: hsl(120, 61%, 44%);
 }
-.twelvesCells:active {
+.two-to-one-cell:active {
     background-color: hsl(120, 61%, 54%);
 }
 
@@ -209,15 +230,14 @@
 }
 
 #secondaryBets {
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    margin-left: 55px;
 }
 
 #secondaryBets2 {
-    margin-left: auto;
-    margin-right: auto;
-    border: 2px solid;
-    border-color: white;
+    display: flex;
+    margin-left: 55px;
+    width: 662px;
 }
 
 .spin-output {
