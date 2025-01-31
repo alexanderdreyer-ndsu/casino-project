@@ -72,7 +72,9 @@ function payout(inputMap, spin, color) {
     }
 
     for (let item of inputMap.keys()) {
-        if (item === spin.toString()) {
+        const getItemClassNumber = item.split(" ");
+        
+        if (parseInt(getItemClassNumber[0]) === spin) {
             payout += inputMap.get(item) * 36;
         } else if (item === "1/12" && spin >= 1 && spin <= 12) {
             payout += inputMap.get(item) * 3;
