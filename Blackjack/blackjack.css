@@ -1,9 +1,8 @@
-body{
+body {
     background: radial-gradient(circle, forestgreen, black);
-    overflow: hidden;
 }
 
-.page-all{
+.page-all {
     display: flex;
     justify-content: space-between;
     border: none;
@@ -11,10 +10,11 @@ body{
     color: white;
     margin: 0px auto;
     width: 1200px;
+    position: relative;
     overflow: hidden;
 }
 
-.game-info{
+.game-info {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -22,7 +22,7 @@ body{
     margin-left: -550px;
 }
 
-.dealer-cards{
+.dealer-cards {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -30,7 +30,7 @@ body{
     position: absolute;
 }
 
-.player-cards{
+.player-cards {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -39,7 +39,7 @@ body{
     margin: 200px 0;
 }
 
-.player-control-btns{
+.player-control-btns {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -47,8 +47,8 @@ body{
     margin-right: 100px;
 }
 
-.game-btns{
-    background-color:#ddc300;
+.game-btns {
+    background-color: #ddc300;
     padding: 15px;
     border: none;
     border-radius: 15px;
@@ -56,14 +56,17 @@ body{
     font-weight: bold;
     transition: 150ms;
 }
-.game-btns:hover{
+
+.game-btns:hover {
     scale: 1.3;
     cursor: pointer;
 }
-.game-btns:active{
+
+.game-btns:active {
     scale: 1.5;
 }
-.game-btns:disabled{
+
+.game-btns:disabled {
     background-color: hsl(53, 100%, 23%);
 }
 
@@ -86,7 +89,7 @@ body{
     font-family: 'Franklin Gothic Medium';
 }
 
-#display-dealer-cards{
+#display-dealer-cards {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -94,7 +97,7 @@ body{
     margin-left: 10px;
 }
 
-#display-player-cards{
+#display-player-cards {
     display: flex;
     gap: 0.5em;
     border: none;
@@ -102,7 +105,7 @@ body{
     border-radius: 7px;
 }
 
-#display-player-split-cards{
+#display-player-split-cards {
     display: flex;
     gap: 0.5em;
     border: none;
