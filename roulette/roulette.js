@@ -76,25 +76,27 @@ function payout(inputMap, spin, color) {
         
         if (parseInt(getItemClassNumber[0]) === spin) {
             payout += inputMap.get(item) * 36;
-        } else if (item === "1/12" && spin >= 1 && spin <= 12) {
+        } else if (getItemClassNumber[0] === "1/12" && spin >= 1 && spin <= 12) {
             payout += inputMap.get(item) * 3;
-        } else if (item === "2/12" && spin >= 13 && spin <= 24) {
+        } else if (getItemClassNumber[0] === "2/12" && spin >= 13 && spin <= 24) {
             payout += inputMap.get(item) * 3;
-        } else if (item === "3/12" && spin >= 25 && spin <= 36) {
+        } else if (getItemClassNumber[0] === "3/12" && spin >= 25 && spin <= 36) {
             payout += inputMap.get(item) * 3;
-        } else if (item === "Evens" && spin % 2 === 0) {
+        } else if (getItemClassNumber[0] === "Evens" && spin % 2 === 0) {
             payout += inputMap.get(item) * 2;
-        } else if (item === "Odds" && spin % 2 !== 0) {
+        } else if (getItemClassNumber[0] === "Odds" && spin % 2 !== 0) {
             payout += inputMap.get(item) * 2;
-        } else if (item === "19 to 36" && spin <= 18) {
+        } else if (getItemClassNumber[0] === "Low" && spin <= 18) {
             payout += inputMap.get(item) * 2;
-        } else if (item === "two-to-one-cell bottom" && thirdRow.includes(spin.toString())) {
+        } else if (getItemClassNumber[0] === "High" && spin > 18) {
+            payout += inputMap.get(item) * 2;
+        } else if (getItemClassNumber[0] === "two-to-one-cell bottom" && thirdRow.includes(spin.toString())) {
             payout += inputMap.get(item) * 3;
-        } else if (item === "two-to-one-cell middle" && secondRow.includes(spin.toString())) {
+        } else if (getItemClassNumber[0] === "two-to-one-cell middle" && secondRow.includes(spin.toString())) {
             payout += inputMap.get(item) * 3;
-        } else if (item === "two-to-one-cell top" && firstRow.includes(spin.toString())) {
+        } else if (getItemClassNumber[0] === "two-to-one-cell top" && firstRow.includes(spin.toString())) {
             payout += inputMap.get(item) * 3;
-        } else if (item === color) {
+        } else if (getItemClassNumber[0] === color) {
             payout += inputMap.get(item) * 2;
         }
     }
