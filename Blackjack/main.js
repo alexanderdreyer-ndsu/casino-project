@@ -205,7 +205,7 @@ function reduceHandAces(hand) {
     }
 
     for (const card of hand.cards) {
-        if (card.numValue === 'Ace') hand.count -= 10;
+        if (card.numValue === 'Ace' && hand.count > 21) hand.count -= 10;
     }
 }
 
