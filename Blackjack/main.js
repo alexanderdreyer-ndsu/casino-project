@@ -219,7 +219,7 @@ function runDealerTurn() {
         reduceHandAces(dealerHand);
     }
 
-    if (dealerHand.count === 17 && dealerHand.cards.some(card => card.numValue === 'Ace') && dealerHand.cards.length === 2) {
+    if (dealerHand.count - 10 === 7 && dealerHand.cards.some(card => card.numValue === 'Ace')) {
         drawCard(dealerHand);
     }
 
