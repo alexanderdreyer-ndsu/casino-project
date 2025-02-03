@@ -90,11 +90,11 @@ function payout(inputMap, spin, color) {
             payout += inputMap.get(item) * 2;
         } else if (getItemClassNumber[0] === "High" && spin > 18) {
             payout += inputMap.get(item) * 2;
-        } else if (getItemClassNumber[0] === "two-to-one-cell bottom" && thirdRow.includes(spin.toString())) {
+        } else if (getItemClassNumber[0] === "two-to-one-bottom" && thirdRow.includes(spin.toString())) {
             payout += inputMap.get(item) * 3;
-        } else if (getItemClassNumber[0] === "two-to-one-cell middle" && secondRow.includes(spin.toString())) {
+        } else if (getItemClassNumber[0] === "two-to-one-middle" && secondRow.includes(spin.toString())) {
             payout += inputMap.get(item) * 3;
-        } else if (getItemClassNumber[0] === "two-to-one-cell top" && firstRow.includes(spin.toString())) {
+        } else if (getItemClassNumber[0] === "two-to-one-top" && firstRow.includes(spin.toString())) {
             payout += inputMap.get(item) * 3;
         } else if (getItemClassNumber[0] === color) {
             payout += inputMap.get(item) * 2;
