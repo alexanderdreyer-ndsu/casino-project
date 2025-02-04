@@ -47,11 +47,15 @@ body {
     background-position: center;
 }
 
+#classic-slots {
+    background-color: orange;
+}
+
 #slots-cell {
     grid-area: 1 / 2 / 2 / 3;
 }
 
-#Blackjack {
+#blackjack {
     background-image: url("blackjack1.webp");
     background-size: cover;
     background-position: center;

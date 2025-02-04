@@ -3,7 +3,7 @@ const bettingBtns = document.getElementsByClassName("bettingBtns");
 const balanceOutput = document.getElementById("balance-output");
 const betDisplay = document.getElementById("betDisplay");
 const prevWinDisplay = document.getElementById("prevWinDisplay");
-const outputTable = document.getElementById("outputTable").getElementsByTagName('tbody')[0];
+const outputTable = document.getElementById("outputTableContainer").getElementsByTagName('tbody')[0];
 
 let balance = 100;
 let bet = 0;
@@ -12,42 +12,34 @@ balanceOutput.innerText = balance.toFixed(2);
 betDisplay.innerText = bet.toFixed(2);
 
 function generateSpin() {
-    const objects = ['🏆', '💰', '🍊', '🍒', '💎', '🔔', '👑', '💸', '🧨', '🍉', '🍌', '🍀', '🍇', '🍎', '💲', '🥝', '❤️', '🎲'];
-    let spunObjects = [];
+    const objects = ['🍒', '🍋', '💎', '7️⃣', '🍇'];
+    let spunRow = [];
 
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 3; i++) {
         let spin = Math.floor(Math.random() * objects.length);
 
-        spunObjects.push(objects[spin]);
+        spunRow.push(objects[spin]);
     }
 
-    return spunObjects;
+    return spunRow;
 }
 
 function printColumn(iterator, listOfSpunObjects) {
     let firstOutputRow = outputTable.rows[0] || outputTable.insertRow();
-    let secondOutputRow = outputTable.rows[1] || outputTable.insertRow();
-    let thirdOutputRow = outputTable.rows[2] || outputTable.insertRow();
 
     const newCell = firstOutputRow.insertCell(iterator);
-    const newCell2 = secondOutputRow.insertCell(iterator);
-    const newCell3 = thirdOutputRow.insertCell(iterator);
 
     newCell.className = "outputCells slideInTop";
-    newCell2.className = "outputCells slideInTop";
-    newCell3.className = "outputCells slideInTop";
 
     newCell.innerText = listOfSpunObjects[iterator];
-    newCell2.innerText = listOfSpunObjects[iterator + 5];
-    newCell3.innerText = listOfSpunObjects[iterator + 10];
 }
 
 function printSpin(spunObjects) {
     outputTable.innerText = "";
     
-    const columnDelayInMilliseconds = 750;
+    const columnDelayInMilliseconds = 625;
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 3; i++) {
         setTimeout(() => {
             printColumn(i, spunObjects);
         }, i * columnDelayInMilliseconds);
@@ -55,33 +47,45 @@ function printSpin(spunObjects) {
 }
 
 function populateTable() {
-    const defaultItems = generateSpin();
+    const initItems = generateSpin();
 
-    for (let i = 0; i < 5; i++) {
-        printColumn(i, defaultItems);
+    for (let i = 0; i < 3; i++) {
+        printColumn(i, initItems);
     }
 }
 
-function payout(spunObjects, bet) {
-    const cells = document.getElementsByClassName("outputCells");
+function compareArrays(winningRows, spunRow) {
+    const sortFirst = winningRows.sort();
+    const sortSecond = spunRow.sort();
+
+    return sortFirst.every((value, index) => value === sortSecond[index]);
+}
+
+function payout(spunRow, bet) {
+    const allDiamond = ['💎', '💎', '💎'];
+    const allCherries = ['🍒', '🍒', '🍒'];
+    const allSevens = ['7️⃣', '7️⃣', '7️⃣'];
+    const allLemons = ['🍋', '🍋', '🍋'];
+    const allGrapes = ['🍇', '🍇', '🍇'];
+    const twoSevensDiamond = ['7️⃣', '💎', '7️⃣'];
+    const allFruit = ['🍒', '🍋', '🍇'];
+    const twoDiamondsSeven = ['💎', '7️⃣', '💎'];
+
+    const winningRows = new Map();
+    winningRows.set(allDiamond, 30);
+    winningRows.set(allSevens, 7);
+    winningRows.set(allCherries, 5);
+    winningRows.set(allLemons, 3);
+    winningRows.set(allGrapes, 3);
+    winningRows.set(twoSevensDiamond, 5);
+    winningRows.set(allFruit, 5);
+    winningRows.set(twoDiamondsSeven, 7);
 
     let payoutAmount = 0;
-    let multiplier = 0.334;
-    const amountOfOccurrancesToWin = 3;
-    const occurrances = new Map();
-    
-    for (let item of spunObjects) {
-        occurrances.has(item) ? occurrances.set(item, occurrances.get(item) + 1) : occurrances.set(item, 1);
-    }
 
-    for (let [item, count] of occurrances.entries()) {
-        if (item === '💎' && count >= amountOfOccurrancesToWin) multiplier = 0.5;
-        if (count >= amountOfOccurrancesToWin) payoutAmount += bet * (count * multiplier);
-    }
-
-    for (let cell of cells) {
-        if (occurrances.get(cell.innerHTML.trim()) >= amountOfOccurrancesToWin) {
-            cell.className = "outputCells flashForWin";
+    for (let row of winningRows.keys()) {
+        if (compareArrays(row, spunRow)) {
+            payoutAmount += bet * winningRows.get(row);
         }
     }
 
@@ -95,10 +99,11 @@ function spin() {
     balanceOutput.innerText = balance.toFixed(2);
 
     const spunObjects = generateSpin();
+    const delayUntilNextSpinMilliseconds = 2200;
 
     setTimeout(() => {
         spinbtn.disabled = false;
-    }, 4000);
+    }, delayUntilNextSpinMilliseconds);
 
     printSpin(spunObjects);
 
@@ -108,15 +113,15 @@ function spin() {
 
         balanceOutput.innerText = balance.toFixed(2);
         prevWinDisplay.innerText = payoutAmount.toFixed(2);
-    }, 4000);
+    }, delayUntilNextSpinMilliseconds);
 }
 
 function main() {
     populateTable();
 
-    const maxBet = 50;
+    const maxBet = 25;
 
-    const buttonIncrement = 5;
+    const buttonIncrement = 1;
 
     for (let btn of bettingBtns) {
         btn.addEventListener("click", () => {
@@ -146,10 +151,10 @@ function main() {
 main();
 
 
-//EV calculation - currently ~ 0.93
+//EV calculation - currently ~ 0.90
 function calculateExpectedValue(amountOfSpins) {
     let amountWagered = 0;
-    let bet = 5;
+    let bet = 1;
     let totalPayout = 0;
 
     for (let i = 0; i < amountOfSpins; i++) {
