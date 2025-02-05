@@ -3,7 +3,7 @@ const bettingBtns = document.getElementsByClassName("bettingBtns");
 const balanceOutput = document.getElementById("balance-output");
 const betDisplay = document.getElementById("betDisplay");
 const prevWinDisplay = document.getElementById("prevWinDisplay");
-const outputTable = document.getElementById("outputTableContainer").getElementsByTagName('tbody')[0];
+const outputTableContainer = document.getElementById("output-table-container")
 
 let balance = 100;
 let bet = 0;
@@ -24,33 +24,29 @@ function generateSpin() {
     return spunRow;
 }
 
-function printColumn(iterator, listOfSpunObjects) {
-    let firstOutputRow = outputTable.rows[0] || outputTable.insertRow();
-
-    const newCell = firstOutputRow.insertCell(iterator);
-
-    newCell.className = "outputCells slideInTop";
-
-    newCell.innerText = listOfSpunObjects[iterator];
+function printColumns(i, spunRow) {
+    const gameColumn = document.createElement("h1");
+    outputTableContainer.appendChild(gameColumn);
+    gameColumn.innerText = spunRow[i];
+    gameColumn.className = "column slideInTop";
 }
 
-function printSpin(spunObjects) {
-    outputTable.innerText = "";
-    
+function printSpin(spunRow) {
+    outputTableContainer.innerText = "";
     const columnDelayInMilliseconds = 625;
 
     for (let i = 0; i < 3; i++) {
         setTimeout(() => {
-            printColumn(i, spunObjects);
+            printColumns(i, spunRow);
         }, i * columnDelayInMilliseconds);
     }
 }
 
 function populateTable() {
-    const initItems = generateSpin();
+    const initRow = generateSpin();
 
     for (let i = 0; i < 3; i++) {
-        printColumn(i, initItems);
+        printColumns(i, initRow);
     }
 }
 
