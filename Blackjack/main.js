@@ -1,14 +1,14 @@
-const playBtn = document.getElementById("play-btn");
-const hitBtn = document.getElementById("hit-btn");
-const stayBtn = document.getElementById("stay-btn");
-const splitBtn = document.getElementById("split-btn");
-const doubleBtn = document.getElementById("double-btn");
+const playBtn = document.querySelector("#play-btn");
+const hitBtn = document.querySelector("#hit-btn");
+const stayBtn = document.querySelector("#stay-btn");
+const splitBtn = document.querySelector("#split-btn");
+const doubleBtn = document.querySelector("#double-btn");
 
-let playerCardDisplay = document.getElementById("display-player-cards");
-let dealerCardDisplay = document.getElementById("display-dealer-cards");
-let playerSplitCardDisplay = document.getElementById("display-player-split-cards");
-let displayGameInfo = document.getElementById("game-output-display");
-let balanceOutput = document.getElementById("balance-output");
+let playerCardDisplay = document.querySelector("#display-player-cards");
+let dealerCardDisplay = document.querySelector("#display-dealer-cards");
+let playerSplitCardDisplay = document.querySelector("#display-player-split-cards");
+let displayGameInfo = document.querySelector("#game-output-display");
+let balanceOutput = document.querySelector("#balance-output");
 
 let faceDownCardImage = document.createElement('img');
 
@@ -330,7 +330,7 @@ function split() {
 }
 
 function game() {
-    let userBetInput = document.getElementById("user-input-bet").value;
+    let userBetInput = document.querySelector("#user-input-bet").value;
 
     displayGameInfo.innerText = "";
 
