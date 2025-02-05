@@ -1,4 +1,4 @@
-#text {
+#text-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,6 +21,7 @@
     margin-top: 75px;
     transition: 150ms;
 }
+
 #go-home-button:hover {
     scale: 1.3;
     cursor: pointer;
