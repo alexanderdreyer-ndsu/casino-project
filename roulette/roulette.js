@@ -1,16 +1,15 @@
-const cells = document.getElementsByTagName("td");
-const chips = document.getElementsByClassName("chips");
-const spinButton = document.getElementById("spin");
-const balanceDisplay = document.getElementById("balance-output");
-const clearBetButton = document.getElementById("clear-bet");
-const spinOutput = document.getElementById("spinOutput");
-const spinOutputDiv = document.getElementById("spinOutputDiv");
+const cells = document.querySelectorAll("td");
+const chips = document.querySelectorAll(".chips");
+const spinButton = document.querySelector("#spin");
+const balanceDisplay = document.querySelector("#balance-output");
+const spinOutput = document.querySelector("#spinOutput");
+const spinOutputDiv = document.querySelector("#spinOutputDiv");
 const validStrings = ["1/12", "2/12", "3/12", "Evens", "Odds", "Red", "Black", "High", "Low", "two-to-one-cell top", "two-to-one-cell middle", "two-to-one-cell bottom"];
 
 
-let previousNumbersDisplay = document.getElementById("previous-numbers");
-let timer = document.getElementById("timer");
-let betsAvailableLabel = document.getElementById("bets-available-label");
+let previousNumbersDisplay = document.querySelector("#previous-numbers");
+let timer = document.querySelector("#timer");
+let betsAvailableLabel = document.querySelector("#bets-available-label");
 
 let chipSize = 0;
 let thisBet = 0;
@@ -49,7 +48,7 @@ function addToPreviousSpins(num, color) {
     newNumber.classList.add("spin-output");
     newNumber.appendChild(newNumberText);
 
-    newNumberText.innerText = num;
+    newNumberText.textContent = num;
 
     newNumber.style.backgroundColor = color.toLowerCase().toString();
 
@@ -101,13 +100,14 @@ function payout(inputMap, spin, color) {
         }
     }
 
+    console.log(`Payout: ${payout}`);
     return payout;
 }
 
 function spin() {
     let spinNumberAndColor = generateSpin();
 
-    const gameCells = document.getElementsByClassName("game-cell")
+    const gameCells = document.querySelectorAll(".game-cell")
 
     for (let cell of gameCells) {
         if (parseInt(cell.id) === spinNumberAndColor[0]) {
@@ -120,9 +120,10 @@ function spin() {
     let winnings = payout(userBets, spinNumberAndColor[0], spinNumberAndColor[1]);
     balance += winnings;
     userBets.clear();
-    balanceDisplay.innerText = balance.toFixed(2);
+    balanceDisplay.textContent = balance.toFixed(2);
     thisBet = 0;
 
+    console.log(`Balance: ${balance}`);
     clearBet();
 }
 
@@ -135,16 +136,15 @@ function updateTimer() {
     }
 
     betsClosed = timeUntilSpin <= 10;
-    betsAvailableLabel.innerText = betsClosed ? "Bets Closed" : "Bets Open";
-
-    timer.innerText = timeUntilSpin;
+    betsAvailableLabel.textContent = betsClosed ? "Bets Closed" : "Bets Open";
+    timer.textContent = timeUntilSpin;
 }
 
 function clearBet() {
     userBets.clear();
-
+    
     balance += thisBet;
-    balanceDisplay.innerText = balance.toFixed(2);
+    balanceDisplay.textContent = balance.toFixed(2);
 
     thisBet = 0;
 
@@ -153,7 +153,7 @@ function clearBet() {
             cell.removeChild(cell.firstChild);
         }
         
-        cell.innerText = cell.id;
+        cell.textContent = cell.id;
     }
 }
 
@@ -172,14 +172,14 @@ function addBet(cell) {
 
         const updatedChip = document.createElement("button");
         updatedChip.className = "chips-on-board";
-        updatedChip.innerText = currentBetOnThisCell + chipSize;
+        updatedChip.textContent = currentBetOnThisCell + chipSize;
 
         userBets.set(cell.className, currentBetOnThisCell + chipSize);
 
         balance -= chipSize;
         thisBet += chipSize;
 
-        cell.innerHTML = "";
+        cell.textContent = "";
         cell.appendChild(updatedChip);
     } else {
         userBets.set(cell.className, chipSize);
@@ -187,16 +187,16 @@ function addBet(cell) {
         balance -= chipSize;
         thisBet += chipSize;
 
-        cell.innerHTML = "";
-        chipToBeDisplayed.innerText = chipSize;
+        cell.textContent = "";
+        chipToBeDisplayed.textContent = chipSize;
         cell.appendChild(chipToBeDisplayed);
     }
 
-    balanceDisplay.innerText = balance.toFixed(2);
+    balanceDisplay.textContent = balance.toFixed(2);
 }
 
 function main() {
-    balanceDisplay.innerText = balance.toFixed(2);
+    balanceDisplay.textContent = balance.toFixed(2);
 
     for (let i = 0; i < 37; i++) {
         validStrings.push(i.toString());
@@ -219,7 +219,7 @@ function main() {
         });
     }
 
-    clearBetButton.addEventListener("click", clearBet);
+    document.querySelector("#clear-bet").addEventListener("click", clearBet);
 
     setInterval(updateTimer, 1000);
 }
