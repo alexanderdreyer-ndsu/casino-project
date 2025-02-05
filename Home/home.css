@@ -14,7 +14,10 @@ body {
     color: white;
     min-width: 415px;
     min-height: 200px;
+    color: white;
+    -webkit-text-stroke: 1px black;
 }
+
 .game-btns:hover {
     scale: 1.05;
     outline: 3px solid gold;
@@ -48,7 +51,9 @@ body {
 }
 
 #classic-slots {
-    background-color: orange;
+    background-image: url("Screenshot\ 2025-02-05\ 131918.png");
+    background-size: cover;
+    background-position: center;
 }
 
 #slots-cell {

@@ -94,16 +94,16 @@ function spin() {
     balance -= bet;
     balanceOutput.textContent = balance.toFixed(2);
 
-    const spunObjects = generateSpin();
+    const spunRow = generateSpin();
 
     setTimeout(() => {
         spinBtn.disabled = false;
     }, 2200);
 
-    printSpin(spunObjects);
+    printSpin(spunRow);
 
     setTimeout(() => {
-        const payoutAmount = payout(spunObjects, bet);
+        const payoutAmount = payout(spunRow, bet);
         balance += payoutAmount;
 
         balanceOutput.textContent = balance.toFixed(2);
