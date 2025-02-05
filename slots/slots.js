@@ -1,9 +1,9 @@
-const spinbtn = document.getElementById("spinBtn");
-const bettingBtns = document.getElementsByClassName("bettingBtns");
-const balanceOutput = document.getElementById("balance-output");
-const betDisplay = document.getElementById("betDisplay");
-const prevWinDisplay = document.getElementById("prevWinDisplay");
-const outputTable = document.getElementById("outputTable").getElementsByTagName('tbody')[0];
+const spinbtn = document.querySelector("#spinBtn");
+const bettingBtns = document.querySelectorAll(".bettingBtns");
+const balanceOutput = document.querySelector("#balance-output");
+const betDisplay = document.querySelector("#betDisplay");
+const prevWinDisplay = document.querySelector("#prevWinDisplay");
+const outputTable = document.querySelector("#outputTable").querySelectorAll('tbody')[0];
 
 let balance = 100;
 let bet = 0;
@@ -63,7 +63,7 @@ function populateTable() {
 }
 
 function payout(spunObjects, bet) {
-    const cells = document.getElementsByClassName("outputCells");
+    const cells = document.querySelectorAll(".outputCells");
 
     let payoutAmount = 0;
     let multiplier = 0.334;
@@ -135,16 +135,11 @@ function main() {
     }
 
     spinbtn.addEventListener("click", () => {
-        if (balance - bet < 0) {
-            return window.alert("Insufficient Funds");
-        }
-
-        if (bet > 0) spin();
+        if (bet > 0 && balance - bet >= 0) spin();
     });
 }
 
 main();
-
 
 //EV calculation - currently ~ 0.93
 function calculateExpectedValue(amountOfSpins) {

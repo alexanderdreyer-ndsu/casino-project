@@ -141,7 +141,6 @@ function main() {
 
 main();
 
-
 //EV calculation - currently ~ 0.90
 function calculateExpectedValue(amountOfSpins) {
     let amountWagered = 0;
