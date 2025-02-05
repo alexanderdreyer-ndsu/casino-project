@@ -1,15 +1,15 @@
-const spinbtn = document.getElementById("spinBtn");
-const bettingBtns = document.getElementsByClassName("bettingBtns");
-const balanceOutput = document.getElementById("balance-output");
-const betDisplay = document.getElementById("betDisplay");
-const prevWinDisplay = document.getElementById("prevWinDisplay");
-const outputTableContainer = document.getElementById("output-table-container")
+const spinBtn = document.querySelector("#spin-btn");
+const bettingBtns = document.querySelectorAll(".bettingBtns");
+const balanceOutput = document.querySelector("#balance-output");
+const betDisplay = document.querySelector("#betDisplay");
+const prevWinDisplay = document.querySelector("#prevWinDisplay");
+const outputTableContainer = document.querySelector("#output-table-container")
 
 let balance = 100;
 let bet = 0;
 
-balanceOutput.innerText = balance.toFixed(2);
-betDisplay.innerText = bet.toFixed(2);
+balanceOutput.textContent = balance.toFixed(2);
+betDisplay.textContent = bet.toFixed(2);
 
 function generateSpin() {
     const objects = ['🍒', '🍋', '💎', '7️⃣', '🍇'];
@@ -25,14 +25,14 @@ function generateSpin() {
 }
 
 function printColumns(i, spunRow) {
-    const gameColumn = document.createElement("h1");
+    const gameColumn = document.createElement("div");
     outputTableContainer.appendChild(gameColumn);
-    gameColumn.innerText = spunRow[i];
+    gameColumn.textContent = spunRow[i];
     gameColumn.className = "column slideInTop";
 }
 
 function printSpin(spunRow) {
-    outputTableContainer.innerText = "";
+    outputTableContainer.textContent = "";
     const columnDelayInMilliseconds = 625;
 
     for (let i = 0; i < 3; i++) {
@@ -89,17 +89,16 @@ function payout(spunRow, bet) {
 }
 
 function spin() {
-    spinbtn.disabled = true;
+    spinBtn.disabled = true;
 
     balance -= bet;
-    balanceOutput.innerText = balance.toFixed(2);
+    balanceOutput.textContent = balance.toFixed(2);
 
     const spunObjects = generateSpin();
-    const delayUntilNextSpinMilliseconds = 2200;
 
     setTimeout(() => {
-        spinbtn.disabled = false;
-    }, delayUntilNextSpinMilliseconds);
+        spinBtn.disabled = false;
+    }, 2200);
 
     printSpin(spunObjects);
 
@@ -107,9 +106,9 @@ function spin() {
         const payoutAmount = payout(spunObjects, bet);
         balance += payoutAmount;
 
-        balanceOutput.innerText = balance.toFixed(2);
-        prevWinDisplay.innerText = payoutAmount.toFixed(2);
-    }, delayUntilNextSpinMilliseconds);
+        balanceOutput.textContent = balance.toFixed(2);
+        prevWinDisplay.textContent = payoutAmount.toFixed(2);
+    }, 2200);
 }
 
 function main() {
@@ -131,16 +130,12 @@ function main() {
             
             if (bet > maxBet) bet = maxBet;
 
-            betDisplay.innerText = "$" + bet.toFixed(2);
+            betDisplay.textContent = "$" + bet.toFixed(2);
         });
     }
 
-    spinbtn.addEventListener("click", () => {
-        if (balance - bet < 0) {
-            return window.alert("Insufficient Funds");
-        }
-
-        if (bet > 0) spin();
+    spinBtn.addEventListener("click", () => {
+        if (bet > 0 && balance - bet >= 0) spin();
     });
 }
 
@@ -150,7 +145,7 @@ main();
 //EV calculation - currently ~ 0.90
 function calculateExpectedValue(amountOfSpins) {
     let amountWagered = 0;
-    let bet = 1;
+    const bet = 1;
     let totalPayout = 0;
 
     for (let i = 0; i < amountOfSpins; i++) {
