@@ -241,7 +241,7 @@ function hit() {
         return;
     }
 
-    if (playerHand1.count === 21 && !checkDidPlayerSplit) return runDealerTurn();
+    if (playerHand1.count >= 21 && !checkDidPlayerSplit) return runDealerTurn();
 
     if (playerHand2.count >= 21) return endGame();
 
