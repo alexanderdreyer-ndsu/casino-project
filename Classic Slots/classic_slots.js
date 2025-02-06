@@ -3,8 +3,7 @@ const bettingBtns = document.querySelectorAll(".bettingBtns");
 const balanceOutput = document.querySelector("#balance-output");
 const betDisplay = document.querySelector("#betDisplay");
 const prevWinDisplay = document.querySelector("#prevWinDisplay");
-const outputTableContainer = document.querySelector("#output-table-container")
-
+const doors = document.querySelectorAll(".door");
 let balance = 100;
 let bet = 0;
 
@@ -17,36 +16,31 @@ function generateSpin() {
 
     for (let i = 0; i < 3; i++) {
         let spin = Math.floor(Math.random() * objects.length);
-
         spunRow.push(objects[spin]);
     }
 
     return spunRow;
 }
 
-function printColumns(i, spunRow) {
-    const gameColumn = document.createElement("div");
-    outputTableContainer.appendChild(gameColumn);
-    gameColumn.textContent = spunRow[i];
-    gameColumn.className = "column slideInTop";
-}
+async function printSpin(spunRow) {
+    let i = 0;
+    let j = 1
 
-function printSpin(spunRow) {
-    outputTableContainer.textContent = "";
-    const columnDelayInMilliseconds = 625;
+    for (const door of doors) {
+        if (door.children.length !== 0) {
+            const currentItem = door.children[0];
+            currentItem.style.transform = `translateY(${door.clientHeight}px)`;
+            currentItem.addEventListener("transitionend", () => {
+                door.removeChild(currentItem);
+            });
+            await new Promise((resolve) => setTimeout(resolve, j++ + 400));
+        }
 
-    for (let i = 0; i < 3; i++) {
-        setTimeout(() => {
-            printColumns(i, spunRow);
-        }, i * columnDelayInMilliseconds);
-    }
-}
-
-function populateTable() {
-    const initRow = generateSpin();
-
-    for (let i = 0; i < 3; i++) {
-        printColumns(i, initRow);
+        const box = document.createElement("div");
+        box.textContent = spunRow[i++];
+        box.style.transition = "0.4s ease-in";
+        box.className = "box slideInTop";
+        door.appendChild(box);
     }
 }
 
@@ -66,7 +60,6 @@ function payout(spunRow, bet) {
     const twoSevensDiamond = ['7️⃣', '💎', '7️⃣'];
     const allFruit = ['🍒', '🍋', '🍇'];
     const twoDiamondsSeven = ['💎', '7️⃣', '💎'];
-
     const winningRows = new Map();
     winningRows.set(allDiamond, 30);
     winningRows.set(allSevens, 7);
@@ -76,7 +69,6 @@ function payout(spunRow, bet) {
     winningRows.set(twoSevensDiamond, 5);
     winningRows.set(allFruit, 5);
     winningRows.set(twoDiamondsSeven, 7);
-
     let payoutAmount = 0;
 
     for (let row of winningRows.keys()) {
@@ -90,10 +82,8 @@ function payout(spunRow, bet) {
 
 function spin() {
     spinBtn.disabled = true;
-
     balance -= bet;
     balanceOutput.textContent = balance.toFixed(2);
-
     const spunRow = generateSpin();
 
     setTimeout(() => {
@@ -112,14 +102,13 @@ function spin() {
 }
 
 function main() {
-    populateTable();
-
+    const initRow = generateSpin();
+    printSpin(initRow);
     const maxBet = 25;
-
     const buttonIncrement = 1;
 
-    for (let btn of bettingBtns) {
-        btn.addEventListener("click", () => {
+    for (const btn of bettingBtns) {
+        btn.addEventListener("click", function() {
             if (btn.id === "max-bet-btn") {
                 bet = maxBet;
             } else {
