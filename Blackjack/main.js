@@ -17,9 +17,7 @@ let playerHand1 = new Hand();
 let playerHand2 = new Hand();
 let shoe = new Shoe(6);
 let balance = 100;
-let originalBet;
-let totalBet;
-let faceDownCard;
+let originalBet, totalBet, faceDownCard;
 
 dealerHand.cardDisplay = dealerCardDisplay;
 playerHand1.cardDisplay = playerCardDisplay;
@@ -245,7 +243,7 @@ function hit() {
 
     if (playerHand1.count === 21 && !checkDidPlayerSplit) return runDealerTurn();
 
-    if (!checkDidPlayerSplit || playerHand2.count >= 21) return endGame();
+    if (playerHand2.count >= 21) return endGame();
 
     playerHand1.selected = false;
     playerHand2.selected = true;
@@ -329,7 +327,7 @@ function split() {
     checkForBlackjack();
 }
 
-function game() {
+async function game() {
     let userBetInput = document.querySelector("#user-input-bet").value;
 
     displayGameInfo.innerText = "";
