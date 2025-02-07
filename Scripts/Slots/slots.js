@@ -26,7 +26,6 @@ function generateSpin() {
 
 async function printSpin(listOfSpunObjects) {
     let i = 0;
-    let j = 0;
 
     for (const door of doors) {
         if (door.children.length !== 0) {
@@ -35,7 +34,7 @@ async function printSpin(listOfSpunObjects) {
             currentBoxes.addEventListener("transitionend", () => {
                 door.removeChild(currentBoxes);
             });
-            await new Promise((resolve) => setTimeout(resolve, j + 550));
+            await new Promise((resolve) => setTimeout(resolve, 510));
         }
 
         const boxes = document.createElement("div");
@@ -85,7 +84,7 @@ async function spin() {
     balanceOutput.textContent = balance.toFixed(2);
     const spunObjects = generateSpin();
     printSpin(spunObjects);
-    await new Promise((resolve) => setTimeout(resolve, 3800));
+    await new Promise((resolve) => setTimeout(resolve, 3700));
     spinbtn.disabled = false;
     const payoutAmount = payout(spunObjects, safeBet);
     balance += payoutAmount;
