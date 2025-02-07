@@ -12,7 +12,7 @@ balanceOutput.textContent = balance.toFixed(2);
 betDisplay.textContent = bet.toFixed(2);
 
 function generateSpin() {
-    const objects = ['🍍', '💰', '🍊', '🍒', '💎', '🍓', '👑', '🔪', '🌴', '🍉', '🍌', '🏺', '🍇', '🍎', '🧊', '🥝', '❤️', '🐱‍👤'];
+    const objects = ['🍍', '💰', '🍊', '🥭', '💎', '🍓', '👑', '🔪', '🌴', '🍉', '🍌', '🏺', '🍇', '🍎', '🧊', '🥝', '❤️', '🐱‍👤'];
     let spunObjects = [];
 
     for (let i = 0; i < 15; i++) {
@@ -56,21 +56,21 @@ async function printSpin(listOfSpunObjects) {
 function payout(spunObjects, bet) {
     let payoutAmount = 0;
     let multiplier = 0.334;
-    const amountOfOccurrancesToWin = 3;
-    const occurrances = new Map();
+    const freqToWin = 3;
+    const freqMap = new Map();
 
     for (let item of spunObjects) {
-        occurrances.has(item) ? occurrances.set(item, occurrances.get(item) + 1) : occurrances.set(item, 1);
+        freqMap.has(item) ? freqMap.set(item, freqMap.get(item) + 1) : freqMap.set(item, 1);
     }
 
-    for (let [item, count] of occurrances.entries()) {
-        if (item === '💎' && count >= amountOfOccurrancesToWin) multiplier = 0.5;
-        if (count >= amountOfOccurrancesToWin) payoutAmount += bet * (count * multiplier);
+    for (let [item, count] of freqMap.entries()) {
+        if (item === '💎' && count >= freqToWin) multiplier = 0.5;
+        if (count >= freqToWin) payoutAmount += bet * (count * multiplier);
     }
 
     const boxes = document.querySelectorAll(".box");
     for (let box of boxes) {
-        if (occurrances.get(box.textContent) >= amountOfOccurrancesToWin) {
+        if (freqMap.get(box.textContent) >= freqToWin) {
             box.classList.add("flashForWin");
         }
     }
@@ -79,14 +79,15 @@ function payout(spunObjects, bet) {
 }
 
 async function spin() {
+    const safeBet = bet;
     spinbtn.disabled = true;
-    balance -= bet;
+    balance -= safeBet;
     balanceOutput.textContent = balance.toFixed(2);
     const spunObjects = generateSpin();
     printSpin(spunObjects);
     await new Promise((resolve) => setTimeout(resolve, 3800));
     spinbtn.disabled = false;
-    const payoutAmount = payout(spunObjects, bet);
+    const payoutAmount = payout(spunObjects, safeBet);
     balance += payoutAmount;
     balanceOutput.textContent = balance.toFixed(2);
     prevWinDisplay.textContent = payoutAmount.toFixed(2);
