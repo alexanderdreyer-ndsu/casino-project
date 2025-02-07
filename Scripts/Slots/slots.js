@@ -34,7 +34,7 @@ async function printSpin(listOfSpunObjects) {
             currentBoxes.addEventListener("transitionend", () => {
                 door.removeChild(currentBoxes);
             });
-            await new Promise((resolve) => setTimeout(resolve, 510));
+            await new Promise((resolve) => setTimeout(resolve, 540));
         }
 
         const boxes = document.createElement("div");
