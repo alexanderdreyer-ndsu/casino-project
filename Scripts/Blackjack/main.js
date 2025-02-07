@@ -10,7 +10,7 @@ let playerSplitCardDisplay = document.querySelector("#display-player-split-cards
 let displayGameInfo = document.querySelector("#game-output-display");
 let balanceOutput = document.querySelector("#balance-output");
 
-let faceDownCardImage = document.createElement('img');
+let faceDownCardImage = document.createElement("img");
 
 let dealerHand = new Hand();
 let playerHand1 = new Hand();
@@ -29,7 +29,7 @@ function drawFaceDownCard() {
     faceDownCard = shoe.drawCard();
     dealerHand.addToHand(faceDownCard);
 
-    faceDownCardImage.src = "Images/backOfCard.jpeg";
+    faceDownCardImage.src = "../../Images/Blackjack/backOfCard.jpeg";
     faceDownCardImage.className = "game-cards slideInTop";
 
     dealerCardDisplay.appendChild(faceDownCardImage);

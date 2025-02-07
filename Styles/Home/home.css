@@ -35,7 +35,7 @@ body {
 }
 
 #roulette {
-    background-image: url("view-roulette-game-casino_23-2151007731.avif");
+    background-image: url("../../Images/Home/view-roulette-game-casino_23-2151007731.avif");
     background-size: cover;
     background-position-y: center;
 }
@@ -45,13 +45,13 @@ body {
 }
 
 #slots {
-    background-image: url("eugenia-vorontsova-promo-bg1.jpg");
+    background-image: url("../../Images/Home/eugenia-vorontsova-promo-bg1.jpg");
     background-size: cover;
     background-position: center;
 }
 
 #classic-slots {
-    background-image: url("Screenshot\ 2025-02-05\ 131918.png");
+    background-image: url("../../Images/Home/classic-slots-logo.png");
     background-size: cover;
     background-position: center;
 }
@@ -61,7 +61,7 @@ body {
 }
 
 #blackjack {
-    background-image: url("blackjack1.webp");
+    background-image: url("../../Images/Home/blackjack1.webp");
     background-size: cover;
     background-position: center;
 }

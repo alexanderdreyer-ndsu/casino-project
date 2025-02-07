@@ -10,7 +10,7 @@ class Shoe {
         for (let suite of suites) {
             for (let numValue of values) {
                 for (let cardAmount = 0; cardAmount < this.decks; cardAmount++) {
-                    let card = new Card(numValue, suite, `Images/${numValue}Of${suite}.png`);
+                    let card = new Card(numValue, suite, `../../Images/Blackjack/${numValue}Of${suite}.png`);
                     this.shoe.push(card);
                 }
             }
