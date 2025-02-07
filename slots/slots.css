@@ -1,46 +1,66 @@
 body {
-    background-color: black;
+    background-image: url(cartoon-forest-background-1920-x-1080-0xhrzw9zvozynyqh.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .container {
     display: flex;
     flex-direction: column;
+    height: 85vh;
+    justify-content: space-around;
+}
+
+#doors {
+    display: flex;
     justify-content: center;
-    align-items: center;
-    scale: 0.93;
+    gap: 1.5rem;
 }
 
-#tableOutput {
-    display: inline-block;
+.door {
+    background: rgb(255, 119, 119);
+    width: 180px;
+    height: 400px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px #000000 inset;
     overflow: hidden;
-    border: 2px solid;
-    width: 700px;
-    height: 460px;
-    font-size: 100px;
 }
 
-.outputCells{
-    text-align: center;
+.boxes {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+    font-size: 5.5rem;
 }
 
-.bettingBtns{
+.box {
+    border-radius: 15px;
+    animation: breathe 2.5s ease-in-out infinite;
+}
+
+.bettingBtns {
     width: 50px;
     height: 50px;
     border: none;
     border-radius: 50%;
     padding: 10px;
-    background-color: dodgerblue;
+    background-color: rgb(246, 17, 63);
     color: white;
     font-weight: 600;
-    transition: 150ms ease-in-out;
+    transition: 250ms ease-in-out;
 }
-.bettingBtns:hover{
+
+.bettingBtns:hover {
     scale: 1.3;
-    background-color: #ffe23b;
+    background-color: rgb(241, 25, 94);
 }
-.bettingBtns:active{
-    scale: 1.4  ;
-    background-color: yellow;
+
+.bettingBtns:active {
+    scale: 1.4;
+    background-color: rgb(246, 17, 63);
 }
 
 #max-bet-btn {
@@ -60,14 +80,17 @@ body {
     width: 200px;
     height: 50px;
 }
-#spinBtn:hover{
+
+#spinBtn:hover {
     scale: 1.2;
     background-color: #ffe23b;
 }
-#spinBtn:active{
+
+#spinBtn:active {
     scale: 1.3;
     background-color: yellow;
 }
+
 #spinBtn:disabled {
     background-color: grey;
 }
@@ -95,15 +118,13 @@ body {
     justify-content: center;
     padding: 5px;
     color: white;
-    background-color: #00af32;
+    background-color: #0099ff;
     border-radius: 15px;
 }
 
 #game-controls {
     display: flex;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 12px;
+    margin: 0 auto;
     width: 80%;
     justify-content: space-between;
 }
@@ -113,13 +134,26 @@ body {
 }
 
 .flashForWin {
-    animation: flashForWin 1.5s ease-in-out;
+    animation: flashForWin 0.5s ease-in-out infinite;
+}
+
+@keyframes breathe {
+    0%,
+    100% {
+        scale: 1;
+        transform: rotate(-0.5deg);
+    }
+
+    50% {
+        transform: rotate(0.5deg);
+        scale: 1.05;
+    }
 }
 
 @keyframes flashForWin {
     40% {
-        transform: translateY(-10px);
-        background-color: #f3c018;
+        transform: translateY(-5px);
+        background: #f3c018;
     }
 
     100% {
@@ -128,6 +162,7 @@ body {
 }
 
 @keyframes slideInTop {
+
     100%,
     75%,
     85% {

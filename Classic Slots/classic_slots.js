@@ -3,7 +3,6 @@ const bettingBtns = document.querySelectorAll(".bettingBtns");
 const balanceOutput = document.querySelector("#balance-output");
 const betDisplay = document.querySelector("#betDisplay");
 const prevWinDisplay = document.querySelector("#prevWinDisplay");
-const doors = document.querySelectorAll(".door");
 let balance = 100;
 let bet = 0;
 
@@ -25,6 +24,8 @@ function generateSpin() {
 async function printSpin(spunRow) {
     let i = 0;
     let j = 1
+
+    const doors = document.querySelectorAll(".door");
 
     for (const door of doors) {
         if (door.children.length !== 0) {

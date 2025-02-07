@@ -3,16 +3,16 @@ const bettingBtns = document.querySelectorAll(".bettingBtns");
 const balanceOutput = document.querySelector("#balance-output");
 const betDisplay = document.querySelector("#betDisplay");
 const prevWinDisplay = document.querySelector("#prevWinDisplay");
-const outputTable = document.querySelector("#outputTable").querySelectorAll('tbody')[0];
+const doors = document.querySelectorAll(".door");
 
 let balance = 100;
 let bet = 0;
 
-balanceOutput.innerText = balance.toFixed(2);
-betDisplay.innerText = bet.toFixed(2);
+balanceOutput.textContent = balance.toFixed(2);
+betDisplay.textContent = bet.toFixed(2);
 
 function generateSpin() {
-    const objects = ['🏆', '💰', '🍊', '🍒', '💎', '🔔', '👑', '💸', '🧨', '🍉', '🍌', '🍀', '🍇', '🍎', '💲', '🥝', '❤️', '🎲'];
+    const objects = ['🍍', '💰', '🍊', '🍒', '💎', '🍓', '👑', '🔪', '🌴', '🍉', '🍌', '🏺', '🍇', '🍎', '🧊', '🥝', '❤️', '🐱‍👤'];
     let spunObjects = [];
 
     for (let i = 0; i < 15; i++) {
@@ -24,52 +24,41 @@ function generateSpin() {
     return spunObjects;
 }
 
-function printColumn(iterator, listOfSpunObjects) {
-    let firstOutputRow = outputTable.rows[0] || outputTable.insertRow();
-    let secondOutputRow = outputTable.rows[1] || outputTable.insertRow();
-    let thirdOutputRow = outputTable.rows[2] || outputTable.insertRow();
+async function printSpin(listOfSpunObjects) {
+    let i = 0;
+    let j = 0;
 
-    const newCell = firstOutputRow.insertCell(iterator);
-    const newCell2 = secondOutputRow.insertCell(iterator);
-    const newCell3 = thirdOutputRow.insertCell(iterator);
+    for (const door of doors) {
+        if (door.children.length !== 0) {
+            const currentBoxes = door.children[0];
+            currentBoxes.style.transform = `translateY(${door.clientHeight + 100}px)`;
+            currentBoxes.addEventListener("transitionend", () => {
+                door.removeChild(currentBoxes);
+            });
+            await new Promise((resolve) => setTimeout(resolve, j + 550));
+        }
 
-    newCell.className = "outputCells slideInTop";
-    newCell2.className = "outputCells slideInTop";
-    newCell3.className = "outputCells slideInTop";
+        const boxes = document.createElement("div");
+        boxes.style.transition = "0.5s ease-in-out";
+        boxes.className = "boxes slideInTop";
 
-    newCell.innerText = listOfSpunObjects[iterator];
-    newCell2.innerText = listOfSpunObjects[iterator + 5];
-    newCell3.innerText = listOfSpunObjects[iterator + 10];
-}
+        for (let n = 0; n < 3; n++) {
+            const box = document.createElement("div");
+            box.classList.add("box");
+            box.textContent = listOfSpunObjects[i++];
+            boxes.appendChild(box);
+        }
 
-function printSpin(spunObjects) {
-    outputTable.innerText = "";
-    
-    const columnDelayInMilliseconds = 750;
-
-    for (let i = 0; i < 5; i++) {
-        setTimeout(() => {
-            printColumn(i, spunObjects);
-        }, i * columnDelayInMilliseconds);
-    }
-}
-
-function populateTable() {
-    const defaultItems = generateSpin();
-
-    for (let i = 0; i < 5; i++) {
-        printColumn(i, defaultItems);
+        door.appendChild(boxes);
     }
 }
 
 function payout(spunObjects, bet) {
-    const cells = document.querySelectorAll(".outputCells");
-
     let payoutAmount = 0;
     let multiplier = 0.334;
     const amountOfOccurrancesToWin = 3;
     const occurrances = new Map();
-    
+
     for (let item of spunObjects) {
         occurrances.has(item) ? occurrances.set(item, occurrances.get(item) + 1) : occurrances.set(item, 1);
     }
@@ -79,44 +68,35 @@ function payout(spunObjects, bet) {
         if (count >= amountOfOccurrancesToWin) payoutAmount += bet * (count * multiplier);
     }
 
-    for (let cell of cells) {
-        if (occurrances.get(cell.innerHTML.trim()) >= amountOfOccurrancesToWin) {
-            cell.className = "outputCells flashForWin";
+    const boxes = document.querySelectorAll(".box");
+    for (let box of boxes) {
+        if (occurrances.get(box.textContent) >= amountOfOccurrancesToWin) {
+            box.classList.add("flashForWin");
         }
     }
 
     return payoutAmount;
 }
 
-function spin() {
+async function spin() {
     spinbtn.disabled = true;
-
     balance -= bet;
-    balanceOutput.innerText = balance.toFixed(2);
-
+    balanceOutput.textContent = balance.toFixed(2);
     const spunObjects = generateSpin();
-
-    setTimeout(() => {
-        spinbtn.disabled = false;
-    }, 4000);
-
     printSpin(spunObjects);
-
-    setTimeout(() => {
-        const payoutAmount = payout(spunObjects, bet);
-        balance += payoutAmount;
-
-        balanceOutput.innerText = balance.toFixed(2);
-        prevWinDisplay.innerText = payoutAmount.toFixed(2);
-    }, 4000);
+    await new Promise((resolve) => setTimeout(resolve, 3800));
+    spinbtn.disabled = false;
+    const payoutAmount = payout(spunObjects, bet);
+    balance += payoutAmount;
+    balanceOutput.textContent = balance.toFixed(2);
+    prevWinDisplay.textContent = payoutAmount.toFixed(2);
 }
 
-function main() {
-    populateTable();
-
+async function main() {
+    const initRow = generateSpin();
+    printSpin(initRow);
     const maxBet = 50;
-
-    const buttonIncrement = 5;
+    const buttonIncrement = 2;
 
     for (let btn of bettingBtns) {
         btn.addEventListener("click", () => {
@@ -125,15 +105,16 @@ function main() {
             } else {
                 btn.id === "add" ? bet += buttonIncrement : bet -= buttonIncrement;
             }
-            
+
             if (bet < 0) bet = 0;
-            
+
             if (bet > maxBet) bet = maxBet;
 
-            betDisplay.innerText = "$" + bet.toFixed(2);
+            betDisplay.textContent = "$" + bet.toFixed(2);
         });
     }
 
+    await new Promise ((resolve) => setTimeout(resolve, 1000));
     spinbtn.addEventListener("click", () => {
         if (bet > 0 && balance - bet >= 0) spin();
     });
