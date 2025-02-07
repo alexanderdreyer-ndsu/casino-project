@@ -34,11 +34,11 @@ async function printSpin(listOfSpunObjects) {
             currentBoxes.addEventListener("transitionend", () => {
                 door.removeChild(currentBoxes);
             });
-            await new Promise((resolve) => setTimeout(resolve, 540));
+            await new Promise((resolve) => setTimeout(resolve, 380));
         }
 
         const boxes = document.createElement("div");
-        boxes.style.transition = "0.5s ease-in-out";
+        boxes.style.transition = "0.36s ease-in-out";
         boxes.className = "boxes slideInTop";
 
         for (let n = 0; n < 3; n++) {
@@ -84,7 +84,7 @@ async function spin() {
     balanceOutput.textContent = balance.toFixed(2);
     const spunObjects = generateSpin();
     printSpin(spunObjects);
-    await new Promise((resolve) => setTimeout(resolve, 3700));
+    await new Promise((resolve) => setTimeout(resolve, 3300));
     spinbtn.disabled = false;
     const payoutAmount = payout(spunObjects, safeBet);
     balance += payoutAmount;
