@@ -12,7 +12,7 @@ balanceOutput.textContent = balance.toFixed(2);
 betDisplay.textContent = bet.toFixed(2);
 
 function generateSpin() {
-    const objects = ['🍍', '💰', '🍊', '🥭', '💎', '🍓', '👑', '🔪', '🌴', '🍉', '🍌', '🏺', '🍇', '🍎', '🧊', '🥝', '❤️', '🐱‍👤'];
+    const objects = ['🍍', '💰', '🍊', '🥭', '💎', '🍓', '👑', '🔪', '🌴', '🍉', '🍌', '🏺', '🍇', '🍎', '🧊', '🥝', '❤️', '🐱‍👤', '🥥'];
     let spunObjects = [];
 
     for (let i = 0; i < 15; i++) {
