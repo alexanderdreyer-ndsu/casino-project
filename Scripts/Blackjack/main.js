@@ -370,8 +370,7 @@ async function game() {
     setTimeout(() => {
         drawCard(playerHand1);
 
-        // checkForSplitAllowed(playerHand1) ? splitBtn.disabled = false : splitBtn.disabled = true;
-
+        checkForSplitAllowed(playerHand1) ? splitBtn.disabled = false : splitBtn.disabled = true;
 
         hitBtn.addEventListener("click", hit);
         if (balance - originalBet >= 0) doubleBtn.addEventListener("click", double);
