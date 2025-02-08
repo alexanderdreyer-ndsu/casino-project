@@ -31,30 +31,15 @@ class Hand {
         this.calculateHandCount();
     }
 
-    popFromHand() {
-        let images = document.getElementsByTagName('img');
-
-        let card = this.cards[1];
+    popFromHand(removeThisCard) {
+        const images = document.querySelectorAll(".game-cards");
         this.cards.splice(1, 1);
         this.calculateHandCount();
 
-        for (let image of images) {
-            if (image.src.includes(card.imagePath)) {
-                playerCardDisplay.removeChild(image);
+        for (const img of images) {
+            if (img.src.includes(`${removeThisCard.numValue}Of${removeThisCard.suite}`)) {
+                img.parentElement.removeChild(img);
                 break;
-            }
-        }
-    }
-
-    clearHand() {
-        let images = document.getElementsByTagName('img');
-
-        this.cards = [];
-        this.count = 0;
-
-        while (images.length !== 0) {
-            for (const image of images) {
-                image.parentNode.removeChild(image);
             }
         }
     }

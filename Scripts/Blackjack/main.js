@@ -3,14 +3,12 @@ const hitBtn = document.querySelector("#hit-btn");
 const stayBtn = document.querySelector("#stay-btn");
 const splitBtn = document.querySelector("#split-btn");
 const doubleBtn = document.querySelector("#double-btn");
-
-let playerCardDisplay = document.querySelector("#display-player-cards");
-let dealerCardDisplay = document.querySelector("#display-dealer-cards");
-let playerSplitCardDisplay = document.querySelector("#display-player-split-cards");
-let displayGameInfo = document.querySelector("#game-output-display");
-let balanceOutput = document.querySelector("#balance-output");
-
-let faceDownCardImage = document.createElement("img");
+const faceDownCardImage = document.createElement("img");
+const playerCardDisplay = document.querySelector("#display-player-cards");
+const dealerCardDisplay = document.querySelector("#display-dealer-cards");
+const playerSplitCardDisplay = document.querySelector("#display-player-split-cards");
+const displayGameInfo = document.querySelector("#game-output-display");
+const balanceOutput = document.querySelector("#balance-output");
 
 let dealerHand = new Hand();
 let playerHand1 = new Hand();
@@ -33,8 +31,6 @@ function drawFaceDownCard() {
     faceDownCardImage.className = "game-cards slideInTop";
 
     dealerCardDisplay.appendChild(faceDownCardImage);
-
-    reduceHandAces(dealerHand);
 }
 
 function drawCard(hand) {
@@ -46,6 +42,17 @@ function drawCard(hand) {
     img.className = "game-cards slideInTop";
 
     hand.cardDisplay.appendChild(img);
+}
+
+function clearHand(hand) {
+    const images = document.querySelectorAll(".game-cards");
+
+    hand.cards = [];
+    hand.count = 0;
+            
+    images.forEach(img => {
+        img.parentElement.removeChild(img);
+    });
 }
 
 function endGame() {
@@ -313,14 +320,13 @@ function split() {
 
     const splitCard = playerHand1.cards[1];
     playerHand2.addToHand(splitCard);
+    playerHand1.popFromHand(splitCard);
 
     const img = document.createElement('img');
     img.src = splitCard.imagePath;
-    img.className = "game-cards";
+    img.classList.add("game-cards");
 
     playerSplitCardDisplay.appendChild(img);
-
-    playerHand1.popFromHand();
 
     drawCard(playerHand1);
     drawCard(playerHand2);
@@ -328,8 +334,10 @@ function split() {
 }
 
 async function game() {
-    let userBetInput = document.querySelector("#user-input-bet").value;
-
+    const userBetInput = document.querySelector("#user-input-bet").value;
+    clearHand(dealerHand);
+    clearHand(playerHand1);
+    clearHand(playerHand2);
     displayGameInfo.innerText = "";
 
     originalBet = Number(userBetInput) >= 0.01 && Number(userBetInput) <= balance ? Number(userBetInput) : 0;
@@ -340,10 +348,6 @@ async function game() {
     totalBet = originalBet;
     balance -= totalBet;
     balanceOutput.innerText = balance.toFixed(2);
-
-    dealerHand.clearHand();
-    playerHand1.clearHand();
-    playerHand2.clearHand();
 
     playBtn.disabled = true;
 
@@ -366,7 +370,8 @@ async function game() {
     setTimeout(() => {
         drawCard(playerHand1);
 
-        checkForSplitAllowed(playerHand1) ? splitBtn.disabled = false : splitBtn.disabled = true;
+        // checkForSplitAllowed(playerHand1) ? splitBtn.disabled = false : splitBtn.disabled = true;
+
 
         hitBtn.addEventListener("click", hit);
         if (balance - originalBet >= 0) doubleBtn.addEventListener("click", double);
