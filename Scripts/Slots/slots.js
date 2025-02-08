@@ -12,7 +12,7 @@ balanceOutput.textContent = balance.toFixed(2);
 betDisplay.textContent = bet.toFixed(2);
 
 function generateSpin() {
-    const objects = ['🍍', '💰', '🍊', '🥭', '💎', '🍓', '👑', '🔪', '🌴', '🍉', '🍌', '🏺', '🍇', '🍎', '🧊', '🥝', '❤️', '🐱‍👤', '🥥'];
+    const objects = ['🍍', '🍊', '💎', '🍓', '🔪', '🌴', '🍉', '🍌', '🏺', '🍇', '🍎', '🧊', '🥝', '🐱‍👤', '🥥'];
     let spunObjects = [];
 
     for (let i = 0; i < 15; i++) {
@@ -54,8 +54,8 @@ async function printSpin(listOfSpunObjects) {
 
 function payout(spunObjects, bet) {
     let payoutAmount = 0;
-    let multiplier = 0.334;
-    const freqToWin = 3;
+    let multiplier = 0.8;
+    const freqToWin = 4;
     const freqMap = new Map();
 
     for (let item of spunObjects) {
@@ -63,7 +63,7 @@ function payout(spunObjects, bet) {
     }
 
     for (let [item, count] of freqMap.entries()) {
-        if (item === '💎' && count >= freqToWin) multiplier = 0.5;
+        if (item === '💎' && count >= freqToWin) multiplier = 1.3;
         if (count >= freqToWin) payoutAmount += bet * (count * multiplier);
     }
 
@@ -95,8 +95,8 @@ async function spin() {
 async function main() {
     const initRow = generateSpin();
     printSpin(initRow);
-    const maxBet = 50;
-    const buttonIncrement = 2;
+    const maxBet = 20;
+    const buttonIncrement = 1;
 
     for (let btn of bettingBtns) {
         btn.addEventListener("click", () => {
@@ -122,7 +122,7 @@ async function main() {
 
 main();
 
-//EV calculation - currently ~ 0.93
+//EV calculation - currently ~ 0.77
 function calculateExpectedValue(amountOfSpins) {
     let amountWagered = 0;
     let bet = 5;
