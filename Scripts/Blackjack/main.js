@@ -275,7 +275,7 @@ function double() {
     const checkDidPlayerSplit = playerHand2.count !== 0;
 
     if (!checkDidPlayerSplit) {
-        return playerHand1.count >= 21 ? endGame() : runDealerTurn();
+        return playerHand1.count > 21 ? endGame() : runDealerTurn();
     }
 
     playerHand1.selected = false;
