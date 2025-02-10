@@ -132,9 +132,8 @@ function checkForBlackjack() {
 function checkForSplitAllowed(hand) {
     const faceCardCheck = ["Jack", "Queen", "King"];
 
-    if (faceCardCheck.includes(hand.cards[0].numValue) && faceCardCheck.includes(hand.cards[1].numValue)) return true;
-
-    if (((faceCardCheck.includes(hand.cards[0].numValue)) && hand.cards[1].numValue === "10") || 
+    if ((faceCardCheck.includes(hand.cards[0].numValue) && faceCardCheck.includes(hand.cards[1].numValue)) || 
+    ((faceCardCheck.includes(hand.cards[0].numValue)) && hand.cards[1].numValue === "10") || 
     ((faceCardCheck.includes(hand.cards[1].numValue)) && hand.cards[0].numValue === "10")) return true;
 
     return (hand.cards[0].numValue === hand.cards[1].numValue);
