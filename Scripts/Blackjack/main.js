@@ -3,25 +3,23 @@ const hitBtn = document.querySelector("#hit-btn");
 const stayBtn = document.querySelector("#stay-btn");
 const splitBtn = document.querySelector("#split-btn");
 const doubleBtn = document.querySelector("#double-btn");
-const faceDownCardImage = document.createElement("img");
 const playerCardDisplay = document.querySelector("#display-player-cards");
 const dealerCardDisplay = document.querySelector("#display-dealer-cards");
 const playerSplitCardDisplay = document.querySelector("#display-player-split-cards");
 const displayGameInfo = document.querySelector("#game-output-display");
 const balanceOutput = document.querySelector("#balance-output");
-
-let dealerHand = new Hand();
-let playerHand1 = new Hand();
-let playerHand2 = new Hand();
-let shoe = new Shoe(6);
+const faceDownCardImage = document.createElement("img");
+const dealerHand = new Hand();
+const playerHand1 = new Hand();
+const playerHand2 = new Hand();
+const shoe = new Shoe(6);
 let balance = 100;
 let originalBet, totalBet, faceDownCard;
 
 dealerHand.cardDisplay = dealerCardDisplay;
 playerHand1.cardDisplay = playerCardDisplay;
 playerHand2.cardDisplay = playerSplitCardDisplay;
-
-balanceOutput.innerText = balance.toFixed(2);
+balanceOutput.textContent = balance.toFixed(2);
 
 function drawFaceDownCard() {
     faceDownCard = shoe.drawCard();
@@ -61,7 +59,7 @@ function endGame() {
     disableButtons();
     calculateWinner();
 
-    balanceOutput.innerText = balance.toFixed(2);
+    balanceOutput.textContent = balance.toFixed(2);
 
     setTimeout(() => {
         playBtn.disabled = false;
@@ -73,7 +71,7 @@ function endGameFromCheckForBlackjack() {
 
     disableButtons();
 
-    balanceOutput.innerText = balance.toFixed(2);
+    balanceOutput.textContent = balance.toFixed(2);
 
     setTimeout(() => {
         playBtn.disabled = false;
@@ -89,7 +87,7 @@ function checkForBlackjack() {
         if (isDealerBlackjack) {
             isPlayerBlackjack ? balance += playerHand1.betOnThisHand : balance = balance;
 
-            displayGameInfo.innerText = `${isPlayerBlackjack ? "Push" : "Dealer Blackjack"}`;
+            displayGameInfo.textContent = `${isPlayerBlackjack ? "Push" : "Dealer Blackjack"}`;
 
             return endGameFromCheckForBlackjack();
         }
@@ -97,7 +95,7 @@ function checkForBlackjack() {
         if (isPlayerBlackjack) {
             balance += playerHand1.betOnThisHand * 2.5;
 
-            displayGameInfo.innerText = "Player Blackjack";
+            displayGameInfo.textContent = "Player Blackjack";
 
             return endGameFromCheckForBlackjack();
         }
@@ -108,7 +106,7 @@ function checkForBlackjack() {
     if (isPlayerBlackjack && isPlayer2Blackjack) {
         balance += totalBet * 2.5;
 
-        displayGameInfo.innerText = "Player Hand 1 Blackjack, Player Hand 2 Blackjack";
+        displayGameInfo.textContent = "Player Hand 1 Blackjack, Player Hand 2 Blackjack";
 
         return endGameFromCheckForBlackjack();
     } 
@@ -116,7 +114,7 @@ function checkForBlackjack() {
     if (isPlayerBlackjack) {
         balance += playerHand1.betOnThisHand * 2.5;
 
-        displayGameInfo.innerText = "Player Hand 1 Blackjack";
+        displayGameInfo.textContent = "Player Hand 1 Blackjack";
 
         return stay();
     }
@@ -127,25 +125,19 @@ function checkForBlackjack() {
         playerHand1.selected = true;
         playerHand2.selected = false;
 
-        displayGameInfo.innerText = "Player Hand 2 Blackjack";
+        displayGameInfo.textContent = "Player Hand 2 Blackjack";
     }
 }
 
 function checkForSplitAllowed(hand) {
-    let flag;
     const faceCardCheck = ["Jack", "Queen", "King"];
 
-    if (faceCardCheck.includes(hand.cards[0].numValue) && faceCardCheck.includes(hand.cards[1].numValue)) {
-        flag = true;
-    } else if ((faceCardCheck.includes(hand.cards[0].numValue)) && hand.cards[1].numValue === "10") {
-        flag = true;
-    } else if ((faceCardCheck.includes(hand.cards[1].numValue)) && hand.cards[0].numValue === "10") {
-        flag = true;
-    } else {
-        flag = (hand.cards[0].numValue === hand.cards[1].numValue);
-    }
+    if (faceCardCheck.includes(hand.cards[0].numValue) && faceCardCheck.includes(hand.cards[1].numValue)) return true;
 
-    return flag;
+    if (((faceCardCheck.includes(hand.cards[0].numValue)) && hand.cards[1].numValue === "10") || 
+    ((faceCardCheck.includes(hand.cards[1].numValue)) && hand.cards[0].numValue === "10")) return true;
+
+    return (hand.cards[0].numValue === hand.cards[1].numValue);
 }
 
 function calculateWinner() {
@@ -161,11 +153,11 @@ function calculateWinner() {
         if (dealerScore !== playerScore) {
             dealerWon ? balance = balance : balance += playerHand1.betOnThisHand * 2;
 
-            return displayGameInfo.innerText = `${dealerWon ? "Dealer Win" : "Player Win"}`;
+            return displayGameInfo.textContent = `${dealerWon ? "Dealer Win" : "Player Win"}`;
         }
 
         balance += totalBet;
-        return displayGameInfo.innerText = "Push";
+        return displayGameInfo.textContent = "Push";
     }
 
     const player2Score = playerHand2.count <= 21 ? playerHand2.count : -1;
@@ -194,7 +186,7 @@ function calculateWinner() {
         dealerVsPlayer2Message = "Push";
     }
 
-    displayGameInfo.innerText = `${dealerVsPlayer1Message}, ${dealerVsPlayer2Message}`;
+    displayGameInfo.textContent = `${dealerVsPlayer1Message}, ${dealerVsPlayer2Message}`;
 }
 
 function disableButtons() {
@@ -263,7 +255,7 @@ function hit() {
 
 function double() {
     balance -= originalBet;
-    balanceOutput.innerText = balance.toFixed(2);
+    balanceOutput.textContent = balance.toFixed(2);
 
     if (playerHand1.selected) {
         playerHand1.betOnThisHand += originalBet;
@@ -312,7 +304,7 @@ function stay() {
 function split() {
     balance -= originalBet;
     playerHand2.betOnThisHand = playerHand1.betOnThisHand;
-    balanceOutput.innerText = balance.toFixed(2);
+    balanceOutput.textContent = balance.toFixed(2);
 
     splitBtn.disabled = true;
 
@@ -338,7 +330,7 @@ async function game() {
     clearHand(dealerHand);
     clearHand(playerHand1);
     clearHand(playerHand2);
-    displayGameInfo.innerText = "";
+    displayGameInfo.textContent = "";
 
     originalBet = Number(userBetInput) >= 0.01 && Number(userBetInput) <= balance ? Number(userBetInput) : 0;
 
@@ -347,7 +339,7 @@ async function game() {
     playerHand1.betOnThisHand = originalBet;
     totalBet = originalBet;
     balance -= totalBet;
-    balanceOutput.innerText = balance.toFixed(2);
+    balanceOutput.textContent = balance.toFixed(2);
 
     playBtn.disabled = true;
 
