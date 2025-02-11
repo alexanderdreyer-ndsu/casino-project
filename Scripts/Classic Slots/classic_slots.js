@@ -53,23 +53,15 @@ function compareArrays(winningRows, spunRow) {
 }
 
 function payout(spunRow, bet) {
-    const allDiamond = ['💎', '💎', '💎'];
-    const allCherries = ['🍒', '🍒', '🍒'];
-    const allSevens = ['7️⃣', '7️⃣', '7️⃣'];
-    const allLemons = ['🍋', '🍋', '🍋'];
-    const allGrapes = ['🍇', '🍇', '🍇'];
-    const twoSevensDiamond = ['7️⃣', '💎', '7️⃣'];
-    const allFruit = ['🍒', '🍋', '🍇'];
-    const twoDiamondsSeven = ['💎', '7️⃣', '💎'];
     const winningRows = new Map();
-    winningRows.set(allDiamond, 30);
-    winningRows.set(allSevens, 7);
-    winningRows.set(allCherries, 5);
-    winningRows.set(allLemons, 3);
-    winningRows.set(allGrapes, 3);
-    winningRows.set(twoSevensDiamond, 5);
-    winningRows.set(allFruit, 5);
-    winningRows.set(twoDiamondsSeven, 7);
+    winningRows.set(['💎', '💎', '💎'], 30);
+    winningRows.set(['7️⃣', '7️⃣', '7️⃣'], 7);
+    winningRows.set(['🍒', '🍒', '🍒'], 5);
+    winningRows.set(['🍋', '🍋', '🍋'], 3);
+    winningRows.set(['🍇', '🍇', '🍇'], 3);
+    winningRows.set(['7️⃣', '💎', '7️⃣'], 5);
+    winningRows.set(['🍒', '🍋', '🍇'], 5);
+    winningRows.set(['💎', '7️⃣', '💎'], 7);
     let payoutAmount = 0;
 
     for (let row of winningRows.keys()) {
