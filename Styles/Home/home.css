@@ -70,6 +70,10 @@ body {
     grid-area: 2 / 3 / 0 / 3;
 }
 
+#minesweep {
+    background-color: rgb(148, 0, 0);
+}
+
 #bottom-text {
     display: flex;
     color: grey;
@@ -99,6 +103,6 @@ body {
     }
 
     50% {
-        outline-offset: 10px;
+        outline-offset: 7px;
     }
 }
