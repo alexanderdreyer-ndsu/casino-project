@@ -109,14 +109,22 @@
 
 <body id="body">
     <div class="container">
-        <form id="game-controlls">
-            Bet
-            <input class="form-input" id="input" type="number" min="0" placeholder="0.00" step="0.01" required>
-            Bombs
-            <input class="form-input" id="bomb-count" type="number" step="1" min="1" max="24" placeholder="1 - 24" required>
-            <button id="submit-btn" type="submit">Play</button>
-            <button id="cashout">Cash Out</button>
-        </form>
+        <div id="game-controlls">
+            <div id="bet-container" class="bet-and-bombs">
+                Bet
+                <input class="form-input" id="input" type="number" min="0" placeholder="0.00">
+            </div>
+
+            <div id="bombs-container" class="bet-and-bombs">
+                Bombs
+                <input class="form-input" id="bomb-count" type="number" min="1" max="24" placeholder="1 - 24">
+            </div>
+
+            <div id="buttons-container">
+                <button id="play-btn">Play</button>
+                <button id="cashout">Cash Out</button>
+            </div>
+        </div>
 
         <div id="table-display">
             <h1 id="multiplier-header">Multiplier</h1>

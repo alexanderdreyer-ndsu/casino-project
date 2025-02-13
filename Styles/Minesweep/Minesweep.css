@@ -13,12 +13,23 @@ body {
 #game-controlls {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
+    align-items: flex-start;
     font-weight: bold;
     gap: 15px;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     color: black;
+}
+
+.bet-and-bombs {
+    display: flex;
+    gap: 10px;
+    width: 75%;
+}
+
+#buttons-container {
+    display: flex;
+    gap: 10px;
+    width: 100%;
 }
 
 input {
@@ -26,15 +37,15 @@ input {
     border-radius: 5px;
     box-shadow:0 0 5px black inset;
     padding: 5px 15px;
-    width: 70%;
+    width: 100%;
 }
 
 button {
     border: none;
     border-radius: 5px;
-    width: 50%;
+    width: 36%;
     padding: 5px;
-    transition: 200ms;
+    transition: 150ms;
 }
 
 #table-display {
