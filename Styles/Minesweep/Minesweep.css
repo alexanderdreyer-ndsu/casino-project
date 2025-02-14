@@ -64,7 +64,7 @@ h1 {
     align-items: center;
     background: hsl(0, 0%, 21%);
     border: none;
-    border-radius: 15px;
+    border-radius: 10px;
     width: 85px;
     height: 85px;
     margin: 3px;
@@ -80,6 +80,7 @@ h1 {
 .flipped-bomb {
     pointer-events: none;
     background: red;
+    animation: flipCell 0.25s ease-in;
 }
 
 .flipped-bomb:hover {
@@ -89,6 +90,14 @@ h1 {
 
 .flipped-safe {
     pointer-events: none;
-    border: 5px solid;
+    border: 3px solid;
     border-color: limegreen;
+    background: hsl(0, 0%, 11%);
+    animation: flipCell 0.25s ease-in;
+}
+
+@keyframes flipCell {
+    50% {
+        scale: 1.1;
+    }
 }

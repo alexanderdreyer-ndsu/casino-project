@@ -16,7 +16,6 @@ play.addEventListener("click", () => {
     balance -= bet;
     balanceDisplay.textContent = balance.toFixed(2);
     multiplierHeader.textContent = "Multiplier 0x";
-    let j = 1;
     let payoutMultiplier = 0;
 
     cells.forEach(cell => {
@@ -43,7 +42,8 @@ play.addEventListener("click", () => {
 
             cashoutBtn.disabled = false;
             cell.classList.add("flipped-safe");
-            payoutMultiplier = j++ * (bombs / 24);
+            //used desmos graphing calculator to come up with a payout curve
+            payoutMultiplier += 10 * ((bombs / 35) ** 2.4) + 0.14;
             multiplierHeader.textContent = `Multiplier ${payoutMultiplier.toFixed(2)}x`;
         });
     });
