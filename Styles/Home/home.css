@@ -71,7 +71,9 @@ body {
 }
 
 #minesweep {
-    background-color: rgb(148, 0, 0);
+    background-image: url("../../Images/Home/minesweep_background.jpg");
+    background-size: cover;
+    background-position: center;
 }
 
 #bottom-text {
