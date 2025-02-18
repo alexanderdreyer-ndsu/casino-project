@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(29, 29, 29);
+    background: radial-gradient(circle, rgb(178, 224, 251), rgb(39, 176, 255));
     margin: 0;
     padding: 0;
 }
@@ -24,7 +24,7 @@ body {
     width: 250px;
     height: 350px;
     background: white;
-    box-shadow: 0 0 20px black inset;
+    box-shadow: 0 0 10px black inset;
     overflow: hidden;
     border-radius: 15px;
     margin: 3ch;
