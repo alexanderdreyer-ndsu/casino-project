@@ -12,7 +12,7 @@ const faceDownCardImage = document.createElement("img");
 const dealerHand = new Hand();
 const playerHand1 = new Hand();
 const playerHand2 = new Hand();
-const shoe = new Shoe(6);
+let shoe = new Shoe();
 let balance = 100;
 let originalBet, totalBet, faceDownCard;
 
@@ -21,24 +21,14 @@ playerHand1.cardDisplay = playerCardDisplay;
 playerHand2.cardDisplay = playerSplitCardDisplay;
 balanceOutput.textContent = balance.toFixed(2);
 
-function drawFaceDownCard() {
-    faceDownCard = shoe.drawCard();
-    dealerHand.addToHand(faceDownCard);
-
-    faceDownCardImage.src = "../../Images/Blackjack/backOfCard.jpeg";
-    faceDownCardImage.className = "game-cards slideInTop";
-
-    dealerCardDisplay.appendChild(faceDownCardImage);
-}
-
 function drawCard(hand) {
     const card = shoe.drawCard();
     hand.addToHand(card);
-
+    
     const img = document.createElement('img');
     img.src = card.imagePath;
     img.className = "game-cards slideInTop";
-
+    
     hand.cardDisplay.appendChild(img);
 }
 
@@ -131,12 +121,12 @@ function checkForBlackjack() {
 
 function checkForSplitAllowed(hand) {
     const faceCardCheck = ["Jack", "Queen", "King"];
+    return true;
+    // if ((faceCardCheck.includes(hand.cards[0].numValue) && faceCardCheck.includes(hand.cards[1].numValue)) || 
+    // ((faceCardCheck.includes(hand.cards[0].numValue)) && hand.cards[1].numValue === "10") || 
+    // ((faceCardCheck.includes(hand.cards[1].numValue)) && hand.cards[0].numValue === "10")) return true;
 
-    if ((faceCardCheck.includes(hand.cards[0].numValue) && faceCardCheck.includes(hand.cards[1].numValue)) || 
-    ((faceCardCheck.includes(hand.cards[0].numValue)) && hand.cards[1].numValue === "10") || 
-    ((faceCardCheck.includes(hand.cards[1].numValue)) && hand.cards[0].numValue === "10")) return true;
-
-    return (hand.cards[0].numValue === hand.cards[1].numValue);
+    // return (hand.cards[0].numValue === hand.cards[1].numValue);
 }
 
 function calculateWinner() {
@@ -348,34 +338,38 @@ async function game() {
     playerCardDisplay.style.backgroundColor = null;
     playerSplitCardDisplay.style.backgroundColor = null;
 
-    drawFaceDownCard();
+    faceDownCard = shoe.drawCard();
+    dealerHand.addToHand(faceDownCard);
 
-    setTimeout(() => {
+    faceDownCardImage.src = "../../Images/Blackjack/backOfCard.jpeg";
+    faceDownCardImage.className = "game-cards slideInTop";
+
+    dealerCardDisplay.appendChild(faceDownCardImage);
+
+    await new Promise(resolve => setTimeout(() => {
         drawCard(playerHand1);
-    }, 1000);
+        resolve();
+    }, 750));
 
-    setTimeout(() => {
+    await new Promise(resolve => setTimeout(() => {
         drawCard(dealerHand);
-    }, 1500);
+        resolve();
+    }, 550));
 
-    setTimeout(() => {
+    await new Promise(resolve => setTimeout(() => {
         drawCard(playerHand1);
-
-        checkForSplitAllowed(playerHand1) ? splitBtn.disabled = false : splitBtn.disabled = true;
-
-        hitBtn.addEventListener("click", hit);
-        if (balance - originalBet >= 0) doubleBtn.addEventListener("click", double);
-        stayBtn.addEventListener("click", stay);
-        if (balance - originalBet >= 0) splitBtn.addEventListener("click", split);
-
-        stayBtn.disabled = false;
-        hitBtn.disabled = false;
-        doubleBtn.disabled = false;
-    }, 2300);
-
-    setTimeout(() => {
-        checkForBlackjack();
-    }, 3400);
+        resolve();
+    }, 750));
+    
+    checkForSplitAllowed(playerHand1) ? splitBtn.disabled = false : splitBtn.disabled = true;
+    hitBtn.addEventListener("click", hit);
+    if (balance - originalBet >= 0) doubleBtn.addEventListener("click", double);
+    stayBtn.addEventListener("click", stay);
+    if (balance - originalBet >= 0) splitBtn.addEventListener("click", split);
+    stayBtn.disabled = false;
+    hitBtn.disabled = false;
+    doubleBtn.disabled = false;
+    checkForBlackjack();
 }
 
 window.addEventListener("DOMContentLoaded", () => {

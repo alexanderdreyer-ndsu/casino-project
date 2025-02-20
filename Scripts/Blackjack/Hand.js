@@ -32,15 +32,14 @@ class Hand {
     }
 
     popFromHand(removeThisCard) {
-        const images = document.querySelectorAll(".game-cards");
-        this.cards.splice(1, 1);
-        this.calculateHandCount();
-
-        for (const img of images) {
-            if (img.src.includes(`${removeThisCard.numValue}Of${removeThisCard.suite}`)) {
+        for (const img of document.querySelectorAll(".game-cards")) {
+            if (img.src.includes(`${removeThisCard.numValue}Of${removeThisCard.suite}`) && this.cards.includes(removeThisCard)) {
                 img.parentElement.removeChild(img);
                 break;
             }
         }
+
+        this.cards.splice(1, 1);
+        this.calculateHandCount();
     }
 }
