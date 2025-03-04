@@ -149,6 +149,18 @@ function addBet(cell) {
     balanceDisplay.textContent = balance.toFixed(2);
 }
 
+//no bias found
+function calcIsGameFair(amount) {
+    const arr = new Map();
+    for (let i = 0; i < amount; i++) {
+        const instance = generateSpin();
+        arr.has(instance[0]) ? arr.set(instance[0], arr.get(instance[0]) + 1) : arr.set(instance[0], 1);
+    }
+
+    console.log(arr);
+}
+
+//calcIsGameFair(100000);
 
 balanceDisplay.textContent = balance.toFixed(2);
 
