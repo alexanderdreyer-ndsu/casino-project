@@ -1,0 +1,44 @@
+body{
+    padding: 0;
+    margin: 0;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+    height: fit-content;
+}
+
+.game{
+    height: 400px;
+    width: 80%;
+    background: darkolivegreen;
+    border-radius: 45px;
+    border: 10px rgb(115, 30, 30) solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.lane{
+    margin: 5px auto;
+    width: 90%;
+    border-top: 2px white solid;
+    border-bottom: 2px white solid;
+    border-right: 30px white solid;
+    height: 60px;
+}
+
+#play-btn{
+    width: 10%;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(79, 79, 255);
+    font-size: 1.2rem;
+    padding: 3px;
+    font-weight: bold;
+    color: rgb(225, 225, 225);
+}
