@@ -1,6 +1,7 @@
 body{
     padding: 0;
     margin: 0;
+    background: radial-gradient(circle, grey, black);
 }
 
 .container{
@@ -30,10 +31,13 @@ body{
     border-bottom: 2px white solid;
     border-right: 30px white solid;
     height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
-#play-btn{
-    width: 10%;
+.game-btns{
+    width: 150px;
     border: none;
     border-radius: 5px;
     background-color: rgb(79, 79, 255);
@@ -41,4 +45,26 @@ body{
     padding: 3px;
     font-weight: bold;
     color: rgb(225, 225, 225);
+    transition: 150ms;
+}
+
+.game-btns:hover{
+    color: white;
+    background-color: rgb(89, 89, 252);
+}
+
+.horse{
+    width: 20px;
+    height: 20px;
+    background-color: rgb(87, 39, 39);
+    left: 0;
+}
+
+input{
+    width: 100%;
+}
+
+#submit-bet-btn{
+    margin-left: 10%;
+    margin-right: 10%;
 }
