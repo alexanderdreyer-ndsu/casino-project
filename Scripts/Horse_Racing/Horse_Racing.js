@@ -3,20 +3,7 @@ const betMenu = document.querySelector("#bet-menu");
 const betInputForm = document.querySelector("#bet-input-form");
 const gameWindow = document.querySelector("#game");
 const balanceDisplay = document.querySelector("#balance-output");
-const timeArr = [
-    "5.1", 
-    "5.4", 
-    "5.5", 
-    "5.6", 
-    "5.9", 
-    "6.1", 
-    "6.3", 
-    "6.5", 
-    "6.7", 
-    "6.8", 
-    "7.0", 
-    "7.3"
-];
+const betInfoLabel = document.querySelector("#bet-info-label");
 
 let balance = 100;
 balanceDisplay.textContent = balance.toFixed(2);
@@ -35,55 +22,56 @@ betInputForm.addEventListener("submit", (event) => {
         return window.alert("Bet Amount Rejected");
     }
 
-    gameWindow.innerHTML = "";
+    betInfoLabel.textContent = `Bet: $${bet}\tLane: ${betLane}`;
 
-    const allTimes = [...timeArr];
+    gameWindow.innerHTML = "";
 
     for (let i = 0; i < lanes; i++) {
         const thisLane = document.createElement("div");
         thisLane.classList.add("lane");
-        thisLane.id = `Lane ${i + 1}`;
         gameWindow.appendChild(thisLane);
-
-        const time = allTimes[Math.floor(Math.random() * allTimes.length)];
 
         const thisHorse = document.createElement("div");
         thisLane.appendChild(thisHorse);
-        thisHorse.id = `Horse ${i + 1}`;
+        thisHorse.textContent = "🏇";
         thisHorse.classList.add("horse");
-        thisHorse.style.transition = `${time}s ease-in`;
-        thisHorse.dataset.time = `${time}`;
-        Promise.resolve();
-        thisHorse.style.transform = `translateX(${thisLane.clientWidth}px)`;
-
-        allTimes.splice(allTimes.indexOf(time), 1);
     }
 
-    let slowestTime = 0;
-    let fastestTime = 10;
+    const positions = [];
+    let raceOver = false;
     let fastestHorse;
+    const horses = document.querySelectorAll(".horse");
+    let win = false;
 
-    document.querySelectorAll(".horse").forEach(horse => {
-        const thisHorseTime = parseFloat(horse.dataset.time);
-
-        if (thisHorseTime < fastestTime) {
-            fastestTime = thisHorseTime;
-            fastestHorse = horse;
-        }
-
-        if (thisHorseTime > slowestTime) {
-            slowestTime = thisHorseTime;
-        }
-    });
-
-    if (`Lane ${betLane}` === fastestHorse.parentElement.id) {
-        balance += bet * lanes;
-    } else {
-        balance -= bet;
+    for (let i = 0; i < lanes; i++) {
+        positions.push(0);
     }
 
-    setTimeout(() => {
-        balanceDisplay.textContent = balance.toFixed(2);
-    }, slowestTime * 1000);
+    let raceInterval = setInterval(() => {
+        if (raceOver) {
+            clearInterval(raceInterval);
 
+            if (`Lane ${betLane}` === fastestHorse.parentElement.id) {
+                balance += bet * lanes;
+                win = true;
+            } else {
+                balance -= bet;
+            }
+
+            betInfoLabel.textContent = win ? `Win: $${bet * lanes}` : `Loss`;
+            fastestHorse.parentElement.style.borderColor = "gold";
+
+            return balanceDisplay.textContent = balance.toFixed(2);
+        }
+
+        for (let i = 0; i < horses.length; i++) {
+            positions[i] += Math.random() * 5;
+            horses[i].style.left = `${positions[i]}px`;
+
+            if (positions[i] >= horses[i].parentElement.clientWidth) {
+                fastestHorse = horses[i];
+                raceOver = true;
+            }
+        }
+    }, 50);
 });

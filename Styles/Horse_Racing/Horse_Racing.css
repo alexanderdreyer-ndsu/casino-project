@@ -1,14 +1,14 @@
 body{
     padding: 0;
     margin: 0;
-    background: radial-gradient(circle, grey, black);
+    background: rgb(33, 33, 33);
 }
 
 .container{
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    margin-top: 40px;
     height: fit-content;
 }
 
@@ -26,14 +26,13 @@ body{
 
 .lane{
     margin: 5px auto;
-    width: 90%;
+    width: 91%;
     border-top: 2px white solid;
     border-bottom: 2px white solid;
     border-right: 30px white solid;
     height: 60px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    transition: 250ms;
+    position: relative;
 }
 
 .game-btns{
@@ -54,10 +53,12 @@ body{
 }
 
 .horse{
-    width: 20px;
-    height: 20px;
-    background-color: rgb(87, 39, 39);
     left: 0;
+    width: 25px;
+    height: 25px;
+    font-size: 2rem;
+    height: 50px;
+    position: absolute;
 }
 
 input{
@@ -67,4 +68,25 @@ input{
 #submit-bet-btn{
     margin-left: 10%;
     margin-right: 10%;
+}
+
+#bet-info-label{
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    margin: 10px 0;
+}
+
+#bet-menu{
+    border: none;
+    border-radius: 2px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+form{
+    gap: 15px;
 }
