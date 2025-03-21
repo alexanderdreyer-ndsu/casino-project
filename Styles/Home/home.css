@@ -76,6 +76,12 @@ body {
     background-position: center;
 }
 
+#Horse-Racing{
+    background-image: url("../../Images/Home/istockphoto-478244976-612x612.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
 #bottom-text {
     display: flex;
     color: grey;
