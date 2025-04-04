@@ -23,6 +23,14 @@ class Hand {
             }
         }
 
+        let numberOfAces = this.cards.filter(card => card.numValue === "Ace").length;
+        let trackAcesReduced = 0;
+        
+        while (this.count > 21 && trackAcesReduced < numberOfAces) {
+            this.count -= 10;
+            trackAcesReduced++;
+        }
+
         return this.count;
     }
 

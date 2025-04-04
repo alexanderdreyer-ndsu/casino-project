@@ -43,23 +43,11 @@ function clearHand(hand) {
     });
 }
 
-function endGame() {
+function endGame(calcWinner) {
     faceDownCardImage.src = faceDownCard.imagePath;
 
     disableButtons();
-    calculateWinner();
-
-    balanceOutput.textContent = balance.toFixed(2);
-
-    setTimeout(() => {
-        playBtn.disabled = false;
-    }, 1000);
-}
-
-function endGameFromCheckForBlackjack() {
-    faceDownCardImage.src = faceDownCard.imagePath;
-
-    disableButtons();
+    if (calcWinner) calculateWinner();
 
     balanceOutput.textContent = balance.toFixed(2);
 
@@ -79,7 +67,7 @@ function checkForBlackjack() {
 
             displayGameInfo.textContent = `${isPlayerBlackjack ? "Push" : "Dealer Blackjack"}`;
 
-            return endGameFromCheckForBlackjack();
+            return endGame(false);
         }
 
         if (isPlayerBlackjack) {
@@ -87,7 +75,7 @@ function checkForBlackjack() {
 
             displayGameInfo.textContent = "Player Blackjack";
 
-            return endGameFromCheckForBlackjack();
+            return endGame(false);
         }
     }
     
@@ -98,7 +86,7 @@ function checkForBlackjack() {
 
         displayGameInfo.textContent = "Player Hand 1 Blackjack, Player Hand 2 Blackjack";
 
-        return endGameFromCheckForBlackjack();
+        return endGame(false);
     } 
     
     if (isPlayerBlackjack) {
@@ -184,16 +172,6 @@ function disableButtons() {
     splitBtn.disabled = true;
 }
 
-function reduceHandAces(hand) {
-    if (hand.count <= 21) {
-        return;
-    }
-
-    for (const card of hand.cards) {
-        if (card.numValue === 'Ace' && hand.count > 21) hand.count -= 10;
-    }
-}
-
 function runDealerTurn() {
     if (dealerHand.count === 22) {
         reduceHandAces(dealerHand);
@@ -208,7 +186,7 @@ function runDealerTurn() {
         drawCard(dealerHand);
     }
 
-    endGame();
+    endGame(true);
 }
 
 function hit() {
@@ -230,7 +208,7 @@ function hit() {
 
     if (playerHand1.count >= 21 && !checkDidPlayerSplit) return runDealerTurn();
 
-    if (playerHand2.count >= 21) return endGame();
+    if (playerHand2.count >= 21) return endGame(true);
 
     playerHand1.selected = false;
     playerHand2.selected = true;
@@ -263,7 +241,7 @@ function double() {
     const checkDidPlayerSplit = playerHand2.count !== 0;
 
     if (!checkDidPlayerSplit) {
-        return playerHand1.count > 21 ? endGame() : runDealerTurn();
+        return playerHand1.count > 21 ? endGame(true) : runDealerTurn();
     }
 
     playerHand1.selected = false;
